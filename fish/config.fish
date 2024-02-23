@@ -7,14 +7,14 @@ set -U fish_user_paths $HOME/.bin  $HOME/.local/bin $HOME/.config/emacs/bin $HOM
 ### EXPORT ###
 set fish_greeting                                 # Supresses fish's intro message
 set TERM "xterm-256color"                         # Sets the terminal type
-set EDITOR "vim"                                  # $EDITOR use vim in terminal
-set VISUAL "vim"                                  # $VISUAL use vim in GUI mode
+set EDITOR "nvim"                                  # $EDITOR use vim in terminal
+set VISUAL "nvim"                                  # $VISUAL use vim in GUI mode
 
 ### SET MANPAGER
 ### Uncomment only one of these!
 
 ### "vim" as manpager
-set -x MANPAGER "vim +Man!"
+set -x MANPAGER "nvim +Man!"
 
 ### "less" as manpager
 # set -x MANPAGER "less"
@@ -145,7 +145,7 @@ alias ......='cd ../../../../..'
 alias .5='cd ../../../../..'
 
 # vim and emacs
-alias vim='vim'
+alias nv='nvim'
 alias em='/usr/bin/emacs -nw'
 alias emacs="emacsclient -c -a 'emacs'"
 alias rem="killall emacs || echo 'Emacs server not running'; /usr/bin/emacs --daemon"
@@ -242,3 +242,5 @@ colorscript random
 ### SETTING THE STARSHIP PROMPT ###
 starship init fish | source
 
+# opam configuration
+source /home/lazy/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
