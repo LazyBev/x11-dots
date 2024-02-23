@@ -213,9 +213,6 @@ bar {
 bindsym $mod+Shift+x exec i3lock --color "blue"
 
 #Start-Up
+
 exec_always --no-startup-id nitrogen --restore
-exec_always --no-startup-id autotiling -w 1 3 5 7 9
-assign [class="^Floorp$"] 1
-assign [class="^Discord$"] 2
-assign [class="^osu!$"] 3
 bindsym $mod+g exec ~/load layout.sh
