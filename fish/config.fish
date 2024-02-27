@@ -2,7 +2,15 @@
 # First line removes the path; second line sets it.  Without the first line,
 # your path gets massive and fish becomes very slow.
 set -e fish_user_paths
-set -U fish_user_paths $HOME/.bin  $HOME/.local/bin $HOME/.config/emacs/bin $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
+set -U fish_user_paths $HOME/.linuxbrew/bin/brew $HOME/.bin  $HOME/.local/bin $HOME/.config/emacs/bin $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
+
+set -ga fish_user_paths /home/lazy/.nimble/bin
+set -gx HOMEBREW_PREFIX "/home/linuxbrew/.linuxbrew";
+set -gx HOMEBREW_CELLAR "/home/linuxbrew/.linuxbrew/Cellar";
+set -gx HOMEBREW_REPOSITORY "/home/linuxbrew/.linuxbrew/Homebrew";
+fish_add_path -gP "/home/linuxbrew/.linuxbrew/bin" "/home/linuxbrew/.linuxbrew/sbin";
+! set -q MANPATH; and set MANPATH ''; set -gx MANPATH "/home/linuxbrew/.linuxbrew/share/man" $MANPATH;
+! set -q INFOPATH; and set INFOPATH ''; set -gx INFOPATH "/home/linuxbrew/.linuxbrew/share/info" $INFOPATH;
 
 ### EXPORT ###
 set fish_greeting                                 # Supresses fish's intro message
@@ -244,3 +252,6 @@ starship init fish | source
 
 # opam configuration
 source /home/lazy/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
+
+eval "/home/linuxbrew/.linuxbrew/bin/brew shellenv"
+
