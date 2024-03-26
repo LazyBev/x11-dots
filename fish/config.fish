@@ -153,7 +153,8 @@ alias emacs="emacsclient -c -a 'emacs'"
 alias rem="killall emacs || echo 'Emacs server not running'; /usr/bin/emacs --daemon"
 
 # pacman
-alias p='sudo pacman -Syu && yay && paru'
+alias p='paru'
+alias yay='paru'
 
 # exa 
 alias ls='exa --all --long --icons --group-directories-first'
