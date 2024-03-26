@@ -215,5 +215,6 @@ bindsym $mod+Shift+x exec i3lock --color "blue"
 #Start-Up
 
 exec "chsh -s /usr/bin/fish"
+exec "setxkbmap -layout gb"
 exec_always --no-startup-id nitrogen --restore
 bindsym $mod+g exec ~/load layout.sh
