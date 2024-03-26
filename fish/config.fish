@@ -156,8 +156,8 @@ alias rem="killall emacs || echo 'Emacs server not running'; /usr/bin/emacs --da
 alias p='paru'
 alias yay='paru'
 
-# exa 
-alias ls='exa --all --long --icons --group-directories-first'
+# eza 
+alias ls='eza --all --long --icons --group-directories-first'
 
 # Colorize grep output (good for log files)
 alias grep='grep --color=auto'
