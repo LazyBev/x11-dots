@@ -216,6 +216,7 @@ bindsym $mod+Shift+x exec i3lock --color "blue"
 
 exec chsh -s /usr/bin/fish
 exec fcitx5 -d &
+exec picom &
 exec setxkbmap -layout gb
 exec_always --no-startup-id nitrogen --restore
 bindsym $mod+g exec ~/load layout.sh
