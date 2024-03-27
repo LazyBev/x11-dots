@@ -8,7 +8,7 @@ sudo git clone https://aur.archlinux.org/paru.git
 cd ~/paru 
 sudo makepkg -si 
 cd ~ 
-paru -S man i3 mercury-browser-bin doas picom zip unzip cowsay ponysay neofetch fcitx5-im fcitx5-mozc lolcat polkit gvfs alsa-utils pipewire pipewire-pulse pavucontrol dunst xarchiver thunar thunar-archive-plugin lxappearance gnome-extra eza rofi fish btop neovim nitrogen alacritty 
+paru -S man i3 mercury-browser-bin picom zip unzip neofetch fcitx5-im lolcat polkit gvfs alsa-utils pipewire pipewire-pulse pavucontrol dunst xarchiver thunar thunar-archive-plugin lxappearance eza rofi fish bottom neovim nitrogen alacritty 
 cd ~/.config 
 sudo rm -rf i3 
 sudo rm -rf fish 
