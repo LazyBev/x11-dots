@@ -16,6 +16,8 @@ sudo rm -rf nvim
 sudo rm -rf /etc/pacman.conf 
 sudo rm -rf /etc/xdg/picom.conf 
 sudo rm -rf omf 
+sudo rm -rf nitrogen
+sudo ln -s ~/dotfiles/nitrogen 
 sudo ln -s ~/dotfiles/fonts ~/.local/share
 sudo ln -s ~/dotfiles/omf  
 sudo ln -s ~/dotfiles/fish  
