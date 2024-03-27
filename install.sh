@@ -24,8 +24,8 @@ sudo ln -s ~/dotfiles/fish
 sudo ln -s ~/dotfiles/i3  
 sudo ln -s ~/dotfiles/nvim  
 sudo ln -s ~/dotfiles/rofi  
-sudo ln -s ~/dotfiles/Misc/pacman.conf /etc
-sudo ln -s ~/dotfiles/Misc/picom.conf /etc/xdg  
+sudo ln -s ~/dotfiles/pacman.conf /etc
+sudo ln -s ~/dotfiles/picom.conf /etc/xdg  
 sudo chsh $USER -s /bin/fish  
 gitdot 
 cd ~
