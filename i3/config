@@ -210,7 +210,7 @@ bar {
 	}
 }
 
-bindsym $mod+x exec flameshot
+bindsym $mod+x exec "flameshot gui"
 
 #Start-Up
 
