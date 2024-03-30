@@ -70,6 +70,8 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
+bindsym $mod+s exec "flameshot"
+
 # move focused window
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
