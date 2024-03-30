@@ -189,7 +189,7 @@ alias pull='git pull origin'
 alias push='git push origin'
 alias tag='git tag'
 alias newtag='git tag -a'
-alias gdotf='cd ~/dotfiles && doas git pull && prevd'
+alias gitdot='cd ~/dotfiles && doas git pull && prevd'
 
 # get error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
