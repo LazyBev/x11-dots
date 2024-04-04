@@ -1,0 +1,381 @@
+Log file created at: 2024-03-27 22:37:14 692 130751092463744
+2024-03-27 22:37:14 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-27 22:37:14 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-27 22:37:14 692 130751092463744 client/client.cc(565) LOG(ERROR) Connection failure to session
+2024-03-27 22:37:14 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-27 22:37:14 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-27 22:37:14 692 130751092463744 client/client.cc(565) LOG(ERROR) Connection failure to session
+2024-03-27 23:39:11 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-27 23:39:11 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-27 23:39:12 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-27 23:39:12 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:30 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:30 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:30 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:30 692 130751092463744 client/client.cc(358) LOG(ERROR) Session id is void. re-issue session id
+2024-03-29 04:49:31 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:31 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:31 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:31 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:31 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:31 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:40 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:40 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:40 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:40 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:40 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:40 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:40 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:41 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:41 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:41 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:41 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:41 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:41 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:41 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:41 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:41 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:41 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:41 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:41 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-29 04:49:41 692 130751092463744 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-03-30 00:57:42 692 130751092463744 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-03-30 00:57:42 692 130751092463744 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-03-30 00:57:42 692 130751092463744 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-03-30 00:57:42 692 130751092463744 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-03-30 00:57:42 692 130751092463744 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-03-30 00:57:42 692 130751092463744 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+Log file created at: 2024-04-01 06:56:21 77581 123946735802496
+2024-04-01 07:28:54 77581 123946735802496 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-02 15:36:09 77581 123946735802496 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-02 15:36:09 77581 123946735802496 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+Log file created at: 2024-04-03 07:06:32 205647 129449700345984
+2024-04-04 02:54:21 205647 129449700345984 client/client.cc(358) LOG(ERROR) Session id is void. re-issue session id
+2024-04-04 04:22:31 205647 129449700345984 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-04-04 04:22:31 205647 129449700345984 client/client.cc(358) LOG(ERROR) Session id is void. re-issue session id
+2024-04-04 04:37:29 205647 129449700345984 client/client.cc(358) LOG(ERROR) Session id is void. re-issue session id
+2024-04-04 14:43:44 205647 129449700345984 client/client.cc(358) LOG(ERROR) Session id is void. re-issue session id
+2024-04-04 14:44:43 205647 129449700345984 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-04-04 14:44:43 205647 129449700345984 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-04-04 14:44:43 205647 129449700345984 unix/fcitx5/fcitx_key_event_handler.cc(112) LOG(ERROR) Translate failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(472) LOG(ERROR) DeleteSession failed
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 ipc/unix_ipc.cc(290) LOG(WARNING) connect failed: Connection refused
+2024-04-04 14:53:30 205647 129449700345984 client/client.cc(645) LOG(ERROR) Connection failure to session
