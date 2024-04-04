@@ -13,11 +13,15 @@ cd ~/.config
 sudo rm -rf i3 
 sudo rm -rf fish 
 sudo rm -rf nvim 
+sudo rm -rf fcitx
+sudo rm -rf fcitx5
 sudo rm -rf /etc/pacman.conf 
 sudo rm -rf /etc/xdg/picom.conf 
 sudo rm -rf omf 
 sudo rm -rf nitrogen
-sudo ln -s ~/dotfiles/nitrogen 
+sudo ln -s ~/dotfiles/nitrogen
+sudo ln -s ~/dotfiles/fcitx5
+sudo ln -s ~/dotfiles/fcitx
 sudo ln -s ~/dotfiles/fonts ~/.local/share
 sudo ln -s ~/dotfiles/omf  
 sudo ln -s ~/dotfiles/fish  
