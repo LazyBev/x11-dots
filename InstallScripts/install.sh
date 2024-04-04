@@ -11,6 +11,7 @@ cd ~
 paru -S man i3 mercury-browser-bin picom zip unzip neofetch fcitx5-im lolcat polkit gvfs alsa-utils pipewire pipewire-pulse pavucontrol dunst xarchiver thunar thunar-archive-plugin lxappearance eza rofi fish bottom neovim nitrogen alacritty 
 cd ~/.config 
 sudo rm -rf i3 
+sudo rm -rf mozc
 sudo rm -rf fish 
 sudo rm -rf nvim 
 sudo rm -rf fcitx
@@ -22,6 +23,7 @@ sudo rm -rf nitrogen
 sudo ln -s ~/dotfiles/nitrogen
 sudo ln -s ~/dotfiles/fcitx5
 sudo ln -s ~/dotfiles/fcitx
+sudo ln -s ~/dotfiles/mozc 
 sudo ln -s ~/dotfiles/fonts ~/.local/share
 sudo ln -s ~/dotfiles/omf  
 sudo ln -s ~/dotfiles/fish  
