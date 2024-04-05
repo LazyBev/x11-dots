@@ -1,4 +1,4 @@
-paru -S vesktop-bin steam wine 
+yay -S vesktop-bin steam wine 
 git clone https://github.com/NelloKudo/osu-winello.git  
 cd osu-winello  
 chmod +x osu-winello.sh  
