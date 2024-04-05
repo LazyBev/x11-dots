@@ -1,6 +1,7 @@
 #!/bin/bash
 
 sudo pacman -Syu 
+cd ~
 sudo mkdir Pictures 
 sudo mkdir Videos 
 sudo setxkbmap -layout gb 
@@ -11,6 +12,7 @@ cd ~
 paru -S man i3 mercury-browser-bin picom zip unzip fcitx5-mozc adobe-source-han-sans-fonts adobe-source-han-serif-fonts neofetch fcitx5-im lolcat polkit gvfs alsa-utils pipewire pipewire-pulse pavucontrol dunst xarchiver thunar thunar-archive-plugin lxappearance eza rofi fish bottom neovim nitrogen alacritty 
 cd ~/.config 
 sudo rm -rf i3 
+sudo rm -rf rofi
 sudo rm -rf mozc
 sudo rm -rf fish 
 sudo rm -rf nvim 
@@ -18,6 +20,7 @@ sudo rm -rf fcitx
 sudo rm -rf fcitx5
 sudo rm -rf /etc/pacman.conf 
 sudo rm -rf /etc/xdg/picom.conf 
+sudo rm -rf ~/.local/share/fonts
 sudo rm -rf omf 
 sudo rm -rf nitrogen
 sudo ln -s ~/dotfiles/nitrogen
