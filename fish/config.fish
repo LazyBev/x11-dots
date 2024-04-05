@@ -154,7 +154,6 @@ alias rem="killall emacs || echo 'Emacs server not running'; /usr/bin/emacs --da
 
 # pacman
 alias p='paru'
-alias yay='paru'
 
 # eza 
 alias ls='eza --all --long --icons --group-directories-first'
