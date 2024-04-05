@@ -5,11 +5,11 @@ cd ~
 sudo mkdir Pictures 
 sudo mkdir Videos 
 sudo setxkbmap -layout gb 
-sudo git clone https://aur.archlinux.org/paru.git 
-cd ~/paru 
+sudo git clone https://aur.archlinux.org/yay.git 
+cd ~/yay
 makepkg -si 
 cd ~ 
-paru -S man i3 mercury-browser-bin picom zip unzip fcitx5-mozc adobe-source-han-sans-fonts adobe-source-han-serif-fonts neofetch fcitx5-im lolcat polkit gvfs alsa-utils pipewire pipewire-pulse pavucontrol dunst xarchiver thunar thunar-archive-plugin lxappearance eza rofi fish bottom neovim nitrogen alacritty 
+yay -S man i3 mercury-browser-bin picom zip unzip fcitx5-mozc adobe-source-han-sans-fonts adobe-source-han-serif-fonts neofetch fcitx5-im lolcat polkit gvfs alsa-utils pipewire pipewire-pulse pavucontrol dunst xarchiver thunar thunar-archive-plugin lxappearance eza rofi fish bottom neovim nitrogen alacritty 
 cd ~/.config 
 sudo rm -rf i3 
 sudo rm -rf rofi
