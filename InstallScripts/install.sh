@@ -37,4 +37,3 @@ gitdot
 cd ~
 clear  
 read -p "Press enter in order for changes to take place..."  
-sudo reboot
