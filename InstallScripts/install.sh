@@ -35,5 +35,4 @@ sudo ln -s ~/dotfiles/picom.conf /etc/xdg
 sudo chsh $USER -s /bin/fish  
 gitdot 
 cd ~
-clear  
 read -p "Press enter in order for changes to take place..."  
