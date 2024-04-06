@@ -1,4 +1,4 @@
-yay -S vesktop-bin steam wine 
+yay -S steam
 cd ~
 git clone https://github.com/NelloKudo/osu-winello.git  
 cd osu-winello  
