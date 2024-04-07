@@ -1,2 +1,3 @@
-yay -S cowsay ponysay doas gnome-extra tumux virt-manager qemu dnsmasq libvirt
-sudo usermod -aG libvirt $USER
+#!/bin/bash
+
+yay -S vesktop-bin wine fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx5-im
