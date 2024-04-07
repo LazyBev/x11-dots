@@ -84,12 +84,12 @@ echo "pacstrap -K /mnt base base-devel linux linux-firmware"
 pacstrap -K /mnt base base-devel linux linux-headers linux-firmware grub efibootmgr sof-firmware vim neovim nitrogen
 
 echo "genfstab -U /mnt >> /mnt/etc/fstab"
-genfstab /mnt -U > /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 
 # Entering the new system.
 echo "arch-chroot /mnt /bin/bash"
 
-arch-chroot /mnt /bin/bash<<"END_COMMANDS"
+arch-chroot /mnt<<"END_COMMANDS"
 
 echo "what cpu do you have (AMD or INTEL)?: "
 read -p CPU
