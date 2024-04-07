@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "This is intended to be run on an arch ISO. This will NOT work on a already installed system."
+echo "This is intended to be run on an arch ISO. This will NOT work on a already installed system. Must have some knowledge on disk partioning"
 
 sudo cp -rp ~/dotfiles/pacman.conf /etc
 
