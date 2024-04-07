@@ -83,8 +83,6 @@ pacstrap -K /mnt base base-devel linux linux-headers linux-firmware grub efiboot
 echo "genfstab -U /mnt >> /mnt/etc/fstab"
 genfstab /mnt -U > /mnt/etc/fstab
 
-mv dotfiles /mnt
-
 # Entering the new system.
 echo "arch-chroot /mnt /bin/bash"
 
