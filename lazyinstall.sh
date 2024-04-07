@@ -190,6 +190,3 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 exit
 END_COMMANDS
 umount -a
-echo "Rebooting in order for changes to take place..." 
-sleep 1
-sudo reboot
