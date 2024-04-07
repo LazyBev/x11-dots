@@ -76,7 +76,7 @@ echo "mount --mkdir $DRIVEb /mnt/boot"
 mount --mkdir $DRIVEb /mnt/boot
 
 echo "pacstrap -K /mnt base base-devel linux linux-firmware"
-pacstrap -K /mnt base base-devel linux linux-firmware grub efibootmgr sof-firmware vim
+pacstrap -K /mnt base base-devel linux linux-headers linux-firmware grub efibootmgr sof-firmware vim neovim nitrogen
 
 echo "genfstab -U /mnt >> /mnt/etc/fstab"
 genfstab /mnt -U > /mnt/etc/fstab
@@ -119,11 +119,11 @@ fi
 echo "sudo git clone https://aur.archlinux.org/yay-bin.git"
 sudo git clone https://aur.archlinux.org/yay-bin.git 
 cd yay-bin
-makepkg -si
+makepkg -sci
 
 # Installing packages and moving to fish.
 cd ~
-yay -S man mercury-browser-bin flameshot lolcat gvfs dunst xarchiver thunar thunar-archive-plugin lxappearance eza fish bottom neovim nitrogen vesktop-bin wine fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx5-im steam
+yay -S man mercury-browser-bin flameshot lolcat gvfs dunst xarchiver thunar thunar-archive-plugin lxappearance eza fish bottom vesktop-bin wine-staging fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx5-im steam
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 fish
 
@@ -154,27 +154,26 @@ fi
 # Setting up users.
 echo "username: "
 read USERn
-useradd -m -G wheel -s /bin/bash $USERn
+useradd -mG wheel,audio,video,lp,kvm -s /bin/bash $USERn
 passwd $USERn
 
 # Installing dotfiles.
 cd ~/.config 
-sudo ln -sf ~/dotfiles/nitrogen
-sudo ln -sf ~/dotfiles/fcitx5
-sudo ln -sf ~/dotfiles/fcitx
-sudo ln -sf ~/dotfiles/mozc 
-sudo ln -sf ~/dotfiles/fonts ~/.local/share
-sudo ln -sf ~/dotfiles/omf  
-sudo ln -sf ~/dotfiles/fish  
-sudo ln -sf ~/dotfiles/i3  
-sudo ln -sf ~/dotfiles/nvim  
-sudo ln -sf ~/dotfiles/rofi  
-sudo ln -sf ~/dotfiles/pacman.conf /etc
-sudo ln -sf ~/dotfiles/picom.conf /etc/xdg  
+sudo cp -r ~/dotfiles/nitrogen
+sudo cp -r ~/dotfiles/fcitx5
+sudo cp -r ~/dotfiles/fcitx
+sudo cp -r ~/dotfiles/mozc 
+sudo cp -r ~/dotfiles/fonts ~/.local/share
+sudo cp -r ~/dotfiles/omf  
+sudo cp -r ~/dotfiles/fish  
+sudo cp -r ~/dotfiles/i3  
+sudo cp -r ~/dotfiles/nvim  
+sudo cp -r ~/dotfiles/rofi  
+sudo cp -r ~/dotfiles/pacman.conf /etc
+sudo cp -r ~/dotfiles/picom.conf /etc/xdg  
 cd ~
 
 # Hostname setup.
-sudo mkdir /etc/hostname
 echo "Choose a hostname for your machine:"
 read HOSTNAME
 sudo echo $HOSTNAME >> /etc/hostname
@@ -186,12 +185,12 @@ sudo echo "echo %wheel ALL=(ALL) ALL >> EDITOR=nano visudo"
 sudo echo "%wheel ALL=(ALL) ALL" >> EDITOR=nano visudo
 sudo systemctl enable NetworkManager
 sudo systemctl enable lightdm
-sudo grub-install /dev/nvme0n1
+sudo grub-install $DRIVE
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # Bye bye, install done.
 exit 
 umount -a
 echo "Rebooting in order for changes to take place..." 
-sleep 2
+sleep 1
 sudo reboot
