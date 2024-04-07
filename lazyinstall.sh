@@ -90,13 +90,13 @@ echo "arch-chroot /mnt /bin/bash"
 arch-chroot /mnt /bin/bash<<"END_COMMANDS"
 
 echo "what cpu do you have (AMD or INTEL)?: "
-read CPU
+read -p CPU
 
 # Installing CPU packages.
 if [ $CPU == "AMD" ]; then
-    echo sudo pacman -Syu amd-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed
+    echo sudo pacman -Syu amd-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed
 elif [ $CPU == "INTEL" ]; then
-    sudo pacman -Syu intel-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed 
+    sudo pacman -Syu intel-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed 
 fi 
 
 # Creating basic directory.
@@ -126,7 +126,7 @@ fish
 
 # Configuring basic system options.
 echo "What is your location in the order of the continent then city? (e.g. Europe/London, Europe/Brussels, Asia/Tokyo): "
-read TZ
+read -p TZ
 echo "ln -sf /usr/share/zoneinfo/$TZ /etc/localtime"
 
 ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
@@ -139,10 +139,10 @@ date
 
 echo "Is this correct?"
 
-read CHOICE
+read -p CHOICE
 
 if [ CHOICE == "YES" ]; then
-    echo 
+    echo "Yippe"
 else
     echo "hwclock --systohc"
     hwclock --systohc
@@ -150,9 +150,13 @@ fi
 
 # Setting up users.
 echo "username: "
-read USERn
+read -p USERn
 useradd -mG wheel,audio,video,lp,kvm -s /bin/bash $USERn
 passwd $USERn
+mkdir /etc/sudoers.d
+echo "$USERn ALL=(ALL:ALL) ALL" >> /etc/sudoers.d/01_user
+
+su $USERn
 
 # Installing dotfiles.
 cd ~/.config 
@@ -172,15 +176,16 @@ cd ~
 
 # Hostname setup.
 echo "Choose a hostname for your machine:"
-read HOSTNAME
+read -p HOSTNAME
 sudo echo $HOSTNAME >> /etc/hostname
 
 # Grub, file systems, systemctl and all that shit.
 sudo passwd
-sudo echo "echo %wheel ALL=(ALL) ALL >> EDITOR=nano visudo"
-sudo echo "%wheel ALL=(ALL) ALL" >> EDITOR=nano visudo
 sudo systemctl enable NetworkManager
 sudo systemctl enable lightdm
+systemctl --user enable pipewire
+systemctl --user enable pipewire-pulse
+systemctl --user enable wireplumber
 sudo grub-install /boot/efi $DRIVE
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
