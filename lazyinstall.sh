@@ -88,8 +88,6 @@ echo "arch-chroot /mnt /bin/bash"
 
 arch-chroot /mnt /bin/bash
 
-cd ~
-
 echo "what cpu do you have (AMD or INTEL)?: "
 read CPU
 
