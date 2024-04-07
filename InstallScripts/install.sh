@@ -17,7 +17,7 @@ sudo git clone https://aur.archlinux.org/yay-bin.git
 cd ~/yay-bin
 makepkg -si 
 cd ~ 
-yay -S man i3 mercury-browser-bin flameshot picom zip unzip neofetch lolcat polkit gvfs alsa-utils pipewire pipewire-pulse pavucontrol dunst xarchiver thunar thunar-archive-plugin lxappearance eza rofi fish bottom neovim nitrogen alacritty 
+yay -S man i3 mpv mercury-browser-bin flameshot picom zip unzip neofetch lolcat polkit gvfs alsa-utils pipewire pipewire-pulse pavucontrol dunst xarchiver thunar thunar-archive-plugin lxappearance eza rofi fish bottom neovim nitrogen alacritty 
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 fish
 cd ~/.config 
