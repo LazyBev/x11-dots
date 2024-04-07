@@ -179,8 +179,8 @@ sudo echo "echo %wheel ALL=(ALL) ALL >> EDITOR=nano visudo"
 sudo echo "%wheel ALL=(ALL) ALL" >> EDITOR=nano visudo
 sudo systemctl enable NetworkManager
 sudo systemctl enable lightdm
-sudo grub-install /boot $DRIVE
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo grub-install /boot $DRIVE
 
 # bye bye
 END_COMMANDS
