@@ -4,7 +4,7 @@ echo "This is intended to be run on an arch ISO. This will NOT work on a already
 
 cd ~
 
-pacman -Sy wget
+pacman -Syy wget
 
 # Testing internet connection.
 echo "Testing your internet connection."
