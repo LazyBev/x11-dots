@@ -74,8 +74,9 @@ mkfs.fat -F 32 $DRIVEb
 echo "mount $DRIVEr /mnt"
 mount $DRIVEr /mnt
 
-echo "mount --mkdir $DRIVEb /mnt/boot"
-mount --mkdir $DRIVEb /mnt/boot
+echo "mount --mkdir $DRIVEb /mnt/boot/efi"
+mkdir -p /mnt/boot/efi
+mount $DRIVEb /mnt/boot/efi
 
 echo "pacstrap -K /mnt base base-devel linux linux-firmware"
 pacstrap -K /mnt base base-devel linux linux-headers linux-firmware grub efibootmgr sof-firmware vim neovim nitrogen
