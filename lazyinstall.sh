@@ -45,7 +45,7 @@ read DRIVE
 echo "sudo wipefs -a -f $DRIVE"
 sudo wipefs -a -f $DRIVE
 
-echo "Please do NOT make a swap partition. It will break the install."
+echo "Please do NOT make a swap partition. It will break the install. (ENTER to continue)"
 
 # Partitioning drives.
 read CHOICE
