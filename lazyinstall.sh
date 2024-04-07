@@ -42,7 +42,7 @@ lsblk
 echo "This is for gpt type partions... (quit now if this is not for you)"
 echo "What drive do you want to install to? (e.g. /dev/sda, /dev/nvme0n1): "
 
-read -p DRIVE
+read DRIVE
 
 echo "sudo wipefs -a -f $DRIVE"
 sudo wipefs -a -f $DRIVE
