@@ -1,4 +1,5 @@
-yay -S steam
+#!/bin/bash
+
 cd ~
 git clone https://github.com/NelloKudo/osu-winello.git  
 cd osu-winello  
