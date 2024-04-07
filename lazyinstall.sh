@@ -2,7 +2,7 @@
 
 echo "This is intended to be run on an arch ISO. This will NOT work on a already installed system."
 
-sudo cp -r ~/dotfiles/pacman.conf /mnt/etc
+sudo cp -rp ~/dotfiles/pacman.conf /mnt/etc
 
 cd ~
 
@@ -159,17 +159,17 @@ passwd $USERn
 
 # Installing dotfiles.
 cd ~/.config 
-sudo cp -r ~/dotfiles/nitrogen
-sudo cp -r ~/dotfiles/fcitx5
-sudo cp -r ~/dotfiles/fcitx
-sudo cp -r ~/dotfiles/mozc 
-sudo cp -r ~/dotfiles/fonts ~/.local/share
-sudo cp -r ~/dotfiles/omf  
-sudo cp -r ~/dotfiles/fish  
-sudo cp -r ~/dotfiles/i3  
-sudo cp -r ~/dotfiles/nvim  
-sudo cp -r ~/dotfiles/rofi  
-sudo cp -r ~/dotfiles/picom.conf 
+sudo cp -rp ~/dotfiles/nitrogen
+sudo cp -rp ~/dotfiles/fcitx5
+sudo cp -rp ~/dotfiles/fcitx
+sudo cp -rp ~/dotfiles/mozc 
+sudo cp -rp ~/dotfiles/fonts ~/.local/share
+sudo cp -rp ~/dotfiles/omf  
+sudo cp -rp ~/dotfiles/fish  
+sudo cp -rp ~/dotfiles/i3  
+sudo cp -rp ~/dotfiles/nvim  
+sudo cp -rp ~/dotfiles/rofi  
+sudo cp -rp ~/dotfiles/picom.conf 
 cd ~
 
 # Hostname setup.
@@ -178,7 +178,6 @@ read HOSTNAME
 sudo echo $HOSTNAME >> /etc/hostname
 
 # Grub, file systems, systemctl and all that shit.
-sudo mkinitcpio -P
 sudo passwd
 sudo echo "echo %wheel ALL=(ALL) ALL >> EDITOR=nano visudo"
 sudo echo "%wheel ALL=(ALL) ALL" >> EDITOR=nano visudo
