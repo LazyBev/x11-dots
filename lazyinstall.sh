@@ -95,11 +95,9 @@ read CPU
 
 # Installing CPU packages.
 if [ $CPU == "AMD" ]; then
-    echo sudo pacman -Syu amd-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed >> la.sh
-    sudo chmod +x la.sh
+    echo sudo pacman -Syu amd-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed
 elif [ $CPU == "INTEL" ];
-    sudo pacman -Syu intel-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed >> la.sh
-    sudo chmod +x la.sh
+    sudo pacman -Syu intel-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed 
 fi 
 
 # Creating basic directory.
@@ -186,7 +184,6 @@ sudo systemctl enable lightdm
 sudo grub-install /boot $DRIVE
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-# Bye bye, install done.
-exit
+# bye bye
 END_COMMANDS
 umount -a
