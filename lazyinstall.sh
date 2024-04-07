@@ -86,7 +86,7 @@ mv dotfiles /mnt
 # Entering the new system.
 echo "arch-chroot /mnt /bin/bash"
 
-arch-chroot /mnt /bin/bash
+arch-chroot /mnt /bin/bash<<"END_COMMANDS"
 
 echo "what cpu do you have (AMD or INTEL)?: "
 read CPU
@@ -187,7 +187,8 @@ sudo grub-install $DRIVE
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # Bye bye, install done.
-exit 
+exit
+END_COMMANDS
 umount -a
 echo "Rebooting in order for changes to take place..." 
 sleep 1
