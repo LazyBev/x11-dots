@@ -8,7 +8,7 @@ else
   exit 1
 fi
 cd ~
-sudo pacman -Sy wget
+pacman -Sy wget
 echo "Checking internet connection..."
 echo "Test one"
 wget -q --spider http://google.com
@@ -59,6 +59,7 @@ echo "pacstrap -K /mnt base base-devel linux linux-firmware"
 pacstrap -K /mnt base base-devel linux linux-firmware grub efibootmgr sof-firmware vim
 echo "genfstab -U /mnt >> /mnt/etc/fstab"
 genfstab /mnt > /mnt/etc/fstab
+mv dotfiles /mnt
 echo "arch-chroot /mnt /bin/bash"
 arch-chroot /mnt /bin/bash
 cd ~
@@ -67,9 +68,11 @@ read CPU
 echo "touch la.sh"
 touch la.sh
 if [ $CPU == "AMD" ] then
-  sudo pacman -Syu amd-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed
+  echo sudo pacman -Syu amd-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed >> la.sh
+  sudo chmod +x la.sh
 elif [ $CPU == "INTEL" ]
-  sudo pacman -Syu intel-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed
+  sudo pacman -Syu intel-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed >> la.sh
+  sudo chmod +x la.sh
 fi 
 if [[ -d ~/Pictures ]] then 
   echo "Pictures dir exists"
@@ -83,15 +86,32 @@ else
 fi
 echo "sudo git clone https://aur.archlinux.org/yay-bin.git"
 sudo git clone https://aur.archlinux.org/yay-bin.git 
-cd ~/yay-bin
+cd yay-bin
 makepkg -si 
 cd ~
 yay -S man mercury-browser-bin flameshot lolcat gvfs dunst xarchiver thunar thunar-archive-plugin lxappearance eza fish bottom neovim nitrogen
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 fish
+echo "What is your location in the order of the continent then city? (e.g. Europe/London, Europe/Brussels, Asia/Tokyo): "
+read TZ
+echo "ln -sf /usr/share/zoneinfo/$TZ /etc/localtime"
+ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
 sudo chsh $USER -s /bin/fish
-exit
-cd /mnt/.config 
+echo "date"
+date
+echo "Is this correct?"
+read CHOICE
+if [ CHOICE == "YES" ] then
+  echo 
+else
+  echo "hwclock --systohc"
+  hwclock --systohc
+fi
+echo "username: "
+read USERn
+useradd -m -G wheel -s /bin/bash $USERn
+passwd $USERn
+cd ~/.config 
 sudo ln -sf ~/dotfiles/nitrogen
 sudo ln -sf ~/dotfiles/fcitx5
 sudo ln -sf ~/dotfiles/fcitx
@@ -106,12 +126,19 @@ sudo ln -sf ~/dotfiles/pacman.conf /etc
 sudo ln -sf ~/dotfiles/picom.conf /etc/xdg  
 cd ~
 sudo mkdir /etc/hostname
-echo "Choose a hostname:"
+echo "Choose a hostname for your machine:"
 read HOSTNAME
-echo $HOSTNAME >> sudo /etc/hostname
-mkinitcpio -P
-passwd
-gitdot
+sudo echo $HOSTNAME >> /etc/hostname
+sudo mkinitcpio -P
+sudo passwd
+sudo echo "echo %wheel ALL=(ALL) ALL >> EDITOR=nano visudo"
+sudo echo "%wheel ALL=(ALL) ALL" >> EDITOR=nano visudo
+sudo systemctl enable NetworkManager
+sudo systemctl enable lightdm
+sudo grub-install /dev/nvme0n1
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+exit 
+umount -a
 "Rebooting in order for changes to take place..." 
 sleep 2
 sudo reboot
