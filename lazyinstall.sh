@@ -43,7 +43,7 @@ lsblk
 echo "What drive do you want to install to? (e.g. /dev/sda, /dev/nvme0n1): "
 echo "This is for gpt type partions... (quit now if this is not for you)"
 
-read DRIVE
+read -p DRIVE
 
 echo "sudo wipefs -a -f $DRIVE"
 sudo wipefs -a -f $DRIVE
@@ -51,7 +51,7 @@ sudo wipefs -a -f $DRIVE
 echo "Please do NOT make a swap partition. It will break the install. (ENTER to continue)"
 
 # Partitioning drives.
-read CHOICE
+read -p CHOICE
 sudo cfdisk $DRIVE
 
 if [ $DRIVE == "/dev/nvme0n1" ]; then 
