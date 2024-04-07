@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 echo "This is intended to be run on an arch ISO. This will NOT work on a already installed system. Must have some knowledge on disk partioning"
 
 sudo cp -rp ~/dotfiles/pacman.conf /etc
@@ -191,5 +193,4 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # bye bye
 END_COMMANDS
-umount -a
 echo "Reboot please"
