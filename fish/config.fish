@@ -226,7 +226,3 @@ alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/mas
 
 # Mocp must be launched with bash instead of Fish!
 alias mocp="bash -c mocp"
-
-# opam configuration
-source /home/lazy/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
-
