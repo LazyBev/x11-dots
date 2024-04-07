@@ -2,7 +2,7 @@
 
 echo "This is intended to be run on an arch ISO. This will NOT work on a already installed system."
 
-sudo cp -rp ~/dotfiles/pacman.conf /mnt/etc
+sudo cp -rp ~/dotfiles/pacman.conf /etc
 
 cd ~
 
@@ -166,6 +166,7 @@ sudo cp -rp ~/dotfiles/i3
 sudo cp -rp ~/dotfiles/nvim  
 sudo cp -rp ~/dotfiles/rofi  
 sudo cp -rp ~/dotfiles/picom.conf 
+sudo cp -rp ~/dotfiles/pacman.conf /etc
 cd ~
 
 # Hostname setup.
