@@ -192,3 +192,4 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 # bye bye
 END_COMMANDS
 umount -a
+echo "Reboot please"
