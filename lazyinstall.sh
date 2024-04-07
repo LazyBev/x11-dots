@@ -79,7 +79,7 @@ echo "pacstrap -K /mnt base base-devel linux linux-firmware"
 pacstrap -K /mnt base base-devel linux linux-firmware grub efibootmgr sof-firmware vim
 
 echo "genfstab -U /mnt >> /mnt/etc/fstab"
-genfstab /mnt -U >> /mnt/etc/fstab
+genfstab /mnt -U > /mnt/etc/fstab
 
 mv dotfiles /mnt
 
