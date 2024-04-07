@@ -1,25 +1,64 @@
 #!/bin/bash
 
-sudo pacman -Syu 
+echo "Arch Install, if you do not wish to continue type NO. else YES: "
+read CHOICE
+if [ CHOICE == "YES" ] then
+  clear
+else 
+  exit 1
+fi
 cd ~
+sudo pacman -Sy wget
+echo "Checking internet connection..."
+wget -q --spider http://google.com
+wget -q --spider http://google.com
+if [ $? -eq 0 ]; then
+    echo "Internet is connected"
+else
+    read -p "Please connect to the internet... (ENTER to quit)"
+    exit 1
+fi
+echo "what drive do you wanna alter? (e.g. /dev/sda, /dev/nvme0n1): "
+read DRIVE
+sudo wipefs -a -f $DRIVE
+sudo fdisk $DRIVE
+g
+n
+1
+echo
++1G
+t
+1
+n
+2
+echo
+echo
+wq
+------- NOT FINISHED --------------
+
+echo "pacstrap -K /mnt base base-devel linux linux-firmware"
+pacstrap -K /mnt base base-devel linux linux-firmware
+
+sudo pacman -S linux gcc zip unzip mpv cmake glibc neofetch vim curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed
 if [ -d ~/Pictures]; then
-  echo Pictures dir exists
+  echo "Pictures dir exists"
 else
   sudo mkdir Pictures
 fi
 if [ -d ~/Videos]; then
-  echo Videos dir exists
+  echo "Videos dir exists"
 else
   sudo mkdir Videos
 fi
-sudo setxkbmap -layout gb 
+sudo pacman -Syu 
 sudo git clone https://aur.archlinux.org/yay-bin.git 
 cd ~/yay-bin
 makepkg -si 
 cd ~ 
-yay -S man i3 mpv mercury-browser-bin flameshot picom zip unzip neofetch lolcat polkit gvfs alsa-utils pipewire pipewire-pulse pavucontrol dunst xarchiver thunar thunar-archive-plugin lxappearance eza rofi fish bottom neovim nitrogen alacritty 
+yay -S man mercury-browser-bin flameshot lolcat gvfs dunst xarchiver thunar thunar-archive-plugin lxappearance eza fish bottom neovim nitrogen
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 fish
+sudo chsh $USER -s /bin/fish
 cd ~/.config 
 sudo rm -rf i3 
 sudo rm -rf rofi
@@ -45,8 +84,8 @@ sudo ln -s ~/dotfiles/nvim
 sudo ln -s ~/dotfiles/rofi  
 sudo ln -s ~/dotfiles/pacman.conf /etc
 sudo ln -s ~/dotfiles/picom.conf /etc/xdg  
-cd ~
-sudo chsh $USER -s /bin/fish  
+cd ~  
 gitdot
-read -p "Rebooting in order for changes to take place..."  
+"Rebooting in order for changes to take place..." 
+sleep 2
 sudo reboot
