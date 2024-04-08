@@ -15,7 +15,6 @@ sudo cp -rp fcitx5 ../.config
 sudo cp -rp fcitx ../.config
 sudo cp -rp mozc ../.config
 sudo cp -rp fonts ~/.local/share
-sudo cp -rp omf ../.config
 sudo cp -rp fish ../.config
 sudo cp -rp i3 ../.config
 sudo cp -rp nvim ../.config
