@@ -96,9 +96,9 @@ read -p CPU
 
 # Installing CPU packages.
 if [ $CPU == "AMD" ]; then
-    echo sudo pacman -Syu amd-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed
+    echo sudo pacman -Syu amd-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed
 elif [ $CPU == "INTEL" ]; then
-    sudo pacman -Syu intel-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse pavucontrol picom polkit alacritty --noconfirm --needed 
+    sudo pacman -Syu intel-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed 
 fi 
 
 # Creating basic directory.
@@ -161,19 +161,18 @@ echo "$USERn ALL=(ALL:ALL) ALL" >> /etc/sudoers.d/01_user
 su $USERn
 
 # Installing dotfiles.
-cd ~/.config 
-sudo cp -rp ~/dotfiles/nitrogen
-sudo cp -rp ~/dotfiles/fcitx5
-sudo cp -rp ~/dotfiles/fcitx
-sudo cp -rp ~/dotfiles/mozc 
-sudo cp -rp ~/dotfiles/fonts ~/.local/share
-sudo cp -rp ~/dotfiles/omf  
-sudo cp -rp ~/dotfiles/fish  
-sudo cp -rp ~/dotfiles/i3  
-sudo cp -rp ~/dotfiles/nvim  
-sudo cp -rp ~/dotfiles/rofi  
-sudo cp -rp ~/dotfiles/picom.conf 
-sudo cp -rp ~/dotfiles/pacman.conf /etc
+cd ~/dotfiles
+sudo cp -rp fcitx5 ../.config
+sudo cp -rp fcitx ../.config
+sudo cp -rp mozc ../.config
+sudo cp -rp fonts ~/.local/share
+sudo cp -rp omf ../.config
+sudo cp -rp fish ../.config
+sudo cp -rp i3 ../.config
+sudo cp -rp nvim ../.config
+sudo cp -rp rofi ../.config
+sudo cp -rp picom.conf ../.config
+sudo cp -rp pacman.conf /etc
 cd ~
 
 # Hostname setup.
