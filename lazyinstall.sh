@@ -3,29 +3,16 @@
 set -e
 
 echo "This is intended to be run on an (fresh???) arch ISO and must be UEFI mode. This will NOT work on a already installed system. Must have some knowledge on disk partioning"
-
-if [[ cat /sys/firmware/efi/fw_platform_size == 64 ]]; then
-    echo
-else
-    echo "clear"
-    echo "This is not a x86_64 UEFI boot"
-    exit 1
-fi
-
 read -p "Lets choose a keyboard layout. Read the list and check which one you want (ENTER to contnue.)" && localectl list-keymaps
 clear
 
 read -p "Which layout would you like?: " LAUT
 echo "loadkeys $LAUT" && loadkeys $LAUT
-
-cd dotfiles
 cp -rp pacman.conf /etc
 
-cd /
-
+cd ~
 pacman -Syy wget reflector --noconfirm 
 
-cd /
 # Testing internet connection.
 echo "Testing your internet connection."
 echo "Test One."
@@ -114,11 +101,10 @@ echo "arch-chroot /mnt /bin/bash"
 
 arch-chroot /mnt<<"END_COMMANDS"
 
-read -p "what cpu do you have (AMD or INTEL)?: " CPU
-
 # Installing CPU packages.
+read -p "what cpu do you have (AMD or INTEL)?: " CPU
 if [ $CPU == "AMD" ]; then
-    echo sudo pacman -Syu amd-ucode zip unzip mpv cmake vim neovim nitrogen picom neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed
+    sudo pacman -Syu amd-ucode zip unzip mpv cmake vim neovim nitrogen picom neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed
 elif [ $CPU == "INTEL" ]; then
     sudo pacman -Syu intel-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed 
 fi 
@@ -175,8 +161,6 @@ useradd -mG wheel,audio,video,lp,kvm -s /bin/bash $USERn
 passwd $USERn
 echo "sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers"
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
-
-su $USERn
 
 # Installing dotfiles.
 cd ~/dotfiles
