@@ -2,14 +2,28 @@
 
 set -e
 
-echo "This is intended to be run on an arch ISO. This will NOT work on a already installed system. Must have some knowledge on disk partioning"
+echo "This is intended to be run on an (fresh???) arch ISO and must be UEFI mode. This will NOT work on a already installed system. Must have some knowledge on disk partioning"
+
+if [[ cat /sys/firmware/efi/fw_platform_size == 64 ]]; then
+    echo
+else
+    echo "clear"
+    echo "This is not a x86_64 UEFI boot"
+    exit 1
+fi
+
+read -p "Lets choose a keyboard layout. Read the list and check which one you want (ENTER to contnue.)" && localectl list-keymaps
+clear
+
+read -p "Which layout would you like?: " LAUT
+echo "loadkeys $LAUT" && loadkeys $LAUT
 
 cd dotfiles
 cp -rp pacman.conf /etc
 
 cd /
 
-pacman -Syy wget reflector
+pacman -Syy wget reflector --noconfirm 
 
 cd /
 # Testing internet connection.
@@ -79,17 +93,20 @@ echo "mount --mkdir $DRIVEb /mnt/boot/efi"
 mkdir -p /mnt/boot/efi
 mount $DRIVEb /mnt/boot/efi
 
+cd dotfiles 
+cp -rp reflector.conf /etc/xdg/reflector
+systemctl enable reflector.serivce
+systemctl start reflector.service
+
+cd /
 echo "pacstrap -K /mnt base base-devel linux linux-firmware"
-pacstrap -K /mnt base base-devel linux linux-headers linux-firmware grub efibootmgr sof-firmware vim neovim nitrogen
+pacstrap -K /mnt base linux-zen linux-firmware grub efibootmgr sof-firmware --noconfirm --needed
 
 echo "genfstab -U /mnt >> /mnt/etc/fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
 
-cd dotfiles 
-cp -rp reflector.conf /etc/xdg/reflector
-
-cd /
 read -p "which country do you reside in? (capital letter for first letter): " COUN
+echo "echo $COUN >> etc/xdg/reflector/reflector.conf"
 echo $COUN >> etc/xdg/reflector/reflector.conf
 
 # Entering the new system.
@@ -101,7 +118,7 @@ read -p "what cpu do you have (AMD or INTEL)?: " CPU
 
 # Installing CPU packages.
 if [ $CPU == "AMD" ]; then
-    echo sudo pacman -Syu amd-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed
+    echo sudo pacman -Syu amd-ucode zip unzip mpv cmake vim neovim nitrogen picom neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed
 elif [ $CPU == "INTEL" ]; then
     sudo pacman -Syu intel-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed 
 fi 
@@ -127,7 +144,7 @@ makepkg -sci
 
 # Installing packages and moving to fish.
 cd ~
-yay -S man mercury-browser-bin flameshot lolcat gvfs dunst xarchiver thunar thunar-archive-plugin lxappearance eza fish bottom vesktop-bin wine-staging fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx5-im steam
+yay -S man mercury-browser-bin flameshot lolcat gvfs dunst xarchiver thunar thunar-archive-plugin lxappearance eza fish bottom vesktop-bin wine-staging fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx5-im steam --noconfirm --needed
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 fish
 
@@ -156,15 +173,14 @@ fi
 read -p "username: " USERn
 useradd -mG wheel,audio,video,lp,kvm -s /bin/bash $USERn
 passwd $USERn
-mkdir /etc/sudoers.d
-echo "$USERn ALL=(ALL:ALL) ALL" >> /etc/sudoers.d/01_user
+echo "sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers"
+sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
 su $USERn
 
 # Installing dotfiles.
 cd ~/dotfiles
 sudo cp -rp fcitx5 ../.config
-sudo cp -rp fcitx ../.config
 sudo cp -rp mozc ../.config
 sudo cp -rp fonts ~/.local/share
 sudo cp -rp omf ../.config
@@ -192,4 +208,5 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # bye bye
 END_COMMANDS
+umount -R /mnt
 echo "Reboot please, or if you would like to tinker with new installation before using it run ,,arch-chroot /mnt,,"
