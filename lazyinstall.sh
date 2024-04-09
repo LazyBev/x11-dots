@@ -4,12 +4,14 @@ set -e
 
 echo "This is intended to be run on an arch ISO. This will NOT work on a already installed system. Must have some knowledge on disk partioning"
 
-sudo cp -rp ~/dotfiles/pacman.conf /etc
+cd dotfiles
+cp -rp pacman.conf /etc
 
-cd ~
+cd /
 
-pacman -Syy wget
+pacman -Syy wget reflector
 
+cd /
 # Testing internet connection.
 echo "Testing your internet connection."
 echo "Test One."
@@ -42,17 +44,14 @@ fi
 
 lsblk
 echo "This is for gpt type partions... (quit now if this is not for you)"
-echo "What drive do you want to install to? (e.g. /dev/sda, /dev/nvme0n1): "
-
-read DRIVE
+read -p "What drive do you want to install to? (e.g. /dev/sda, /dev/nvme0n1): " DRIVE
 
 echo "sudo wipefs -a -f $DRIVE"
 sudo wipefs -a -f $DRIVE
 
-echo "Please do NOT make a swap partition. It will break the install. (ENTER to continue)"
-
 # Partitioning drives.
-read -p CHOICE
+
+read -p "Please do NOT make a swap partition. It will break the install. (ENTER to continue)" CHOICE
 sudo cfdisk $DRIVE
 
 if [ $DRIVE == "/dev/nvme0n1" ]; then 
@@ -86,13 +85,19 @@ pacstrap -K /mnt base base-devel linux linux-headers linux-firmware grub efiboot
 echo "genfstab -U /mnt >> /mnt/etc/fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
 
+cd dotfiles 
+cp -rp reflector.conf /etc/xdg/reflector
+
+cd /
+read -p "which country do you reside in? (capital letter for first letter): " COUN
+echo $COUN >> etc/xdg/reflector/reflector.conf
+
 # Entering the new system.
 echo "arch-chroot /mnt /bin/bash"
 
 arch-chroot /mnt<<"END_COMMANDS"
 
-echo "what cpu do you have (AMD or INTEL)?: "
-read -p CPU
+read -p "what cpu do you have (AMD or INTEL)?: " CPU
 
 # Installing CPU packages.
 if [ $CPU == "AMD" ]; then
@@ -127,8 +132,7 @@ curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install 
 fish
 
 # Configuring basic system options.
-echo "What is your location in the order of the continent then city? (e.g. Europe/London, Europe/Brussels, Asia/Tokyo): "
-read -p TZ
+read -p "What is your location in the order of the continent then city? (e.g. Europe/London, Europe/Brussels, Asia/Tokyo): " TZ
 echo "ln -sf /usr/share/zoneinfo/$TZ /etc/localtime"
 
 ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
@@ -139,9 +143,7 @@ echo "date"
 
 date
 
-echo "Is this correct?"
-
-read -p CHOICE
+read -p "Is this correct?" CHOICE
 
 if [ CHOICE == "YES" ]; then
     echo "Yippe"
@@ -151,8 +153,7 @@ else
 fi
 
 # Setting up users.
-echo "username: "
-read -p USERn
+read -p "username: " USERn
 useradd -mG wheel,audio,video,lp,kvm -s /bin/bash $USERn
 passwd $USERn
 mkdir /etc/sudoers.d
@@ -176,8 +177,7 @@ sudo cp -rp pacman.conf /etc
 cd ~
 
 # Hostname setup.
-echo "Choose a hostname for your machine:"
-read -p HOSTNAME
+read -p "Choose a hostname for your machine:" HOSTNAME
 sudo echo $HOSTNAME >> /etc/hostname
 
 # Grub, file systems, systemctl and all that shit.
@@ -192,4 +192,4 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # bye bye
 END_COMMANDS
-echo "Reboot please"
+echo "Reboot please, or if you would like to tinker with new installation before using it run ,,arch-chroot /mnt,,"
