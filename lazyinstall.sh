@@ -43,10 +43,10 @@ sudo wipefs -a -f $DRIVE
 read -p "Please do NOT make a swap partition. It will break the install. (ENTER to continue)" CHOICE
 sudo cfdisk $DRIVE
 
-if [ $DRIVE == "/dev/nvme0n1" ]; then 
+if [ $DRIVE == "/dev/nvme0n1" ]; then
     DRIVEb+="$DRIVE"p1
     DRIVEr+="$DRIVE"p2
-else 
+else
     DRIVEb+="$DRIVE"1
     DRIVEr+="$DRIVE"2
 fi
@@ -92,16 +92,16 @@ if [ $CPU == "AMD" ]; then
     sudo pacman -Syu amd-ucode zip unzip mpv cmake vim neovim nitrogen picom neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed
 elif [ $CPU == "INTEL" ]; then
     sudo pacman -Syu intel-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed 
-fi 
+fi
 
 # Creating basic directory.
-if [[ -d ~/Pictures ]]; then 
+if [[ -d ~/Pictures ]]; then
     echo "Pictures dir exists"
 else
     sudo mkdir Pictures
 fi
 
-if [[ -d ~/Videos ]]; then 
+if [[ -d ~/Videos ]]; then
     echo "Videos dir exists" 
 else
     sudo mkdir Videos
