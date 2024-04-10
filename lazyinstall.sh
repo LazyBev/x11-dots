@@ -98,37 +98,19 @@ elif [ $CPU == "INTEL" ]; then
     sudo pacman -Syu intel-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed 
 fi
 
-# Installing Yet Another Yoghurt package manager.
-echo "sudo git clone https://aur.archlinux.org/yay-bin.git"
-sudo git clone https://aur.archlinux.org/yay-bin.git 
-cd yay-bin
-makepkg -sci
-
-# Installing packages and moving to fish.
-cd ~
-yay -S man mercury-browser-bin flameshot lolcat gvfs dunst xarchiver thunar thunar-archive-plugin lxappearance eza fish bottom vesktop-bin wine-staging fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx5-im steam --noconfirm --needed
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-fish
-
 # Configuring basic system options.
 read -p "What is your location in the order of the continent then city? (e.g. Europe/London, Europe/Brussels, Asia/Tokyo): " TZ
 echo "ln -sf /usr/share/zoneinfo/$TZ /etc/localtime"
-
 ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
 
-sudo chsh $USER -s /bin/fish
-
 echo "date"
-
 date
 
 read -p "Is this correct?" CHOICE
-
 if [ CHOICE == "YES" ]; then
     echo "Yippe"
 else
-    echo "hwclock --systohc"
-    hwclock --systohc
+    timedatectl set-timezone $TZ
 fi
 
 # Setting up users.
@@ -152,6 +134,16 @@ sudo cp -rp rofi ../.config
 sudo cp -rp picom.conf ../.config
 sudo cp -rp pacman.conf /etc
 cd ~
+
+# This is a custom command in my fish config 
+su $USERn
+tofish
+
+# Installing Yet Another Yoghurt package manager.
+echo "sudo git clone https://aur.archlinux.org/yay-bin.git"
+sudo git clone https://aur.archlinux.org/yay-bin.git 
+cd yay-bin
+makepkg -sci
 
 # Hostname setup.
 read -p "Choose a hostname for your machine:" HOSTNAME
