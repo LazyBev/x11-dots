@@ -7,7 +7,7 @@ read -p "Lets choose a keyboard layout. Read the list and check which one you wa
 clear
 
 read -p "Which layout would you like?: " LAUT
-loadkeys $LAUT
+echo "loadkeys $LAUT" && loadkeys $LAUT
 cp -rp pacman.conf /etc
 
 cd ~
@@ -35,11 +35,9 @@ lsblk
 echo "This is for gpt type partions... (quit now if this is not for you)"
 read -p "What drive do you want to install to? (e.g. /dev/sda, /dev/nvme0n1): " DRIVE
 
-sudo wipefs -a -f $DRIVE
-
 # Partitioning drives.
 
-read -p "Please do NOT make a swap partition. It will break the install. (ENTER to continue)" CHOICE
+sudo wipefs -a -f $DRIVE
 sudo cfdisk $DRIVE
 
 if [ $DRIVE == "/dev/nvme0n1" ]; then
@@ -51,34 +49,47 @@ else
 fi
 
 # Formatting and mounting drives.
-echo "mkfs.ext4 $DRIVEr"
-mkfs.ext4 $DRIVEr
+echo "mkfs.ext4 $DRIVEr" && mkfs.ext4 $DRIVEr
 
-echo "mkfs.fat -F 32 $DRIVEb"
-mkfs.fat -F 32 $DRIVEb
+echo "mkfs.fat -F 32 $DRIVEb" && mkfs.fat -F 32 $DRIVEb
 
-echo "mount $DRIVEr /mnt"
-mount $DRIVEr /mnt
+read -p "Did you make swap?: " YN
 
-echo "mount --mkdir $DRIVEb /mnt/boot/efi"
-mkdir -p /mnt/boot/efi
-mount $DRIVEb /mnt/boot/efi
+if [[ YN == "yes" ]]; then
+     mkswap /dev/
+fi
+
+echo "mount $DRIVEr /mnt" && mount $DRIVEr /mnt
+echo "mount -m $DRIVEb /mnt/boot/efi" && mount -m $DRIVEb /mnt/boot/efi
 
 cd dotfiles 
 cp -rp reflector.conf /etc/xdg/reflector
 systemctl enable reflector.serivce
 systemctl start reflector.service
 
-cd /
-echo "pacstrap -K /mnt base base-devel linux linux-firmware"
-pacstrap -K /mnt base linux-zen linux-firmware grub efibootmgr sof-firmware --noconfirm --needed
+cd ~
+echo "pacstrap -K /mnt base base-devel linux linux-firmware" && pacstrap -K /mnt base linux-zen linux-firmware grub efibootmgr sof-firmware --noconfirm --needed
 
 echo "genfstab -U /mnt >> /mnt/etc/fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
 
+# Creating basic directory.
+cd dotfiles
+if [[ -d ~/mnt/Pictures ]]; then
+    echo "Pictures dir exists"
+else
+    cp -r Pictures /mnt
+fi
+
+if [[ -d ~/mnt/Videos ]]; then
+    echo "Videos dir exists" 
+else
+    cp -r Videos /mnt
+fi
+
+cd /
 read -p "which country do you reside in? (capital letter for first letter): " COUN
-echo "echo $COUN >> etc/xdg/reflector/reflector.conf"
-echo $COUN >> etc/xdg/reflector/reflector.conf
+echo "echo $COUN >> etc/xdg/reflector/reflector.conf" && echo $COUN >> etc/xdg/reflector/reflector.conf
 
 # Entering the new system.
 echo "arch-chroot /mnt /bin/bash"
@@ -91,19 +102,6 @@ if [ $CPU == "AMD" ]; then
     sudo pacman -Syu amd-ucode zip unzip mpv cmake vim neovim nitrogen picom neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed
 elif [ $CPU == "INTEL" ]; then
     sudo pacman -Syu intel-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed 
-fi
-
-# Creating basic directory.
-if [[ -d ~/Pictures ]]; then
-    echo "Pictures dir exists"
-else
-    sudo mkdir Pictures
-fi
-
-if [[ -d ~/Videos ]]; then
-    echo "Videos dir exists" 
-else
-    sudo mkdir Videos
 fi
 
 # Installing Yet Another Yoghurt package manager.
@@ -148,6 +146,7 @@ sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
 # Installing dotfiles.
 cd ~/dotfiles
+sudo cp -rp 
 sudo cp -rp fcitx5 ../.config
 sudo cp -rp mozc ../.config
 sudo cp -rp fonts ~/.local/share
