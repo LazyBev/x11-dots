@@ -44,14 +44,11 @@ read -p "Please do NOT make a swap partition. It will break the install. (ENTER 
 sudo cfdisk $DRIVE
 
 if [ $DRIVE == "/dev/nvme0n1" ]; then 
-  DRIVEr+="$DRIVE"p2
+    DRIVEb+="$DRIVE"p1
+    DRIVEr+="$DRIVE"p2
 else 
-  DRIVEr+="$DRIVE"2
-fi
-if [ $DRIVE == "/dev/nvme0n1" ]; then 
-  DRIVEb+="$DRIVE"p1
-else 
-  DRIVEb+="$DRIVE"1
+    DRIVEb+="$DRIVE"1
+    DRIVEr+="$DRIVE"2
 fi
 
 # Formatting and mounting drives.
