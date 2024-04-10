@@ -7,7 +7,7 @@ read -p "Lets choose a keyboard layout. Read the list and check which one you wa
 clear
 
 read -p "Which layout would you like?: " LAUT
-echo "loadkeys $LAUT" && loadkeys $LAUT
+loadkeys $LAUT
 cp -rp pacman.conf /etc
 
 cd ~
@@ -35,7 +35,6 @@ lsblk
 echo "This is for gpt type partions... (quit now if this is not for you)"
 read -p "What drive do you want to install to? (e.g. /dev/sda, /dev/nvme0n1): " DRIVE
 
-echo "sudo wipefs -a -f $DRIVE"
 sudo wipefs -a -f $DRIVE
 
 # Partitioning drives.
