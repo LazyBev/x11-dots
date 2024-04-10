@@ -17,29 +17,17 @@ pacman -Syy wget reflector --noconfirm
 echo "Testing your internet connection."
 echo "Test One."
 
-wget -q --spider http://google.com/
-
-    if [ $? -eq 0 ]; then
-        echo "Connected to the internet successfully."
+for i in "One" "Two" "Three"; do
+    echo "Test $i."
+    if wget -q --spider https://google.com; then
+        break
     else
-        echo "Test Two."
-        wget -q --spider http://google.com
-
-        if [ $? -eq 0 ]; then
-            echo "Connected to the internet successfully."
-        else
-
-        echo "Test Three."
-        wget -q --spider http://google.com
-
-        if [ $? -eq 0 ]; then
-            echo "Connected to the internet successfully."
-        else
-            read -p "You aren't connected to the internet. Please connect. [ENTER TO QUIT]"
-            exit 1
-        fi
+        read -p "You aren't connected"
+        exit 1
     fi
-fi
+done
+
+echo "Connected successfully."
 
 # Choosing drives to partition.
 
