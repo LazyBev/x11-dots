@@ -53,12 +53,6 @@ echo "mkfs.ext4 $DRIVEr" && mkfs.ext4 $DRIVEr
 
 echo "mkfs.fat -F 32 $DRIVEb" && mkfs.fat -F 32 $DRIVEb
 
-read -p "Did you make swap?: " YN
-
-if [[ YN == "yes" ]]; then
-     mkswap /dev/
-fi
-
 echo "mount $DRIVEr /mnt" && mount $DRIVEr /mnt
 echo "mount -m $DRIVEb /mnt/boot/efi" && mount -m $DRIVEb /mnt/boot/efi
 
