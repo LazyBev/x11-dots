@@ -17,4 +17,3 @@ sudo cp -rp picom.conf ../.config
 sudo cp -rp pacman.conf /etc
 # Custom command i added to fish config
 tofish
-links https://github.com/bedrocklinux/bedrocklinux-userland/releases/download/0.7.29/bedrock-linux-0.7.29-x86_64.sh
