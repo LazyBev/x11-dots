@@ -155,6 +155,9 @@ alias rem="killall emacs || echo 'Emacs server not running'; /usr/bin/emacs --da
 # eza 
 alias ls='eza --all --long --icons --group-directories-first'
 
+# pacman 
+set pacman 'sudo pacman'
+
 # Colorize grep output (good for log files)
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
