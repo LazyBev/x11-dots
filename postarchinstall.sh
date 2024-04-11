@@ -1,3 +1,5 @@
+#!/bin/bash
+
 read -p "Do you have yay installed?" YN
 if [ YN == "no" ]; then
     cd ..
