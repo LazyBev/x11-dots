@@ -62,7 +62,7 @@ systemctl enable reflector.serivce
 systemctl start reflector.service
 
 cd ~
-echo "pacstrap -K /mnt base base-devel linux linux-firmware" && pacstrap -K /mnt base linux-zen linux-firmware grub efibootmgr sof-firmware --noconfirm --needed
+echo "pacstrap -K /mnt base linux-zen linux-firmware grub efibootmgr sof-firmware --noconfirm --needed" && pacstrap -K /mnt base linux-zen linux-firmware grub efibootmgr sof-firmware --noconfirm --needed
 
 echo "genfstab -U /mnt >> /mnt/etc/fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
