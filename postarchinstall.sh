@@ -1,5 +1,6 @@
 #!/bin/bash 
 cd ..
+sudo rm -rf yay-bin
 sudo git clone https://aur.archlinux.org/yay-bin.git 
 cd yay-bin
 makepkg -sci
