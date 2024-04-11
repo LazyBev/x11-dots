@@ -152,13 +152,6 @@ alias em='/usr/bin/emacs -nw'
 alias emacs="emacsclient -c -a 'emacs'"
 alias rem="killall emacs || echo 'Emacs server not running'; /usr/bin/emacs --daemon"
 
-# pacman
-pacmanS='sudo pacman -S'
-pacmanR='sudo pacman -R'
-pacmanSyy='sudo pacman -Syy'
-pacmanSyu='sudo pacman -Syu'
-pacmanSyyu='sudo pacman -Syyu'
-
 # eza 
 alias ls='eza --all --long --icons --group-directories-first'
 
