@@ -135,8 +135,8 @@ sudo cp -rp picom.conf ../.config
 sudo cp -rp pacman.conf /etc
 cd ~
 
-# This is a custom command in my fish config 
 su $USERn
+# This is a custom command in my fish config 
 tofish
 
 # Installing Yet Another Yoghurt package manager.
