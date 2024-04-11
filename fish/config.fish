@@ -153,8 +153,7 @@ alias emacs="emacsclient -c -a 'emacs'"
 alias rem="killall emacs || echo 'Emacs server not running'; /usr/bin/emacs --daemon"
 
 # pacman
-alias p='paru'
-alias yay='yay'
+
 
 # eza 
 alias ls='eza --all --long --icons --group-directories-first'
