@@ -10,7 +10,7 @@ if [ $YN == "no" ]; then
   makepkg -sci
   cd ../dotfiles
 fi
-paru -S man vesktop-bin curl rofi mercury-browser-bin wget vim neovim neofetch lolcat nitrogen flameshot zip unzip mpv cmake alacritty picom wireplumber gvfs dunst xarchiver thunar thunar-archive-plugin lxappearance eza fish bottom wine-staging fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx5-im fish
+paru -S man xdotool vesktop-bin curl rofi mercury-browser-bin wget vim neovim neofetch lolcat nitrogen flameshot zip unzip mpv cmake alacritty picom wireplumber gvfs dunst xarchiver thunar thunar-archive-plugin lxappearance eza fish bottom wine-staging fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx5-im fish
 sudo cp -rp fcitx5 ../.config
 sudo cp -rp mozc ../.config
 sudo cp -rp fonts ~/.local/share
