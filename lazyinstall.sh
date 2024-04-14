@@ -107,7 +107,7 @@ echo "date"
 date
 
 read -p "Is this correct?" CHOICE
-if [ CHOICE == "YES" ]; then
+if [ $CHOICE == "YES" ]; then
     echo "Yippe"
 else
     timedatectl set-timezone $TZ
