@@ -84,7 +84,7 @@ element-text {
 
 element selected {
     background-color:       @disabled;
-    text-color:             @foreground;
+    text-color:             @accent;
 }
 
 button {
