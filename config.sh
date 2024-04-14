@@ -22,19 +22,17 @@ sudo cp -rp nvim ../.config
 sudo cp -rp rofi ../.config
 sudo cp -rp picom.conf ../.config
 sudo cp -rp pacman.conf /etc
-read -p "Do you want bedrock linux?" YN
 
+read -p "Do you want bedrock linux?" YN
 if [ $YN == "yes" ]; then
   curl -LO https://github.com/bedrocklinux/bedrocklinux-userland/releases/download/0.7.29/bedrock-linux-0.7.29-x86_64.sh
   chmod +x bedrock-linux-0.7.29-x86_64.sh
   ./bedrock-linux-0.7.29-x86_64.sh
 fi
 
-bash << EOF
 read -p "Do you want nix package manager" YN
 if [ $YN == "yes" ]; then
   sh <(curl -L https://nixos.org/nix/install) --daemon
 fi
-exit
-EOF
+
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
