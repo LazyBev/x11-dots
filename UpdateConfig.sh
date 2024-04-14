@@ -7,3 +7,5 @@ sudo cp -rp nvim ../.config
 sudo cp -rp rofi ../.config
 sudo cp -rp picom.conf ../.config
 sudo cp -rp pacman.conf /etc
+
+echo "Press Mod + Shift + c to refresh i3 config"
