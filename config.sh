@@ -41,3 +41,5 @@ else
     cp -r Videos 
     sudo rm -rf Videos/
 fi
+
+echo "Press Mod + Shift + c to refresh i3 config"
