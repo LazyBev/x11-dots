@@ -28,18 +28,17 @@ sudo cp -rpf rofi ../.config
 sudo cp -rpf picom.conf ../.config
 sudo cp -rpf pacman.conf /etc
 
-cd ~
 if [[ -d ~/Pictures ]]; then
-    cp dotfiles/Pictures/bgpic.jpg
+    sudo cp -f Pictures/bgpic.jpg ~/Pictures
 else
-    cp -r Pictures 
+    sudo cp -rpf Pictures ~
 fi
 
 if [[ -d ~/Videos ]]; then
     echo "Videos dir exists" 
 else
-    cp -r Videos 
-    sudo rm -rf Videos/
+    sudo cp -rpf Videos ~
+    sudo rm -rf ~/Videos/
 fi
 
 echo "Press Mod + Shift + c to refresh i3 config"
