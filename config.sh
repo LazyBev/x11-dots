@@ -24,18 +24,16 @@ sudo cp -rp rofi ../.config
 sudo cp -rp picom.conf ../.config
 sudo cp -rp pacman.conf /etc
 
-read -p "Do you want bedrock linux? " YN
-if [ $YN == "yes" ]; then
-  curl -LO https://github.com/bedrocklinux/bedrocklinux-userland/releases/download/0.7.29/bedrock-linux-0.7.29-x86_64.sh
-  chmod +x bedrock-linux-0.7.29-x86_64.sh
-  sudo sh ./bedrock-linux-0.7.29-x86_64.sh --hijack
+cd ~
+if [[ -d ~/Pictures ]]; then
+    cp dotfiles/Pictures/bgpic.jpg
+else
+    cp -r Pictures 
 fi
 
-read -p "Do you want nix package manager? " YN
-if [ $YN == "yes" ]; then
-  sh <(curl -L https://nixos.org/nix/install) --daemon
+if [[ -d ~/Videos ]]; then
+    echo "Videos dir exists" 
+else
+    cp -r Videos 
+    sudo rm -rf Videos/
 fi
-
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-
-reboot
