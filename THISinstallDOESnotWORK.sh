@@ -11,7 +11,7 @@ echo "loadkeys $LAUT" && loadkeys $LAUT
 cp -rp pacman.conf /etc
 
 cd ~
-pacman -Syy wget reflector --noconfirm 
+pacman -Syy wget --noconfirm 
 
 # Testing internet connection.
 echo "Testing your internet connection."
@@ -81,14 +81,10 @@ else
     cp -r Videos /mnt
 fi
 
-cd /
-read -p "which country do you reside in? (capital letter for first letter): " COUN
-echo "echo $COUN >> etc/xdg/reflector/reflector.conf" && echo $COUN >> etc/xdg/reflector/reflector.conf
-
 # Entering the new system.
 echo "arch-chroot /mnt /bin/bash"
 
-arch-chroot /mnt<<"END_COMMANDS"
+arch-chroot /mnt /bin/bash<<"END_COMMANDS"
 
 # Installing CPU packages.
 read -p "what cpu do you have (AMD or INTEL)?: " CPU
@@ -161,5 +157,4 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # bye bye
 END_COMMANDS
-umount -R /mnt
 echo "Reboot please, or if you would like to tinker with new installation before using it run ,,arch-chroot /mnt,,"
