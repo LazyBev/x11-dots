@@ -30,7 +30,7 @@ if [ $YN == "yes" ]; then
   ./bedrock-linux-0.7.29-x86_64.sh
 fi
 
-bash <<"EOF"
+bash << EOF
 read -p "Do you want nix package manager" YN
 if [ $YN == "yes" ]; then
   sh <(curl -L https://nixos.org/nix/install) --daemon
