@@ -4,7 +4,7 @@ echo "---- Making backup at ~/configBackup -----"
 cp -rpf ../.config ../configBackup 
 echo "----- Backup made at ~/configBackup ------"
 
-sudo cp -rpf Pictures/bgpic.jpg
+sudo cp -rpf Pictures/bgpic.jpg ../Pictures
 sudo cp -rpf nitrogen ../.config
 sudo cp -rpf fcitx5 ../.config
 sudo cp -rpf mozc ../.config
