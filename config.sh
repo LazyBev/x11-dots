@@ -1,7 +1,7 @@
 #!/bin/bash 
 set -e
 
-read -p "Do you have paru installed?" YN
+read -p "Do you have paru installed? " YN
 if [ $YN == "no" ]; then
   cd ..
   git clone "https://aur.archlinux.org/paru.git"
@@ -23,14 +23,14 @@ sudo cp -rp rofi ../.config
 sudo cp -rp picom.conf ../.config
 sudo cp -rp pacman.conf /etc
 
-read -p "Do you want bedrock linux?" YN
+read -p "Do you want bedrock linux? " YN
 if [ $YN == "yes" ]; then
   curl -LO https://github.com/bedrocklinux/bedrocklinux-userland/releases/download/0.7.29/bedrock-linux-0.7.29-x86_64.sh
   chmod +x bedrock-linux-0.7.29-x86_64.sh
   ./bedrock-linux-0.7.29-x86_64.sh
 fi
 
-read -p "Do you want nix package manager" YN
+read -p "Do you want nix package manager? " YN
 if [ $YN == "yes" ]; then
   sh <(curl -L https://nixos.org/nix/install) --daemon
 fi
