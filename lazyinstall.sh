@@ -93,9 +93,9 @@ arch-chroot /mnt<<"END_COMMANDS"
 # Installing CPU packages.
 read -p "what cpu do you have (AMD or INTEL)?: " CPU
 if [ $CPU == "AMD" ]; then
-    sudo pacman -Syu amd-ucode zip unzip mpv cmake vim neovim nitrogen picom neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed
+    sudo pacman -Syu amd-ucode xdotool zip unzip mpv cmake vim neovim nitrogen picom neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed
 elif [ $CPU == "INTEL" ]; then
-    sudo pacman -Syu intel-ucode zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed 
+    sudo pacman -Syu intel-ucode xdotool zip unzip mpv cmake neofetch curl xorg xorg-drivers xorg-server xorg-apps xorg-xinit xorg-xinput nvidia-utils i3 lightdm lightdm-gtk-greeter rofi networkmanager alsa-utils pipewire pipewire-pulse wireplumber picom polkit alacritty --noconfirm --needed 
 fi
 
 # Configuring basic system options.
