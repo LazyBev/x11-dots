@@ -27,7 +27,7 @@ read -p "Do you want bedrock linux? " YN
 if [ $YN == "yes" ]; then
   curl -LO https://github.com/bedrocklinux/bedrocklinux-userland/releases/download/0.7.29/bedrock-linux-0.7.29-x86_64.sh
   chmod +x bedrock-linux-0.7.29-x86_64.sh
-  ./bedrock-linux-0.7.29-x86_64.sh
+  sudo sh ./bedrock-linux-0.7.29-x86_64.sh --hijack
 fi
 
 read -p "Do you want nix package manager? " YN
@@ -36,3 +36,5 @@ if [ $YN == "yes" ]; then
 fi
 
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+
+reboot
