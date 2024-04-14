@@ -1,8 +1,8 @@
 * {
-    background:             #080808;
+    background:             #171717;
     foreground:             #bdbdbd;
-    disabled:               #323437;
-    accent:                 #cc2850;
+    disabled:               #000000;
+    accent:                 #990F02;
 
     width:                  600;
     font:                   "MartianMono Nerd Font Medium 10";
