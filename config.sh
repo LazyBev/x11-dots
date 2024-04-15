@@ -17,10 +17,15 @@ echo "---- Making backup at ~/configBackup -----"
 cp -rpf ../.config ../configBackup 
 echo "----- Backup made at ~/configBackup ------"
 
+sudo cp -rpf tmux ../.config
+sudo cp -rpf dunst ../.config
+sudo cp -rpf alacritty ../.config
 sudo cp -rpf nitrogen ../.config
 sudo cp -rpf fcitx5 ../.config
 sudo cp -rpf mozc ../.config
-sudo cp -rpf fonts ~/.local/share
+sudo cp -rpf fonts/SF-Mono-Powerline ~/.local/share
+sudo cp -rpf fonts/MartianMono ~/.local/share
+sudo cp -rpf fonts/fontconfig ../.config
 sudo cp -rpf fish ../.config
 sudo cp -rpf i3 ../.config
 sudo cp -rpf nvim ../.config
