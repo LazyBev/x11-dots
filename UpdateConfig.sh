@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "---- Making backup at ~/configBackup -----"
-cp -rpf ../.config ../configBackup 
+sudo cp -rpf ../.config ../configBackup 
 echo "----- Backup made at ~/configBackup ------"
 
 sudo cp -rpf tmux ../.config
