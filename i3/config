@@ -85,6 +85,7 @@ bindsym $mod+Shift+Right move right
 bindsym $mod+v exec vesktop
 bindsym $mod+m exec mercury-browser
 bindsym $mod+s exec steam
+bindsym $mod+o exec obsidian
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
