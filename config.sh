@@ -23,10 +23,11 @@ sudo cp -rpf alacritty ../.config
 sudo cp -rpf nitrogen ../.config
 sudo cp -rpf fcitx5 ../.config
 sudo cp -rpf mozc ../.config
-sudo cp -rpf fonts/SF-Mono-Powerline ~/.local/share
-sudo cp -rpf fonts/MartianMono ~/.local/share
+sudo cp -rpf fonts/SF-Mono-Powerline ~/.local/share/fonts
+sudo cp -rpf fonts/MartianMono ~/.local/share/fonts
 sudo cp -rpf fonts/fontconfig ../.config
 sudo cp -rpf fish ../.config
+sudo cp -rpf omf ../.config
 sudo cp -rpf i3 ../.config
 sudo cp -rpf nvim ../.config
 sudo cp -rpf rofi ../.config
@@ -46,4 +47,7 @@ else
     sudo rm -rf ~/Videos/
 fi
 
-echo "Press Mod + Shift + c to refresh i3 config"
+curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+alacritty -e fish | tofish
+
+echo "Press Mod + Shift + c to refresh i3 config, also reboot"

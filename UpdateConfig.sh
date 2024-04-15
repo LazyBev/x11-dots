@@ -12,12 +12,13 @@ sudo cp -rpf nitrogen ../.config
 sudo cp -rpf fcitx5 ../.config
 sudo cp -rpf mozc ../.config
 sudo cp -rpf fonts/fontconfig ../.config
-sudo cp -rpf fonts/MartianMono ~/.local/share
-sudo cp -rpf fonts/SF-Mono-Powerline ~/.local/share
+sudo cp -rpf fonts/MartianMono ~/.local/share/fonts
+sudo cp -rpf fonts/SF-Mono-Powerline ~/.local/share/fonts
 sudo cp -rpf fish ../.config
 sudo cp -rpf i3 ../.config
 sudo cp -rpf nvim ../.config
 sudo cp -rpf rofi ../.config
+sudo cp -rpf omf ../.config
 sudo cp -rpf picom.conf ../.config
 sudo cp -rpf pacman.conf /etc
 
