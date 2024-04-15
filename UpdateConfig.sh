@@ -4,7 +4,6 @@ echo "---- Making backup at ~/configBackup -----"
 cp -rpf ../.config ../configBackup 
 echo "----- Backup made at ~/configBackup ------"
 
-sudo cp -rp
 sudo cp -rpf tmux ../.config
 sudo cp -rpf dunst ../.config
 sudo cp -rpf alacritty ../.config
