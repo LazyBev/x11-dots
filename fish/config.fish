@@ -152,10 +152,6 @@ alias em='/usr/bin/emacs -nw'
 alias emacs="emacsclient -c -a 'emacs'"
 alias rem="killall emacs || echo 'Emacs server not running'; /usr/bin/emacs --daemon"
 
-# neofetch
-alias neofetchC='neofetch --colors 4 5 5 4 5 5 --ascii_colors 5 4'
-alias neofetchD='neofetch --colors 1 0 0 0 1 1 --ascii_colors 0 1'
-
 # eza 
 alias ls='eza --all --long --icons --group-directories-first'
 
@@ -230,4 +226,5 @@ alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/mas
 # Mocp must be launched with bash instead of Fish!
 alias mocp="bash -c mocp"
 
-neofetchD
+# neofetch --colors 4 5 5 4 5 5 --ascii_colors 5 4
+neofetch --colors 4 5 5 4 5 5 --ascii_colors 5 4
