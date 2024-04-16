@@ -24,7 +24,7 @@ draw_bold_text_with_bright_colors = true
 
 [colors.bright]
 black = "#080808"
-blue = "#80a0ff"
+blue = "#fb7c5"
 cyan = "#79dac8"
 green = "#8cc85f"
 magenta = "#cf87e8"
@@ -38,7 +38,7 @@ text = "#080808"
 
 [colors.normal]
 black = "#080808"
-blue = "#80a0ff"
+blue = "#fb7c5"
 cyan = "#79dac8"
 green = "#8cc85f"
 magenta = "#cf87e8"
