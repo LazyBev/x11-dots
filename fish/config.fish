@@ -153,8 +153,8 @@ alias emacs="emacsclient -c -a 'emacs'"
 alias rem="killall emacs || echo 'Emacs server not running'; /usr/bin/emacs --daemon"
 
 # neofetch
-set neofetchC 'neofetch --colors 4 5 5 4 5 5 -ascii_colors 5 4'
-set neofetchD 'neofetch --colors 1 0 0 0 1 1 -ascii_colors 0 1'
+alias neofetchC='neofetch --colors 4 5 5 4 5 5 -ascii_colors 5 4'
+alias neofetchD='neofetch --colors 1 0 0 0 1 1 -ascii_colors 0 1'
 
 # eza 
 alias ls='eza --all --long --icons --group-directories-first'
