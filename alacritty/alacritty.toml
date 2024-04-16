@@ -24,7 +24,6 @@ draw_bold_text_with_bright_colors = true
 
 [colors.bright]
 black = "#080808"
-pink = "#ffb7c5"
 blue = "#74b2ff"
 cyan = "#85dc85"
 green = "#8cc85f"
@@ -39,7 +38,6 @@ text = "#080808"
 
 [colors.normal]
 black = "#080808"
-pink = "#ffb7c5"
 blue = "#74b2ff"
 cyan = "#85dc85"
 green = "#8cc85f"
