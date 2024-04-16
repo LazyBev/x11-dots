@@ -87,6 +87,7 @@ bindsym $mod+m exec mercury-browser
 bindsym $mod+s exec steam
 bindsym $mod+o exec obsidian
 bindsym $mod+x exec flameshot gui
+bindsym $mod+Shift+x exec i3lock
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
