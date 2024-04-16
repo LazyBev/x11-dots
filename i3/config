@@ -86,6 +86,7 @@ bindsym $mod+v exec vesktop
 bindsym $mod+m exec mercury-browser
 bindsym $mod+s exec steam
 bindsym $mod+o exec obsidian
+bindsym $mod+x exec flameshot gui
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -208,11 +209,8 @@ bar {
 	}
 }
 
-bindsym $mod+x exec "flameshot gui"
-
 #Start-Up
 
 exec_always fcitx5 -d &
 exec_always picom -b &
 exec_always --no-startup-id nitrogen --restore
-bindsym $mod+g exec ~/load layout.sh
