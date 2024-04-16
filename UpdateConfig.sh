@@ -19,7 +19,7 @@ sudo cp -rpf ~/dotfiles/i3 ~/.config
 sudo cp -rpf ~/dotfiles/nvim ~/.config
 sudo cp -rpf ~/dotfiles/rofi ~/.config
 sudo cp -rpf ~/dotfiles/omf ~/.config
-sudo cp -rpf ~/dotfiles/picom.conf ~/.config
-sudo cp -rpf ~/dotfiles/pacman.conf /etc
+sudo cp -rpf ~/dotfiles/Misc/picom.conf ~/.config
+sudo cp -rpf ~/dotfiles/Misc/pacman.conf /etc
 
 echo "Press Mod + Shift + c to refresh i3 config"
