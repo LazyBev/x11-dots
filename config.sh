@@ -32,8 +32,8 @@ sudo cp -rpf ~/dotfiles/omf ~/.config
 sudo cp -rpf ~/dotfiles/i3 ~/.config
 sudo cp -rpf ~/dotfiles/nvim ~/.config
 sudo cp -rpf ~/dotfiles/rofi ~/.config
-sudo cp -rpf ~/dotfiles/picom.conf ~/.config
-sudo cp -rpf ~/dotfiles/pacman.conf /etc
+sudo cp -rpf ~/dotfiles/Misc/picom.conf ~/.config
+sudo cp -rpf ~/dotfiles/Misc/pacman.conf /etc
 
 if [[ -d ~/Pictures ]]; then
     sudo cp -f Pictures/bgpic.jpg ~/Pictures
@@ -54,7 +54,7 @@ alacritty -e fish | tofish
 paru -S nvidia-lts linux-lts linux-lts-headers
 paru -R linux linux-headers
 
-sudo cp -rpf ~/dotfiles/mkinitcpio.conf /etc/
+sudo cp -rpf ~/dotfiles/Misc/mkinitcpio.conf /etc/
 sudo mkinitcpio -P
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
