@@ -1,1 +1,1 @@
-Thank you for reading the REEADME.md :D
+<p><img src="Pictures/bgpic.jpg"/></p>
