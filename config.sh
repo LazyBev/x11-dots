@@ -12,7 +12,7 @@ if [ $YN == "no" ]; then
   cd ~/dotfiles
 fi
 
-paru -S btop steam obsidian man xdotool vesktop-bin curl rofi mercury-browser-bin wget vim neovim neofetch nitrogen flameshot zip unzip mpv cmake alacritty picom wireplumber gvfs polkit-gnome dunst xarchiver thunar thunar-archive-plugin lxappearance eza fish bottom wine-staging fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-cn-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-jp-fonts fish
+paru -S btop obsidian man xdotool vesktop-bin curl rofi mercury-browser-bin wget vim neovim neofetch nitrogen flameshot zip unzip mpv cmake alacritty picom wireplumber gvfs polkit-gnome dunst xarchiver thunar thunar-archive-plugin lxappearance eza fish bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-cn-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-jp-fonts fish
 
 echo "---- Making backup at ~/configBackup -----"
 sudo cp -rpf ~/.config ~/configBackup 
