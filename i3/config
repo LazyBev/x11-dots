@@ -73,8 +73,8 @@ bindsym $mod+Right focus right
 # move focused window
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+i move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -88,7 +88,7 @@ bindsym $mod+s exec steam
 bindsym $mod+o exec obsidian
 bindsym $mod+x exec flameshot gui
 bindsym $mod+Shift+x exec i3lock
-bindsym $mod+c exec code $PWD
+bindsym $mod+c exec code -n $PWD
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
