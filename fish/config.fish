@@ -152,6 +152,9 @@ alias em='/usr/bin/emacs -nw'
 alias emacs="emacsclient -c -a 'emacs'"
 alias rem="killall emacs || echo 'Emacs server not running'; /usr/bin/emacs --daemon"
 
+# search
+alias nvf='nvim $(fzf --preview=\'cat {}\')'
+
 # eza 
 alias ls='eza --all --long --icons --group-directories-first'
 
