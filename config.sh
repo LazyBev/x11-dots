@@ -51,7 +51,14 @@ fi
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 alacritty -e fish | tofish
 
-paru -S nvidia-lts linux-lts linux-lts-headers
+
+read -p "nvidia or amd gpu" na
+
+if [ $na == "nvidia" ] then
+    paru -S nvidia-lts linux-lts linux-lts-headers
+else
+    paru -S linux-lts linux-lts-headers
+fi
 paru -R linux linux-headers
 
 sudo cp -rpf ~/dotfiles/Misc/mkinitcpio.conf /etc/
