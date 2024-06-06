@@ -1,6 +1,7 @@
 ### ADDING TO THE PATH
 # First line removes the path; second line sets it.  Without the first line,
 # your path gets massive and fish becomes very slow.
+
 if status is-login 
     if [ "$(tty)" = "/dev/tty1" ]
         startx
