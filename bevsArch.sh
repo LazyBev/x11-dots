@@ -36,27 +36,6 @@ pacstrap -K /mnt base base-devel grub efibootmgr sof-firmware --noconfirm --need
 # kernel
 pacstrap /mnt linux-lts linux-lts-headers linux-zen linux-zen-headers nvidia-lts linux-firmware --noconfirm --needed
 
-# Nvidia gpu
-cat <<EOF > /mnt/etc/pacman.d/hooks/nvidia.hook
-[Trigger]
-Operation=Install
-Operation=Upgrade
-Operation=Remove
-Type=Package
-Target=nvidia
-Target=nvidia-lts
-Target=nvidia-zen
-Target=linux-lts
-Target=linux-zen
-
-[Action]
-Description=Updating NVIDIA module in initcpio
-Depends=mkinitcpio
-When=PostTransaction
-NeedsTargets
-Exec=/bin/sh -c 'while read -r trg; do case $trg in linux*) exit 0; esac; done; /usr/bin/mkinitcpio -P'
-EOF
-
 echo "--------------------------------------"
 echo "-- Setup Dependencies               --"
 echo "--------------------------------------"
@@ -65,19 +44,6 @@ pacstrap /mnt networkmanager network-manager-applet wireless_tools amd_ucode nan
 
 # fstab
 genfstab -U /mnt >> /mnt/etc/fstab
-
-echo "--------------------------------------"
-echo "-- Bootloader Installation  --"
-echo "--------------------------------------"
-bootctl install --path /mnt/boot
-echo "default arch.conf" >> /mnt/boot/loader/loader.conf
-cat <<EOF > /mnt/boot/loader/entries/arch.conf
-title Arch Linux
-linux /vmlinuz-linux-lts
-initrd /initramfs-linux-lts.img
-options root=${ROOT} rw
-EOF
-
 
 cat <<REALEND > /mnt/next.sh
 useradd -m $USER
@@ -160,8 +126,6 @@ fi
 echo "-------------------------------------------------"
 echo "Install Complete, You can reboot now"
 echo "-------------------------------------------------"
-
-fish | tofish
 
 REALEND
 
