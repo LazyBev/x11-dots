@@ -1,4 +1,7 @@
 # Dotfiles
-These are my dotfiles, I currently run: Arch + Nvidia gpu [GTX 1660 Super] + i3. Change as needed for your system ^-^
+These are my dotfiles, I currently run: Arch + Nvidia gpu [GTX 1660 Super] + i3. 
+
+Change as needed for your system ^-^
+
 GL!!!
 <p><img src="ss.png"/></p>
