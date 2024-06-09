@@ -2,6 +2,7 @@
 
 set -e
 
+# Disk Partitioning
 lsblk
 
 echo "Please enter EFI paritition: (example /dev/sda1 or /dev/nvme0n1p1): "
@@ -32,33 +33,29 @@ do
         read TPASSWORD
 done
 
-# make filesystems
+# Make Filesystems
 echo -e "\nCreating Filesystems...\n"
 
 mkfs.fat -F 32 $EFI
 mkfs.ext4 $ROOT
 
-# mount target
+# Mount Target
 mount $ROOT /mnt
 mkdir /mnt/boot
 mount $EFI /mnt/boot/
 
-echo "--------------------------------------"
-echo "-- INSTALLING Arch on Main Drive    --"
-echo "--------------------------------------"
+# Installing Arch
 sudo cp -rpf Misc/pacman.conf /mnt/etc
 pacstrap -K /mnt amd_ucode systemd base base-devel efibootmgr sof-firmware --noconfirm --needed
 
 # kernel
 pacstrap /mnt mesa lib32-mesa vulkan-nouveau lib32-vulkan-nouveau lib32-libdrm libdrm linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware --noconfirm --needed
 
-echo "--------------------------------------"
-echo "-- Setup Dependencies               --"
-echo "--------------------------------------"
+# Setup Dependencies
 
 pacstrap /mnt networkmanager network-manager-applet wireless_tools amd_ucode neofetch gvfs polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-cn-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-jp-fonts nano git rofi curl alacritty make obsidian man-db xdotool thuanr reflector nitrogen flameshot zip unzip mpv btop vim neovim picom wireplumber dunst xarchiver eza thunar-archive-plugin fish --noconfirm --needed
 
-# fstab
+# Fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
 cd ..
@@ -72,9 +69,8 @@ sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
 sudo mv -f dotfiles $USER && cd $USER
 
-echo "-------------------------------------------------"
-echo "-- Setup Language to US and set locale         --"
-echo "-------------------------------------------------"
+
+# Setup Language to US and set locale
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
@@ -84,10 +80,7 @@ hwclock --systohc
 
 echo "gentuwu" > /etc/hostname
 
-echo "-------------------------------------------------"
-echo "-- Display and Audio Drivers                   --"
-echo "-------------------------------------------------"
-
+# Display and Audio Drivers
 pacman -S xorg xorg-server pipewire-pulse pipewire --noconfirm --needed
 
 systemctl enable NetworkManager
@@ -95,10 +88,7 @@ systemctl enable NetworkManager
 #DESKTOP ENVIRONMENT
 pacman -S i3 --noconfirm --needed
 
-echo "-------------------------------------------------"
-echo "-- Packages                                    --"
-echo "-------------------------------------------------"
-
+# Packages
 read -p "Do you have paru installed? " YN
 if [ $YN == "no" || $YN == "n" ]; then
   git clone "https://aur.archlinux.org/paru.git"
@@ -109,17 +99,11 @@ fi
 
 paru -S vesktop-bin mercury-browser-bin
 
-echo "-------------------------------------------------"
-echo "-- Mirrors"                                    --"
-echo "-------------------------------------------------"
-
+# Mirrors
 sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 sudo reflector --verbose --latest 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
-echo "-------------------------------------------------"
-echo "-- My config"                                  --"
-echo "-------------------------------------------------"
-
+# My config
 echo "---- Making backup at $USER/configBackup -----"
 sudo cp -rpf $USER/.config $USER/configBackup 
 echo "----- Backup made at $USER/configBackup ------"
