@@ -45,6 +45,12 @@ else
     sudo rm -rf ~/Videos/
 fi
 
+if [[ -d /boot/grub ]]; then
+    echo "Grub exists"
+else
+    sudo mkdir /boot/grub
+fi 
+
 paru -S base base-devel efibootmgr sof-firmware mesa lib32-mesa vulkan-nouveau lib32-vulkan-nouveau lib32-libdrm libdrm linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware grub
 
 sudo cp -rpf ~/dotfiles/Misc/mkinitcpio.conf /etc/
