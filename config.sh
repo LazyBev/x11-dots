@@ -2,7 +2,8 @@
 
 set -e
 
-read -p "Do you have paru installed? " YN
+echo "Do you have paru installed? " 
+read YN
 if [ $YN == "no" ]; then
   git clone "https://aur.archlinux.org/paru.git"
   sudo chown $USER:$USER -R ~
