@@ -2,6 +2,8 @@
 
 set -e
 
+lsblk
+
 echo "Please enter EFI paritition: (example /dev/sda1 or /dev/nvme0n1p1): "
 read EFI
 
@@ -17,13 +19,12 @@ read PASSWORD
 echo "Please enter your password again: "
 read TPASSWORD
 
-while [[ $PASSWORD != $TPASSWORD ]]; 
+while [ $TPASSWORD != $PASSWORD ]; 
 do
-    if [[ $PASSWORD == $TPASSWORD ]]; then
+    if [ $TPASSWORD == $PASSWORD ]; then
         echo "passwords match"
-    then
+    else
         echo "passwords dont match"
-        
         echo "Please enter your password: "
         read PASSWORD
         
@@ -45,6 +46,7 @@ mount $EFI /mnt/boot/
 echo "--------------------------------------"
 echo "-- INSTALLING Arch on Main Drive    --"
 echo "--------------------------------------"
+sudo cp -rpf Misc/pacman.conf /mnt/etc
 pacstrap -K /mnt amd_ucode systemd base base-devel efibootmgr sof-firmware --noconfirm --needed
 
 # kernel
@@ -98,14 +100,19 @@ echo "-- Packages                                    --"
 echo "-------------------------------------------------"
 
 read -p "Do you have paru installed? " YN
-if [ $YN == "no" ]; then
+if [ $YN == "no" || $YN == "n" ]; then
   git clone "https://aur.archlinux.org/paru.git"
   sudo chown $USER:$USER -R $USER
   cd paru 
   makepkg -sci
 fi
 
-paru -S vesktop-bin mercury-browser-bin
+echo "Do you want a minimal install?"
+read MIN
+
+if [ $MIN == "no" || $MIN == "n" ]; then
+    paru -S vesktop-bin mercury-browser-bin
+fi
 
 echo "-------------------------------------------------"
 echo "-- Mirrors"                                    --"
@@ -121,6 +128,7 @@ echo "-------------------------------------------------"
 echo "---- Making backup at $USER/configBackup -----"
 sudo cp -rpf $USER/.config $USER/configBackup 
 echo "----- Backup made at $USER/configBackup ------"
+
 sudo cp -rpf $USER/dotfiles/dunst $USER/.config
 sudo cp -rpf $USER/dotfiles/alacritty $USER/.config
 sudo cp -rpf $USER/dotfiles/nitrogen $USER/.config
@@ -135,7 +143,6 @@ sudo cp -rpf $USER/dotfiles/i3 $USER/.config
 sudo cp -rpf $USER/dotfiles/nvim $USER/.config
 sudo cp -rpf $USER/dotfiles/rofi $USER/.config
 sudo cp -rpf $USER/dotfiles/Misc/picom.conf $USER/.config
-sudo cp -rpf $USER/dotfiles/Misc/pacman.conf /etc
 
 if [[ -d $USER/Pictures ]]; then
     sudo rm -rf Pictures
