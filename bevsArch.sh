@@ -11,21 +11,6 @@ read -p "Please enter Root(/) paritition: (example /dev/sda3 or /dev/nvme0n1p3):
 
 read -p "Please enter your username: " USER 
 
-read -p "Please enter your password: " PASSWORD
-
-read -p "Please enter your password again: " TPASSWORD
-
-while [ $TPASSWORD != $PASSWORD ]; 
-do
-    if [ $TPASSWORD == $PASSWORD ]; then
-        echo "passwords match"
-    else
-        echo "passwords dont match"
-        read -p "Please enter your password: " PASSWORD
-    
-        read -p "Please enter your password again: " TPASSWORD
-done
-
 # Make Filesystems
 echo -e "\nCreating Filesystems...\n"
 
@@ -39,14 +24,16 @@ mount $EFI /mnt/boot/
 
 # Installing Arch
 sudo cp -rpf Misc/pacman.conf /mnt/etc
-pacstrap -K /mnt amd_ucode systemd base base-devel efibootmgr sof-firmware --noconfirm --needed
 
-# kernel
-pacstrap /mnt mesa lib32-mesa vulkan-nouveau lib32-vulkan-nouveau lib32-libdrm libdrm systemd linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware --noconfirm --needed
+read -p "CPU  (intel or amd [no capitals]): " CPU
+pacstrap -K /mnt ${CPU}_ucode systemd base base-devel efibootmgr sof-firmware --noconfirm --needed
+
+# Kernel && Base
+# For GPU refer to https://wiki.archlinux.org/title/NVIDIA#Installation
+pacstrap /mnt mesa lib32-mesa nvidia-open-dkms nvidia-lts nvidia-utils lib32-nvidia-utils systemd linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware --noconfirm --needed
 
 # Setup Dependencies
-
-pacstrap /mnt networkmanager network-manager-applet wireless_tools amd_ucode neofetch gvfs polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-cn-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-jp-fonts nano git rofi curl alacritty make obsidian man-db xdotool thuanr reflector nitrogen flameshot zip unzip mpv btop vim neovim picom wireplumber dunst xarchiver eza thunar-archive-plugin fish --noconfirm --needed
+pacstrap /mnt networkmanager network-manager-applet wireless_tools ${CPU}_ucode neofetch gvfs polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-cn-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-jp-fonts nano git rofi curl alacritty make obsidian man-db xdotool thuanr reflector nitrogen flameshot zip unzip mpv btop vim neovim picom wireplumber dunst xarchiver eza thunar-archive-plugin fish --noconfirm --needed
 
 # Fstab
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -57,6 +44,7 @@ sudo mv -f dotfiles /mnt
 cat <<REALEND > /mnt/next.sh
 useradd -m $USER
 usermod -aG wheel,storage,power,audio $USER
+passwd $USER
 echo $USER:$ROOT | chpasswd
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
@@ -73,12 +61,17 @@ echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc
 
-echo "gentuwu" > /etc/hostname
+read -p "Hostname: " HN
+echo "$HN" > /etc/hostname
 
 # Display and Audio Drivers
 pacman -Syu xorg xorg-server pipewire-pulse pipewire --noconfirm --needed
+sudo nvidia-xconfig
 
-systemctl enable NetworkManager
+sudo systemctl enable NetworkManager
+sudo systemctl enable pipewire
+sudo systemctl enable pipewire-pulse
+sudo systemctl enable wireplumber
 
 #DESKTOP ENVIRONMENT
 pacman -S i3 --noconfirm --needed
@@ -118,18 +111,8 @@ sudo cp -rpf $USER/dotfiles/nvim $USER/.config
 sudo cp -rpf $USER/dotfiles/rofi $USER/.config
 sudo cp -rpf $USER/dotfiles/Misc/picom.conf $USER/.config
 
-if [[ -d $USER/Pictures ]]; then
-    sudo rm -rf Pictures
-    sudo cp -f Pictures/bgpic.jpg $USER/Pictures
-else
-    sudo cp -rpf Pictures $USER
-fi
-
-if [[ -d $USER/Videos ]]; then
-    sudo rm -rf $USER/Videos/
-else
-    sudo mkdir $USER/Videos/
-fi
+sudo mv -f $USER/dotfiles/Pictures $USER
+sudo mv -f $USER/dotfiles/Videos $USER
 
 sudo cp -rpf $USER/dotfiles/Misc/mkinitcpio.conf /etc/
 sudo mkinitcpio -P
