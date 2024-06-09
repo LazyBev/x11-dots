@@ -16,7 +16,6 @@ echo "---- Making backup at ~/configBackup -----"
 sudo cp -rpf ~/.config ~/configBackup 
 echo "----- Backup made at ~/configBackup ------"
 
-sudo cp -rpf ~/dotfiles/tmux ~/.config
 sudo cp -rpf ~/dotfiles/dunst ~/.config
 sudo cp -rpf ~/dotfiles/alacritty ~/.config
 sudo cp -rpf ~/dotfiles/nitrogen ~/.config
