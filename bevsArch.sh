@@ -49,7 +49,7 @@ sudo cp -rpf Misc/pacman.conf /mnt/etc
 pacstrap -K /mnt amd_ucode systemd base base-devel efibootmgr sof-firmware --noconfirm --needed
 
 # kernel
-pacstrap /mnt mesa lib32-mesa vulkan-nouveau lib32-vulkan-nouveau lib32-libdrm libdrm linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware --noconfirm --needed
+pacstrap /mnt mesa lib32-mesa vulkan-nouveau lib32-vulkan-nouveau lib32-libdrm libdrm systemd linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware --noconfirm --needed
 
 # Setup Dependencies
 
