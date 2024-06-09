@@ -51,28 +51,6 @@ else
 fi
 
 paru -S base base-devel efibootmgr sof-firmware amd_ucode mesa lib32-mesa vulkan-nouveau lib32-vulkan-nouveau lib32-libdrm libdrm linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware grub
-echo "default arch.conf" >> /boot/loader/loader.conf
-cat <<EOF > /mnt/boot/loader/entries/arch.conf
-title Arch Linux
-linux /vmlinuz-linux-lts
-initrd /initramfs-linux-lts.img
-options root=${ROOT} rw
-options nouveau.config=NvGspRm=1
-options nouveau.config=NvBios=PRAMIN
-options log_buf_len=16M
-options drm.debug=14
-EOF
-
-cat <<EOF > /mnt/boot/loader/entries/arch-zen.conf
-title Arch Linux Zen
-linux /vmlinuz-linux-zen
-initrd /initramfs-linux-zen.img
-options root=${ROOT} rw
-options nouveau.config=NvGspRm=1
-options nouveau.config=NvBios=PRAMIN
-options log_buf_len=16M
-options drm.debug=14
-EOF
 
 sudo cp -rpf ~/dotfiles/Misc/mkinitcpio.conf /etc/
 sudo mkinitcpio -P
