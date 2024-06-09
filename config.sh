@@ -12,7 +12,9 @@ if [ $YN == "no" ]; then
   cd ~/dotfiles
 fi
 
-paru -S fzf btop obsidian man-db xdotool vesktop-bin curl rofi mercury-browser-bin wget vim neovim neofetch nitrogen flameshot zip unzip mpv cmake alacritty picom wireplumber gvfs polkit-gnome dunst xarchiver thunar thunar-archive-plugin lxappearance eza fish bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-cn-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-jp-fonts fish
+paru -S alacritty rofi curl nitrogen flameshot zip unzip mpv btop vim neovim picom wireplumber dunst xarchiver eza thunar thunar-archive-plugin fish make obsidian man-db xdotool vesktop-bin mercury-browser-bin neofetch gvfs polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-cn-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-jp-fonts
+curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+alacritty -e fish | tofish
 
 echo "---- Making backup at ~/configBackup -----"
 sudo cp -rpf ~/.config ~/configBackup 
@@ -48,17 +50,7 @@ else
     sudo rm -rf ~/Videos/
 fi
 
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-alacritty -e fish | tofish
-
-
-read -p "nvidia or amd gpu" na
-
-if [ $na == "nvidia" ] then
-    paru -S nvidia-lts linux-lts linux-lts-headers
-else
-    paru -S linux-lts linux-lts-headers
-fi
+paru -S nvidia-lts linux-lts linux-lts-headers
 paru -R linux linux-headers
 
 sudo cp -rpf ~/dotfiles/Misc/mkinitcpio.conf /etc/
