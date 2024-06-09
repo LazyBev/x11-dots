@@ -5,20 +5,15 @@ set -e
 # Disk Partitioning
 lsblk
 
-echo "Please enter EFI paritition: (example /dev/sda1 or /dev/nvme0n1p1): "
-read EFI
+read -p "Please enter EFI paritition: (example /dev/sda1 or /dev/nvme0n1p1): " EFI
 
-echo "Please enter Root(/) paritition: (example /dev/sda3 or /dev/nvme0n1p3): "
-read ROOT 
+read -p "Please enter Root(/) paritition: (example /dev/sda3 or /dev/nvme0n1p3): " ROOT 
 
-echo "Please enter your username: "
-read USER 
+read -p "Please enter your username: " USER 
 
-echo "Please enter your password: "
-read PASSWORD
+read -p "Please enter your password: " PASSWORD
 
-echo "Please enter your password again: "
-read TPASSWORD
+read -p "Please enter your password again: " TPASSWORD
 
 while [ $TPASSWORD != $PASSWORD ]; 
 do
@@ -26,11 +21,9 @@ do
         echo "passwords match"
     else
         echo "passwords dont match"
-        echo "Please enter your password: "
-        read PASSWORD
-        
-        echo "Please enter your password again: "
-        read TPASSWORD
+        read -p "Please enter your password: " PASSWORD
+    
+        read -p "Please enter your password again: " TPASSWORD
 done
 
 # Make Filesystems
@@ -69,6 +62,8 @@ sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
 sudo mv -f dotfiles $USER && cd $USER
 
+read -p "Which layout would you like?: " LAUT
+loadkeys $LAUT
 
 # Setup Language to US and set locale
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
