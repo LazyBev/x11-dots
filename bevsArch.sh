@@ -31,10 +31,11 @@ mount -t vfat "${EFI}" /mnt/boot/
 echo "--------------------------------------"
 echo "-- INSTALLING Arch Linux BASE on Main Drive       --"
 echo "--------------------------------------"
-pacstrap -K /mnt base base-devel grub efibootmgr sof-firmware --noconfirm --needed
+pacstrap -K /mnt amd_ucode base base-devel efibootmgr sof-firmware --noconfirm --needed
 
 # kernel
-pacstrap /mnt linux-lts linux-lts-headers linux-zen linux-zen-headers nvidia-lts linux-firmware --noconfirm --needed
+pacstrap /mnt mesa lib32-mesa vulkan-nouveau lib32-vulkan-nouveau lib32-libdrm libdrm linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware grub
+ --noconfirm --needed
 
 echo "--------------------------------------"
 echo "-- Setup Dependencies               --"
@@ -67,7 +68,7 @@ echo "-------------------------------------------------"
 echo "Display and Audio Drivers"
 echo "-------------------------------------------------"
 
-pacman -S xorg xorg-server pipewire-pulse --noconfirm --needed
+pacman -S xorg xorg-server pipewire-pulse pipewire --noconfirm --needed
 
 systemctl enable NetworkManager
 
