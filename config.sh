@@ -45,7 +45,7 @@ else
     sudo rm -rf ~/Videos/
 fi
 
-paru -S base base-devel efibootmgr sof-firmware amd_ucode mesa lib32-mesa vulkan-nouveau lib32-vulkan-nouveau lib32-libdrm libdrm linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware grub
+paru -S base base-devel efibootmgr sof-firmware mesa lib32-mesa vulkan-nouveau lib32-vulkan-nouveau lib32-libdrm libdrm linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware grub
 
 sudo cp -rpf ~/dotfiles/Misc/mkinitcpio.conf /etc/
 sudo mkinitcpio -P
