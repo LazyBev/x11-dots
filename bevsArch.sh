@@ -107,12 +107,7 @@ if [ $YN == "no" || $YN == "n" ]; then
   makepkg -sci
 fi
 
-echo "Do you want a minimal install?"
-read MIN
-
-if [ $MIN == "no" || $MIN == "n" ]; then
-    paru -S vesktop-bin mercury-browser-bin
-fi
+paru -S vesktop-bin mercury-browser-bin
 
 echo "-------------------------------------------------"
 echo "-- Mirrors"                                    --"
