@@ -5,3 +5,5 @@ Change as needed for your system ^-^
 
 GL!!!
 <p><img src="example_pics/ss.png"/></p>
+
+<p><img src="example_pics/sst.png"/></p>
