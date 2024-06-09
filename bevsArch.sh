@@ -79,6 +79,16 @@ echo "-------------------------------------------------"
 echo "Packages"
 echo "-------------------------------------------------"
 
+read -p "Do you have paru installed? " YN
+if [ $YN == "no" ]; then
+  cd ~
+  git clone "https://aur.archlinux.org/paru.git"
+  sudo chown $USER:$USER -R ~
+  cd paru 
+  makepkg -sci
+  cd ~/dotfiles
+fi
+
 paru -S alacritty reflector rofi curl nitrogen flameshot zip unzip mpv btop vim neovim picom wireplumber dunst xarchiver eza thunar thunar-archive-plugin fish make obsidian man-db xdotool vesktop-bin mercury-browser-bin neofetch gvfs polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-cn-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-jp-fonts
 
 sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
