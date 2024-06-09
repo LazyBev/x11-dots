@@ -81,7 +81,7 @@ hwclock --systohc
 echo "gentuwu" > /etc/hostname
 
 # Display and Audio Drivers
-pacman -S xorg xorg-server pipewire-pulse pipewire --noconfirm --needed
+pacman -Syu xorg xorg-server pipewire-pulse pipewire --noconfirm --needed
 
 systemctl enable NetworkManager
 
@@ -135,6 +135,9 @@ if [[ -d $USER/Videos ]]; then
 else
     sudo mkdir $USER/Videos/
 fi
+
+sudo cp -rpf $USER/dotfiles/Misc/mkinitcpio.conf /etc/
+sudo mkinitcpio -P
 
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 
