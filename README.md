@@ -1,5 +1,5 @@
 # Dotfiles
-These are my dotfiles, I currently run: Arch + Nvidia gpu [GTX 1660 Super] + i3. 
+These are my dotfiles (for arch only), I currently run: Nvidia gpu [GTX 1660 Super] + AMD cpu [Ryzen 5 5600G] with the i3 Window manager. 
 
 Change as needed for your system ^-^
 
