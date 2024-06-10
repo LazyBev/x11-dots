@@ -33,7 +33,7 @@ pacstrap -K /mnt ${CPU}_ucode systemd base base-devel efibootmgr sof-firmware --
 pacstrap /mnt mesa lib32-mesa nvidia-open-dkms nvidia-lts nvidia-utils lib32-nvidia-utils systemd linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware --noconfirm --needed
 
 # Setup Dependencies
-pacstrap /mnt networkmanager network-manager-applet wireless_tools ${CPU}_ucode neofetch gvfs polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-cn-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-jp-fonts nano git rofi curl alacritty make obsidian man-db xdotool thuanr reflector nitrogen flameshot zip unzip mpv btop vim neovim picom wireplumber dunst xarchiver eza thunar-archive-plugin fish --noconfirm --needed
+pacstrap /mnt networkmanager network-manager-applet wireless_tools ${CPU}_ucode neofetch gvfs polkit-gnome lxappearance pavucontrol bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-cn-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-jp-fonts nano git rofi curl alacritty make obsidian man-db xdotool thuanr reflector nitrogen flameshot zip unzip mpv btop vim neovim picom wireplumber dunst xarchiver eza thunar-archive-plugin fish --noconfirm --needed
 
 # Fstab
 genfstab -U /mnt >> /mnt/etc/fstab
