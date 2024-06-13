@@ -15,7 +15,7 @@ void disk() {
     system("lsblk");
     printf("Please enter EFI partition: (example /dev/sda1 or /dev/nvme0n1p1): ");
     scanf("%s", efi);
-    printf("Please enter ROOT partition: (example /dev/sda3 or /dev/nvme0n1p3): ");
+    printf("Please enter ROOT partition: (example /dev/sda2 or /dev/nvme0n1p2): ");
     scanf("%s", root);
 
     // Make the filesystems and mounting to targets
