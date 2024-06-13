@@ -6,7 +6,7 @@
 // Initializing variables
 char root[100], efi[100], user[100], pass[100], tpass[100], y[10], laut[100];
 void disk();
-void acc();
+void prof();
 void arch();
 void chr();
 
@@ -147,7 +147,7 @@ void disk() {
     system(command);
 }
 
-void acc() {
+void prof() {
     printf("Please enter your username: ");
     scanf("%s", user); 
 
@@ -169,7 +169,7 @@ void acc() {
 
 int main(void) {
     disk();
-    acc();
+    prof();
     arch();
     chr();
 
