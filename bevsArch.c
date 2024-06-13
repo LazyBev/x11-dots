@@ -10,6 +10,48 @@ void prof();
 void arch();
 void chr();
 
+void disk() {
+    // Partition disks
+    system("lsblk");
+    printf("Please enter EFI partition: (example /dev/sda1 or /dev/nvme0n1p1): ");
+    scanf("%s", efi);
+    printf("Please enter ROOT partition: (example /dev/sda1 or /dev/nvme0n1p1): ");
+    scanf("%s", root);
+
+    // Make the filesystems and mounting to targets
+    char command[256];
+    printf("\nCreating Filesystems...\n");
+    snprintf(command, sizeof(command), "mkfs.fat -F 32 %s", efi);
+    system(command);
+    snprintf(command, sizeof(command), "mkfs.ext4 %s", root);
+    system(command);
+    system("mkdir -p /mnt/boot");
+    snprintf(command, sizeof(command), "mount %s /mnt/boot", efi);
+    system(command);
+    snprintf(command, sizeof(command), "mount %s /mnt", root);
+    system(command);
+}
+
+void prof() {
+    printf("Please enter your username: ");
+    scanf("%s", user); 
+
+    do {
+        printf("Please enter your password: ");
+        scanf("%s", pass); 
+
+        printf("Please enter your password again: ");
+        scanf("%s", tpass);
+
+        if (strcmp(tpass, pass) == 0) {
+            printf("Passwords match\n");
+        } else {
+            printf("Passwords do not match, please try again\n");
+        }
+
+    } while(strcmp(tpass, pass) != 0);
+}
+
 void arch() {
     system("sudo cp -rpf Misc/pacman.conf /mnt/etc");
     system("pacstrap -K /mnt amd_ucode systemd base base-devel efibootmgr sof-firmware mesa lib32-mesa systemd linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware networkmanager network-manager-applet wireless_tools neofetch gvfs pavucontrol polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-cn-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-jp-fonts nano git rofi curl alacritty make obsidian man-db xdotool thuanr reflector nitrogen flameshot zip unzip mpv btop vim neovim picom wireplumber dunst xarchiver eza thunar-archive-plugin fish --noconfirm --needed");
@@ -123,48 +165,6 @@ void chr() {
     system("sudo mkinitcpio -P");
 
     system("curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish");
-}
-
-void disk() {
-    // Partition disks
-    system("lsblk");
-    printf("Please enter EFI partition: (example /dev/sda1 or /dev/nvme0n1p1): ");
-    scanf("%s", efi);
-    printf("Please enter ROOT partition: (example /dev/sda1 or /dev/nvme0n1p1): ");
-    scanf("%s", root);
-
-    // Make the filesystems and mounting to targets
-    char command[256];
-    printf("\nCreating Filesystems...\n");
-    snprintf(command, sizeof(command), "mkfs.fat -F 32 %s", efi);
-    system(command);
-    snprintf(command, sizeof(command), "mkfs.ext4 %s", root);
-    system(command);
-    system("mkdir -p /mnt/boot");
-    snprintf(command, sizeof(command), "mount %s /mnt/boot", efi);
-    system(command);
-    snprintf(command, sizeof(command), "mount %s /mnt", root);
-    system(command);
-}
-
-void prof() {
-    printf("Please enter your username: ");
-    scanf("%s", user); 
-
-    do {
-        printf("Please enter your password: ");
-        scanf("%s", pass); 
-
-        printf("Please enter your password again: ");
-        scanf("%s", tpass);
-
-        if (strcmp(tpass, pass) == 0) {
-            printf("Passwords match\n");
-        } else {
-            printf("Passwords do not match, please try again\n");
-        }
-
-    } while(strcmp(tpass, pass) != 0);
 }
 
 int main(void) {
