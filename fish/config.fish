@@ -236,5 +236,6 @@ alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/mas
 # Mocp must be launched with bash instead of Fish!
 alias mocp="bash -c mocp"
 
+neofetch --ascii ~/dotfiles/neofetch/bk
 neofetch --colors 4 5 5 4 5 5 --ascii_colors 5 4
 # neofetch --colors 4 5 5 4 5 5 --ascii_colors 5 4
