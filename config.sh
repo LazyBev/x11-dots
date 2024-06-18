@@ -36,6 +36,9 @@ sudo cp -rpf $HOME/dotfiles/Misc/pacman.conf /etc
 sudo mv -f $HOME/dotfiles/Pictures $HOME
 sudo mv -f $HOME/dotfiles/Videos $HOME
 
+sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+sudo reflector --verbose --latest 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+
 paru -S base base-devel efibootmgr sof-firmware mesa lib32-mesa linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware
 
 sudo cp -rpf $HOME/dotfiles/Misc/mkinitcpio.conf /etc/
