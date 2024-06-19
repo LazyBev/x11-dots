@@ -121,6 +121,8 @@ void chr() {
     system(command);
     printf("----- Backup made at /home/%s/configBackup ------", user);
 
+    snprintf(command, sizeof(command), "sudo cp -rpf $HOME/dotfiles/neofetch/bk $HOME/.config/neofetch", user, user);
+    system(command);
     snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/dunst /home/%s/.config", user, user);
     system(command);
     snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/nitrogen /home/%s/.config", user, user);
