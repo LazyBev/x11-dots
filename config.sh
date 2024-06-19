@@ -17,6 +17,7 @@ echo "---- Making backup at $HOME/configBackup -----"
 sudo cp -rpf $HOME/.config $HOME/configBackup 
 echo "----- Backup made at $HOME/configBackup ------"
 
+sudo cp -rpf $HOME/dotfiles/neofetch/bk $HOME/.config/neofetch
 sudo cp -rpf $HOME/dotfiles/dunst $HOME/.config
 sudo cp -rpf $HOME/dotfiles/alacritty $HOME/.config
 sudo cp -rpf $HOME/dotfiles/nitrogen $HOME/.config
