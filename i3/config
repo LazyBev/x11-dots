@@ -89,13 +89,14 @@ bindsym $mod+o exec obsidian
 bindsym $mod+x exec flameshot gui
 bindsym $mod+Shift+x exec i3lock
 bindsym $mod+c exec code -n $PWD
+bindwym $mod+e exec emacs
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+Shift+w layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
