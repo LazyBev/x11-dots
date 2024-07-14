@@ -152,9 +152,9 @@ alias .5='cd ../../../../..'
 alias pypy='~/Downloads/pypy3.10-v7.3.16-linux64/bin/pypy'
 
 # vim and emacs
+
 alias nv='nvim'
-alias em='/usr/bin/emacs -nw'
-alias emacs="emacsclient -c -a 'emacs'"
+alias doom='$HOME/.config/emacs/bin/doom'
 alias rem="killall emacs || echo 'Emacs server not running'; /usr/bin/emacs --daemon"
 
 # search
