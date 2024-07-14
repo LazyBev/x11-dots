@@ -8,7 +8,7 @@ char root[100], efi[100], user[100], pass[100], tpass[100], y[10], laut[100];
 void disk();
 void prof();
 void arch();
-void chr();
+void chroot();
 
 void disk() {
     // Partition disks
@@ -54,13 +54,13 @@ void prof() {
 
 void arch() {
     system("sudo cp -rpf Misc/pacman.conf /mnt/etc");
-    system("pacstrap -K /mnt amd_ucode kitty systemd base base-devel efibootmgr sof-firmware mesa lib32-mesa systemd linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware networkmanager network-manager-applet wireless_tools neofetch gvfs pavucontrol polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts nano steam wine git rofi curl alacritty make obsidian man-db xdotool thuanr reflector nitrogen flameshot zip unzip mpv btop vim neovim picom wireplumber dunst xarchiver eza thunar-archive-plugin fish --noconfirm --needed");
+    system("pacstrap -K /mnt amd_ucode kitty systemd base base-devel efibootmgr sof-firmware mesa lib32-mesa systemd linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware networkmanager network-manager-applet wireless_tools neofetch gvfs pavucontrol polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts nano steam wine git rofi curl alacritty make obsidian man-db xdotool thuanr reflector nitrogen flameshot zip unzip mpv btop emacs picom wireplumber dunst xarchiver eza thunar-archive-plugin fish --noconfirm --needed");
     system("genfstab -U /mnt >> /mnt/etc/fstab");
     system("cd ..");
     system("sudo mv -f dotfiles /mnt");
 }
 
-void chr() {
+void chroot() {
     char command[256];
     snprintf(command, sizeof(command), "useradd -m %s", user);
     system(command);
@@ -163,7 +163,11 @@ void chr() {
     snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/Misc/mkinitcpio.conf /etc/", user);
     system(command);
     system("sudo mkinitcpio -P");
-
+    
+    system("git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs");
+    system("~/.config/emacs/bin/doom install");
+    system("~/.config/emacs/bin/doom sync");
+    
     system("curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish");
 }
 
@@ -171,7 +175,7 @@ int main(void) {
     disk();
     prof();
     arch();
-    chr();
+    chroot();
 
     return 0;
 }
