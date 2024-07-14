@@ -151,6 +151,8 @@ alias ......='cd ../../../../..'
 alias .5='cd ../../../../..'
 alias pypy='~/Downloads/pypy3.10-v7.3.16-linux64/bin/pypy'
 
+alias nf='neofetch --ascii ~/.config/neofetch/bk --colors 4 5 5 4 5 5'
+
 # vim and emacs
 
 alias nv='nvim'
