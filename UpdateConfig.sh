@@ -4,6 +4,8 @@ echo "---- Making backup at $HOME/configBackup -----"
 sudo cp -rpf $HOME/.config $HOME/configBackup 
 echo "----- Backup made at $HOME/configBackup ------"
 
+sudo mv $HOME/dotfiles/emacs $HOME/dotfiles/.emacs.d
+sudo cp -rpf $HOME/dotfiles/.emacs.d $HOME
 sudo cp -rpf $HOME/dotfiles/neofetch/bk $HOME/.config/neofetch
 sudo cp -rpf $HOME/dotfiles/dunst $HOME/.config
 sudo cp -rpf $HOME/dotfiles/Pictures/bgpic.jpg ../Pictures
