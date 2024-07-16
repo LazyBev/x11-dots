@@ -116,52 +116,9 @@ void chroot() {
     system("sudo reflector --verbose --latest 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist");
 
     // My config
-    printf("---- Making backup at /home/%s/configBackup -----", user);
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/.config /home/%s/configBackup", user, user);
-    system(command);
-    printf("----- Backup made at /home/%s/configBackup ------", user);
-
-    snprintf(command, sizeof(command), "sudo cp -rpf $HOME/dotfiles/neofetch/bk $HOME/.config/neofetch", user, user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/dunst /home/%s/.config", user, user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/nitrogen /home/%s/.config", user, user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/fcitx5 /home/%s/.config", user, user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/mozc /home/%s/.config", user, user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/fonts/SF-Mono-Powerline /home/%s/.local/share/fonts", user, user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/fonts/MartianMono /home/%s/.local/share/fonts", user, user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/fonts/fontconfig /home/%s/.config", user, user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/fish /home/%s/.config", user, user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/omf /home/%s/.config", user, user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/i3 /home/%s/.config", user, user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/nvim /home/%s/.config", user, user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/rofi /home/%s/.config", user, user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/Misc/picom.conf /home/%s/.config", user, user);
+    snprintf(command, sizeof(command), "./UpdateConfig.sh");
     system(command);
 
-    snprintf(command, sizeof(command), "if [ -d /home/%s/Pictures ]; then sudo rm -rf /home/%s/Pictures; fi", user, user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -f Pictures/bgpic.jpg /home/%s/Pictures", user);
-    system(command);
-    snprintf(command, sizeof(command), "sudo cp -rpf Pictures /home/%s", user);
-    system(command);
-
-    snprintf(command, sizeof(command), "if [ -d /home/%s/Videos ]; then sudo rm -rf /home/%s/Videos/; else sudo mkdir /home/%s/Videos/; fi", user, user, user);
-    system(command);
-
-    snprintf(command, sizeof(command), "sudo cp -rpf /home/%s/dotfiles/Misc/mkinitcpio.conf /etc/", user);
-    system(command);
     system("sudo mkinitcpio -P");
     
     system("git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs");
