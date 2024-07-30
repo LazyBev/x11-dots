@@ -89,7 +89,7 @@ bindsym $mod+o exec obsidian
 bindsym $mod+x exec flameshot gui
 bindsym $mod+Shift+x exec i3lock
 bindsym $mod+c exec code -n $PWD
-bindwym $mod+e exec emacs
+bindsym $mod+e exec emacs
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
