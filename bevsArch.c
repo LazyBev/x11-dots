@@ -62,6 +62,9 @@ void arch() {
 
 void chroot() {
     char command[256];
+    snprintf(command, sizeof(command), "arch-chroot /mnt");
+    system(command);
+
     snprintf(command, sizeof(command), "useradd -m %s", user);
     system(command);
 
@@ -95,19 +98,16 @@ void chroot() {
     system("pacman -Syu xorg xorg-server pipewire-pulse pipewire --noconfirm --needed");
 
     system("systemctl enable NetworkManager");
-
+    system("/usr/lib/xdg-desktop-portal --replace");
+    
     // Desktop environment
     system("pacman -S i3 --noconfirm --needed");
-
+    
     // Packages
-    printf("Do you have paru installed? ");
-    scanf("%s", y);
-    if (strcmp(y, "no") == 0 || strcmp(y, "n") == 0) {
-        system("git clone \"https://aur.archlinux.org/paru.git\"");
-        snprintf(command, sizeof(command), "sudo chown %s:%s -R paru", user, user);
-        system(command);
-        system("cd paru && makepkg -sci");
-    }
+    system("git clone \"https://aur.archlinux.org/paru.git\"");
+    snprintf(command, sizeof(command), "sudo chown %s:%s -R paru", user, user);
+    system(command);
+    system("cd paru && makepkg -sci");
 
     system("paru -S vesktop-bin mercury-browser-bin");
 
