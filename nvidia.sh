@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install the necessary packages
-paru -S xf86-video-nouveau vulkan-mesa-layers lib32-vulkan-mesa-layers
+paru -S xf86-video-nouveau vulkan-mesa-layers lib32-vulkan-mesa-layers nvidia-prime nvidia-dkms nvidia-utils
 
 # Check available graphics providers and OpenGL renderer
 xrandr --listproviders && glxinfo | grep "OpenGL renderer"
