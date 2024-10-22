@@ -42,3 +42,7 @@ cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_suspended_time
 # Start and enable the NVIDIA persistence daemon
 sudo systemctl start nvidia-persistenced.service
 sudo systemctl enable nvidia-persistenced.service
+
+# Telling the user to reboot
+echo "Rebooting..."
+reboot
