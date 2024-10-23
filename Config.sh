@@ -10,7 +10,7 @@ main() {
     chown "$user:$user" -R paru
     cd paru && makepkg -sci
 
-    paru -S vesktop-bin mercury-browser-bin amd_ucode kitty systemd base xdg-desktop-portal xdg-desktop-portal-gtk base-devel efibootmgr sof-firmware mesa lib32-mesa systemd linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware networkmanager network-manager-applet wireless_tools neofetch gvfs pavucontrol polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts nano steam wine git rofi curl alacritty make cmake meson obsidian man-db xdotool thuanr reflector nitrogen flameshot zip unzip mpv btop emacs noto-fonts picom wireplumber dunst xarchiver eza thunar-archive-plugin fish
+    paru -S vesktop-bin mercury-browser-bin amd_ucode kitty systemd base xdg-desktop-portal xdg-desktop-portal-gtk base-devel efibootmgr sof-firmware mesa lib32-mesa xf86-video-nouveau vulkan-mesa-layers lib32-vulkan-mesa-layers nvidia-prime nvidia-lts nvidia-utils systemd linux-lts linux-lts-headers linux-zen linux-zen-headers linux-firmware networkmanager network-manager-applet wireless_tools neofetch gvfs pavucontrol polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts nano steam wine git rofi curl alacritty make cmake meson obsidian man-db xdotool thuanr reflector nitrogen flameshot zip unzip mpv btop emacs noto-fonts picom wireplumber dunst xarchiver eza thunar-archive-plugin fish
 
     # Mirrors
     cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
@@ -22,11 +22,11 @@ main() {
     echo "----- Backup made at $HOME/configBackup ------"
 
     # Copy configurations
-    for dir in .emacs.d neofetch/bk dunst Pictures/bgpic.jpg fcitx5 mozc fonts/fontconfig fonts/MartianMono fonts/SF-Mono-Powerline fish i3 nvim rofi omf; do
-        sudo cp -rpf "$HOME/dotfiles/$dir" "$HOME/.config" || sudo cp -rpf "$HOME/dotfiles/$dir" "$HOME/.local/share/fonts"
+    for config in .emacs.d neofetch/bk dunst Pictures/bgpic.jpg fcitx5 mozc fonts/fontconfig fonts/MartianMono fonts/SF-Mono-Powerline fish i3 nvim rofi omf Misc/picom.conf; do
+        sudo cp -rpf "$HOME/dotfiles/$config" "$HOME/.config"
     done
 
-    sudo cp -rpf "$HOME/dotfiles/Misc/picom.conf" "$HOME/.config"
+    sudo cp -rpf "$HOME/dotfiles/$dir" "$HOME/.local/share/fonts"
     sudo cp -rpf "$HOME/dotfiles/Misc/pacman.conf" /etc
 
     mkinitcpio -P
