@@ -7,21 +7,6 @@ NVIDIA_VENDOR="0x10de"
 # Install the necessary packages
 paru -S --noconfirm xf86-video-nouveau vulkan-mesa-layers lib32-vulkan-mesa-layers nvidia-prime nvidia
 
-# Get user input for the driver type && Validate user input
-while [[ "$prop" != "lts" && "$prop" != "nouveau" ]]; do
-  read -p "Nvidia driver (lts, nouveau): " prop
-  if [[ "$prop" != "lts" && "$prop" != "nouveau" ]]; then
-    echo "Invalid option. Please select 'lts' or 'nouveau'."
-  fi
-done
-
-# Install the appropriate driver
-if [ "$prop" == "lts" ]; then
-  paru -S --noconfirm nvidia-lts
-else
-  paru -S --noconfirm nvidia-dkms
-fi
-
 # Check available graphics providers and OpenGL renderer
 xrandr --listproviders && glxinfo | grep "OpenGL renderer"
 
