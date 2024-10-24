@@ -5,6 +5,7 @@
 if status is-login 
     if [ "$(tty)" = "/dev/tty1" ]
         startx
+	i3
     end
 end
 
