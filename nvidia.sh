@@ -5,7 +5,7 @@ prop=""
 NVIDIA_VENDOR="0x10de"
 
 # Install the necessary packages
-paru -S --noconfirm xf86-video-nouveau vulkan-mesa-layers lib32-vulkan-mesa-layers nvidia-prime
+paru -S --noconfirm xf86-video-nouveau vulkan-mesa-layers lib32-vulkan-mesa-layers nvidia-prime nvidia
 
 # Get user input for the driver type && Validate user input
 while [[ "$prop" != "lts" && "$prop" != "nouveau" ]]; do
