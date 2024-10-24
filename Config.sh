@@ -18,10 +18,11 @@ main() {
     echo "----- Backup made at $HOME/configBackup ------"
 
     # Copy configurations
-    for config in .emacs.d neofetch/bk dunst Pictures/bgpic.jpg fcitx5 mozc fonts/fontconfig fonts/MartianMono fonts/SF-Mono-Powerline fish i3 nvim rofi omf Misc/picom.conf; do
+    for config in .emacs.d neofetch/bk dunst fcitx5 mozc fonts/fontconfig fonts/MartianMono fonts/SF-Mono-Powerline fish i3 nvim rofi omf Misc/picom.conf; do
         sudo cp -rpf "$HOME/dotfiles/$config" "$HOME/.config"
     done
 
+    sudo cp -rpf "$HOME/dotfiles/Pictures/bgpic.jpg" "$HOME/Pictures/"
     sudo cp -rpf "$HOME/dotfiles/$dir" "$HOME/.local/share/fonts"
     sudo cp -rpf "$HOME/dotfiles/Misc/pacman.conf" /etc
 
