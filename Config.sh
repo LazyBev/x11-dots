@@ -1,6 +1,8 @@
 #!/bin/bash
 
 set -e
+set -a
+set -u
 
 main() {
     user=$(whoami)
