@@ -18,7 +18,6 @@ main() {
     echo "---- Making backup at $HOME/configBackup -----"
     sudo cp -rpf "$HOME/.config" "$HOME/configBackup"
     echo "----- Backup made at $HOME/configBackup ------"
-    echo "Update your 13 config by hitting Mod+Shift+c"
 
     # Copy configurations
     for config in dunst fcitx5 mozc fish i3 nvim rofi omf; do
