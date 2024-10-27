@@ -39,7 +39,6 @@ main() {
 
     curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
     chsh -s /usr/bin/fish
-    reboot
 }
 
 main
