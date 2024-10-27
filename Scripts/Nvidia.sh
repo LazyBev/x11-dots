@@ -53,4 +53,3 @@ sudo systemctl enable nvidia-persistenced.service
 
 # Telling the user to reboot
 echo "Configuration complete. Please reboot your system."
-reboot
