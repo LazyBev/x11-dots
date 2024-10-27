@@ -36,7 +36,7 @@ main() {
     ~/.config/emacs/bin/doom sync
 
     flatpak install --user https://sober.vinegarhq.org/sober.flatpakref
-
+    
     yay -S fish
 
     curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
