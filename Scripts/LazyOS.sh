@@ -13,14 +13,25 @@ prompt() {
 # Ask for user input
 disk=$(prompt "Enter the disk to install Arch Linux (e.g., /dev/sda)" "/dev/sda")
 hostname=$(prompt "Enter the hostname (default: archlinux)" "archlinux")
-username=$(prompt "Enter the username (default: user)" "user")
-password=$(prompt "Enter the password (default: password)" "password") # Change this to a secure password
+user=$(prompt "Enter the user (default: user)" "user")
+password=$(prompt "Enter the password (default: password124)" "password124")
 locale=$(prompt "Enter the locale (default: en_GB.UTF-8)" "en_GB.UTF-8")
-timezone=$(prompt "Enter the timezone (default: Europe/london)" "Europe/London")
+timezone=$(prompt "Enter the timezone (default: Europe/London)" "Europe/London")
 
 # Prompt for partition sizes
 boot_size=$(prompt "Enter the size for the boot partition (e.g., 512M)" "512M")
-root_size=$(prompt "Enter the size for the root partition (e.g., 20G or use remaining space)" "20G")
+root_size=$(prompt "Enter the size for the root partition (e.g., 20G)" "20G")
+
+# Confirm disk operations
+read -p "Are you sure you want to proceed with partitioning $disk? (y/n) " confirm
+[[ "$confirm" != "y" ]] && exit 1
+
+# Determine disk prefix
+if [[ "$disk" == /dev/nvme* ]]; then
+    disk_prefix="p"
+else
+    disk_prefix=""
+fi
 
 # Partition the disk
 (
@@ -29,28 +40,32 @@ echo n # New partition for boot
 echo p # Primary
 echo 1 # Partition number
 echo   # First sector (Accept default: will start at the beginning of the disk)
-echo +$boot_size # Size of the boot partition
+echo +"$boot_size" # Size of the boot partition
 echo n # New partition for root
 echo p # Primary
 echo 2 # Partition number
 echo   # First sector (Accept default)
-echo +$root_size # Size of the root partition
+echo +"$root_size" # Size of the root partition
 echo n # New partition for swap or additional partitions if required
 echo p # Primary
 echo 3 # Partition number
 echo   # First sector (Accept default)
 echo   # Last sector (Accept default: will use remaining space)
 echo w # Write the partition table
-) | fdisk $disk
+) | fdisk "$disk"
 
 # Format the partitions
-mkfs.fat -F32 "${disk}1" # Format the boot partition
-mkfs.ext4 "${disk}2" # Format the root partition
+mkfs.fat -F32 "$disk$disk_prefix"1 || { echo "Failed to format boot partition" && exit 1; }
+mkfs.ext4 "$disk$disk_prefix"2 || { echo "Failed to format root partition" && exit 1; }
 
 # Mount the filesystems
-mount "${disk}2" /mnt
+mount "$disk$disk_prefix"2 /mnt
 mkdir /mnt/boot
-mount "${disk}1" /mnt/boot
+mount "$disk$disk_prefix"1 /mnt/boot
+
+# Swap
+mkswap "$disk$disk_prefix"3 || { echo "Failed to format swap partition" && exit 1; }
+swapon "$disk$disk_prefix"3 || { echo "Failed to enable swap partition" && exit 1; }
 
 # Install the base system
 pacstrap /mnt base linux linux-firmware vim
@@ -76,14 +91,14 @@ echo "$hostname" > /etc/hostname
 echo "root:$password" | chpasswd
 
 # Create a new user
-useradd -m -G wheel "$username"
-echo "$username:$password" | chpasswd
+useradd -m -G wheel "$user"
+echo "$user:$password" | chpasswd
 
 # Enable sudo for wheel group
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
 # Install necessary packages
-pacman -S --noconfirm grub efibootmgr systemd i3 gcc amd-ucode
+pacman -Syu --noconfirm grub efibootmgr systemd i3 gcc amd-ucode
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -95,10 +110,10 @@ sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
 # Setting up LazyOS
 git clone https://aur.archlinux.org/yay-bin.git
-sudo chown "$username:$username" -R yay-bin && cd yay-bin 
+sudo chown "$user:$user" -R yay-bin && cd yay-bin 
 makepkg -si && cd ..
 
-yay -Syu steam wine firefox flatpak bluez bluez-utils i3 git nmap wireshark-qt amd-ucode neovim vim john hydra aircrack-ng sqlmap hashcat nikto openbsd-netcat metasploit amd_ucode kitty systemd base xdg-desktop-portal xdg-desktop-portal-gtk base-devel efibootmgr sof-firmware mesa xf86-video-nouveau vulkan-mesa-layers lib32-vulkan-mesa-layers nvidia-prime nvidia nvidia-dkms nvidia-utils systemd linux linux-headers linux-firmware networkmanager network-manager-applet wireless_tools neofetch gvfs pavucontrol polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts nano rofi curl make cmake meson obsidian man-db xdotool thunar nitrogen flameshot zip unzip mpv btop emacs noto-fonts picom wireplumber dunst xarchiver eza thunar-archive-plugin
+yay -S steam wine firefox flatpak bluez bluez-utils i3 git nmap wireshark-qt amd-ucode neovim vim john hydra aircrack-ng sqlmap hashcat nikto openbsd-netcat metasploit amd_ucode kitty systemd base xdg-desktop-portal xdg-desktop-portal-gtk base-devel efibootmgr sof-firmware mesa xf86-video-nouveau vulkan-mesa-layers lib32-vulkan-mesa-layers nvidia-prime nvidia nvidia-dkms nvidia-utils systemd linux linux-headers linux-firmware networkmanager network-manager-applet wireless_tools neofetch gvfs pavucontrol polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts nano rofi curl make cmake meson obsidian man-db xdotool thunar nitrogen flameshot zip unzip mpv btop emacs noto-fonts picom wireplumber dunst xarchiver eza thunar-archive-plugin
 flatpak install --user https://sober.vinegarhq.org/sober.flatpakref
 
 sudo systemctl enable bluetooth.service
