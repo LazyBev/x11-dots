@@ -13,7 +13,7 @@ prompt() {
 # Ask for user input
 disk=$(prompt "Enter the disk to install Arch Linux (e.g., /dev/sda)" "/dev/sda")
 hostname=$(prompt "Enter the hostname (default: archlinux)" "archlinux")
-user=$(prompt "Enter the user (default: user)" "user")
+user=$(prompt "Enter the username (default: user)" "user")
 password=$(prompt "Enter the password (default: password124)" "password124")
 locale=$(prompt "Enter the locale (default: en_GB.UTF-8)" "en_GB.UTF-8")
 timezone=$(prompt "Enter the timezone (default: Europe/London)" "Europe/London")
@@ -21,6 +21,12 @@ timezone=$(prompt "Enter the timezone (default: Europe/London)" "Europe/London")
 # Prompt for partition sizes
 boot_size=$(prompt "Enter the size for the boot partition (e.g., 512M)" "512M")
 root_size=$(prompt "Enter the size for the root partition (e.g., 20G)" "20G")
+
+# GPU Driver selection
+gpu_driver=$(prompt "Enter GPU driver (options: nvidia, amd, intel, open-source):" "nvidia")
+
+# CPU Microcode selection
+cpu_ucode=$(prompt "Enter CPU microcode (options: amd-ucode, intel-ucode):" "amd-ucode")
 
 # Confirm disk operations
 read -p "Are you sure you want to proceed with partitioning $disk? (y/n) " confirm
@@ -103,20 +109,42 @@ sed -i '/ParallelDownloads/s/^#//g' /etc/pacman.conf
 sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
 sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
-# Install necessary packages
-pacman -Syu --noconfirm grub efibootmgr systemd i3 gcc amd-ucode networkmanager network-manager-applet nvidia nvidia-dkms nvidia-utils
+# Install necessary packages based on selections
+pacman -Syu --noconfirm grub efibootmgr systemd i3 gcc $cpu_ucode networkmanager network-manager-applet
+
+# GPU Driver installation
+case "$gpu_driver" in
+    nvidia)
+        pacman -S --noconfirm xf86-video-nouveau nvidia nvidia-dkms nvidia-utils
+        ;;
+    amd)
+        pacman -S --noconfirm xf86-video-amdgpu
+        ;;
+    intel)
+        pacman -S --noconfirm xf86-video-intel
+        ;;
+    open-source)
+        pacman -S --noconfirm mesa
+        ;;
+    *)
+        echo "Unknown GPU driver choice, skipping GPU driver installation."
+        ;;
+esac
+
+# GRUB Bootloader installation
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
-# Network Manager
-sudo systemctl disable dhcpcd
-sudo systemctl stop dhcpcd
-sudo systemctl enable NetworkManager
-sudo systemctl start NetworkManager
+# Network Manager setup
+systemctl disable dhcpcd
+systemctl stop dhcpcd
+systemctl enable NetworkManager
+systemctl start NetworkManager
 
 EOF
 
 # Unmount the partitions
 umount -R /mnt
 
+echo "Installation complete. Rebooting now."
 reboot
