@@ -36,6 +36,7 @@ done
 mkdir -p "$HOME/.config/neofetch/" && sudo cp --parents -rpf "$HOME/dotfiles/neofetch/bk" "$HOME/.config/neofetch/"
 mkdir -p "$HOME/Pictures/" && sudo cp -rpf "$HOME/dotfiles/Pictures/bgpic.jpg" "$HOME/Pictures/"
 sudo cp -rpf "$HOME/dotfiles/Misc/pacman.conf" "$HOME/.config/"
+mkdir -p "$HOME/Videos/"
 
 ~/.config/emacs/bin/doom install
 ~/.config/emacs/bin/doom sync
