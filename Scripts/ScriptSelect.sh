@@ -5,10 +5,8 @@ echo -n "1) Install My Config"
 echo -n "2) Update Installed Config"
 echo -n "3) Nvidia GPU Script"
 echo -n "4) Gaming Script"
-echo -n "5) All"
+echo -n "5) Bluetooth Script"
 read -p ": " scr
-
-cd Scripts
 
 case "$scr" in
   1)
@@ -32,9 +30,8 @@ case "$scr" in
     ;;
   
   5)
-    for script in Config UpdateConfig Nvidia Gaming; do
-        sudo chmod +x ./"$script".sh && ./"$script".sh
-    done
+    sudo chmod +x ./Bluetooth.sh
+    ./Bluetooth.sh
     ;;
   
   *)
