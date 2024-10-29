@@ -98,7 +98,7 @@ echo "$user:$password" | chpasswd
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
 # Install necessary packages
-pacman -Syu --noconfirm grub efibootmgr systemd i3 gcc amd-ucode
+pacman -Syu --noconfirm grub efibootmgr systemd i3 gcc amd-ucode networkmanager
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
