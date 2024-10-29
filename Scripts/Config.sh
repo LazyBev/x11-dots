@@ -1,8 +1,6 @@
 #!/bin/bash
 
-set -e
-set -a
-set -u
+set -eau
 
 user=$(whoami)
 
