@@ -36,7 +36,7 @@ Name="Group 2"
 # Layout
 Default Layout=gb
 # Default Input Method
-DefaultIM=keyboard-ru-phonetic
+DefaultIM=keyboard-ru
 
 [Groups/1/Items/0]
 # Name
@@ -58,17 +58,16 @@ Layout=
 
 [Groups/1/Items/3]
 # Name
-Name=cangjie
+Name=keyboard-cn-altgr-pinyin
 # Layout
 Layout=
 
 [Groups/1/Items/4]
 # Name
-Name=keyboard-cn-altgr-pinyin
+Name=keyboard-gr
 # Layout
 Layout=
 
 [GroupOrder]
 0="Group 2"
 1="Group 1"
-
