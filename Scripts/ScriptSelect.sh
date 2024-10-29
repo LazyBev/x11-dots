@@ -40,8 +40,8 @@ case "$scr" in
     ;;
     
   6)
-    sudo chmod +x ./LazyArch.sh
-    ./LazyArch.sh
+    sudo chmod +x ./All.sh
+    ./All.sh
     ;;
     
   *)
