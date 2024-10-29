@@ -97,16 +97,22 @@ echo "$user:$password" | chpasswd
 # Enable sudo for wheel group
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
-# Install necessary packages
-pacman -Syu --noconfirm grub efibootmgr systemd i3 gcc amd-ucode networkmanager
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
-grub-mkconfig -o /boot/grub/grub.cfg
-
 # Pacman.conf
 sed -i '/Color/s/^#//g' /etc/pacman.conf
 sed -i '/ParallelDownloads/s/^#//g' /etc/pacman.conf
 sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
 sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
+
+# Install necessary packages
+pacman -Syu --noconfirm grub efibootmgr systemd i3 gcc amd-ucode networkmanager network-manager-applet
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# Network Manager
+sudo systemctl disable dhcpcd
+sudo systemctl stop dhcpcd
+sudo systemctl enable NetworkManager
+sudo systemctl start NetworkManager
 
 # Setting up LazyOS
 git clone https://aur.archlinux.org/yay-bin.git
