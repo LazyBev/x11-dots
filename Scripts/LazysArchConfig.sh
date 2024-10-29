@@ -152,8 +152,6 @@ sudo cp -rpf "$HOME/dotfiles/Misc/picom.conf" "$HOME/.config/"
 prop=""
 NVIDIA_VENDOR="0x10de"
 
-yay -S --noconfirm xf86-video-nouveau vulkan-mesa-layers lib32-vulkan-mesa-layers nvidia-prime nvidia nvidia-dkms nvidia-utils
-
 # Check available graphics providers and OpenGL renderer
 xrandr --listproviders && glxinfo | grep "OpenGL renderer"
 
