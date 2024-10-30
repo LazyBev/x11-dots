@@ -110,7 +110,7 @@ sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
 sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
 # Install necessary packages based on selections
-pacman -Syu --noconfirm grub efibootmgr systemd i3 gcc $cpu_ucode networkmanager network-manager-applet
+pacman -Syu --noconfirm grub efibootmgr systemd i3 gcc $cpu_ucode networkmanager network-manager-applet pulseaudio 
 
 # GPU Driver installation
 case "$gpu_driver" in
