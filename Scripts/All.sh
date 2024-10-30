@@ -31,7 +31,7 @@ sudo cp -rpf "$HOME/.config" "$HOME/configBackup"
 echo "----- Backup made at $HOME/configBackup ------"
 
 # Copy configurations
-for config in dunst fcitx5 mozc fish i3 nvim rofi omf; do
+for config in dunst fcitx5 fish i3 nvim rofi omf; do
     sudo cp -rpf "$HOME/dotfiles/$config" "$HOME/.config/";
 done
 
