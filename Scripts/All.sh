@@ -31,7 +31,7 @@ sudo cp -rpf "$HOME/.config" "$HOME/configBackup"
 echo "----- Backup made at $HOME/configBackup ------"
 
 # Copy configurations
-for config in dunst fcitx5 fish i3 nvim rofi omf; do
+for config in .emacs.d dunst fcitx5 fish i3 nvim rofi omf; do
     sudo cp -rpf "$HOME/dotfiles/$config" "$HOME/.config/";
 done
 
@@ -43,8 +43,11 @@ mkdir -p "$HOME/.config/neofetch/" && sudo cp --parents -rpf "$HOME/dotfiles/neo
 mkdir -p "$HOME/Pictures/" && sudo cp -rpf "$HOME/dotfiles/Pictures/bgpic.jpg" "$HOME/Pictures/"
 mkdir -p "$HOME/Videos/"
 
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 ~/.config/emacs/bin/doom install
 ~/.config/emacs/bin/doom sync
+~/.config/emacs/bin/doom upgrade
+~/.config/emacs/bin/doom env
 
 # Install the necessary packages
 prop=""
@@ -93,10 +96,8 @@ cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_suspended_time
 echo "Starting and enabling NVIDIA persistence daemon..."
 sudo systemctl start nvidia-persistenced.service
 sudo systemctl enable nvidia-persistenced.service
-    
-yay -S fish
 
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-chsh -s /usr/bin/fish
+curl -sS https://starship.rs/install.sh | sh
+echo "eval "$(starship init bash)"" | tee -a ~/.bashrc
 
 reboot
