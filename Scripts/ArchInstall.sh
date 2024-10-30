@@ -21,6 +21,7 @@ timezone=$(prompt "Enter the timezone (default: Europe/London)" "Europe/London")
 # Prompt for partition sizes
 boot_size=$(prompt "Enter the size for the boot partition (e.g., 512M)" "512M")
 root_size=$(prompt "Enter the size for the root partition (e.g., 20G)" "20G")
+swap_size=$(prompt "Enter the size for the swap partition (e.g., 2G)" "2G")
 
 # GPU Driver selection
 gpu_driver=$(prompt "Enter GPU driver (options: nvidia, amd, intel, open-source):" "nvidia")
@@ -40,41 +41,49 @@ else
 fi
 
 # Partition the disk
-(
+{
 echo o # Create a new empty GPT partition table
 echo n # New partition for boot
 echo p # Primary
 echo 1 # Partition number
 echo   # First sector (Accept default: will start at the beginning of the disk)
 echo +"$boot_size" # Size of the boot partition
+echo t # Set the type for this partition
+echo 1 # Type for EFI System (EFI boot partition)
 echo n # New partition for root
 echo p # Primary
 echo 2 # Partition number
 echo   # First sector (Accept default)
-echo +"$root_size" # Size of the root partition
+echo +"$swap_size" # Size of the root partition
+echo t # Set the type for this partition
+echo 2 # Select the swap partition
+echo 19 # Type for Linux swap
 echo n # New partition for swap or additional partitions if required
 echo p # Primary
 echo 3 # Partition number
 echo   # First sector (Accept default)
-echo   # Last sector (Accept default: will use remaining space)
+echo +"$root_size" # Size of the root partition
+echo t # Set the type for this partition
+echo 3 # Select the root partition
+echo 20 # Type for Linux filesystem
 echo w # Write the partition table
-) | fdisk "$disk"
+} | fdisk "$disk"
 
 # Format the partitions
-mkfs.fat -F32 "$disk$disk_prefix"1 || { echo "Failed to format boot partition" && exit 1; }
-mkfs.ext4 "$disk$disk_prefix"2 || { echo "Failed to format root partition" && exit 1; }
+mkfs.fat -F32 "$disk$disk_prefix"1 || { echo "Failed to format boot partition"; exit 1; }
+mkfs.ext4 "$disk$disk_prefix"2 || { echo "Failed to format root partition"; exit 1; }
+mkswap "$disk$disk_prefix"3 || { echo "Failed to format swap partition"; exit 1; }
 
 # Mount the filesystems
 mount "$disk$disk_prefix"2 /mnt
-mkdir /mnt/boot
+mkdir -p /mnt/boot
 mount "$disk$disk_prefix"1 /mnt/boot
 
-# Swap
-mkswap "$disk$disk_prefix"3 || { echo "Failed to format swap partition" && exit 1; }
-swapon "$disk$disk_prefix"3 || { echo "Failed to enable swap partition" && exit 1; }
+# Enable swap
+swapon "$disk$disk_prefix"3 || { echo "Failed to enable swap partition"; exit 1; }
 
 # Install the base system
-pacstrap /mnt base linux linux-firmware vim
+pacstrap /mnt base linux linux-firmware vim || { echo "Failed to install base system"; exit 1; }
 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -103,19 +112,19 @@ echo "$user:$password" | chpasswd
 # Enable sudo for wheel group
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
-# Pacman.conf
+# Pacman configuration
 sed -i '/Color/s/^#//g' /etc/pacman.conf
 sed -i '/ParallelDownloads/s/^#//g' /etc/pacman.conf
 sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
 sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
 # Install necessary packages based on selections
-pacman -Syu --noconfirm grub efibootmgr systemd i3 gcc $cpu_ucode networkmanager network-manager-applet pulseaudio 
+pacman -Syu --noconfirm grub efibootmgr systemd i3 gcc "$cpu_ucode" networkmanager network-manager-applet pulseaudio
 
 # GPU Driver installation
 case "$gpu_driver" in
     nvidia)
-        pacman -S --noconfirm xf86-video-nouveau nvidia nvidia-dkms nvidia-utils
+        pacman -S --noconfirm nvidia-dkms nvidia-utils
         ;;
     amd)
         pacman -S --noconfirm xf86-video-amdgpu
@@ -132,8 +141,8 @@ case "$gpu_driver" in
 esac
 
 # GRUB Bootloader installation
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
-grub-mkconfig -o /boot/grub/grub.cfg
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB || { echo "Failed to install GRUB"; exit 1; }
+grub-mkconfig -o /boot/grub/grub.cfg || { echo "Failed to generate GRUB configuration"; exit 1; }
 
 # Network Manager setup
 systemctl disable dhcpcd
@@ -144,7 +153,7 @@ systemctl start NetworkManager
 EOF
 
 # Unmount the partitions
-umount -R /mnt
+umount -R /mnt || { echo "Failed to unmount partitions"; exit 1; }
 
 echo "Installation complete. Rebooting now."
 reboot
