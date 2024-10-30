@@ -1,24 +1,18 @@
 #!/bin/bash
 
-echo "---- Making backup at $HOME/configBackup -----"
-sudo cp -rpf $HOME/.config $HOME/configBackup 
-echo "----- Backup made at $HOME/configBackup ------"
+# Backup configurations
+backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
+echo "---- Making backup at $backup_dir -----"
+mkdir -p "$backup_dir"
+sudo cp -rpf "$HOME/.config" "$backup_dir"
+echo "----- Backup made at $backup_dir ------"
 
-sudo cp -rpf $HOME/dotfiles/.emacs.d $HOME
-sudo cp -rpf $HOME/dotfiles/neofetch/bk $HOME/.config/neofetch
-sudo cp -rpf $HOME/dotfiles/dunst $HOME/.config
-sudo cp -rpf $HOME/dotfiles/Pictures/bgpic.jpg ../Pictures
-sudo cp -rpf $HOME/dotfiles/fcitx5 $HOME/.config
-sudo cp -rpf $HOME/dotfiles/mozc $HOME/.config
-sudo cp -rpf $HOME/dotfiles/fonts/fontconfig $HOME/.config
-sudo cp -rpf $HOME/dotfiles/fonts/MartianMono $HOME/.local/share/fonts
-sudo cp -rpf $HOME/dotfiles/fonts/SF-Mono-Powerline $HOME/.local/share/fonts
-sudo cp -rpf $HOME/dotfiles/fish $HOME/.config
-sudo cp -rpf $HOME/dotfiles/i3 $HOME/.config
-sudo cp -rpf $HOME/dotfiles/nvim $HOME/.config
-sudo cp -rpf $HOME/dotfiles/rofi $HOME/.config
-sudo cp -rpf $HOME/dotfiles/omf $HOME/.config
-sudo cp -rpf $HOME/dotfiles/Misc/picom.conf $HOME/.config
-sudo cp -rpf $HOME/dotfiles/Misc/pacman.conf /etc
+for config in .emacs.d dunst fcitx5 i3 nvim rofi omf; do
+    sudo cp -rpf "$HOME/dotfiles/$config" "$HOME/.config/" || echo "Failed to copy $config"
+done
+
+for fonts in fonts/MartianMono fonts/SF-Mono-Powerline fonts/fontconfig; do
+    sudo cp -rpf "$HOME/dotfiles/$fonts" "$HOME/.local/share/fonts/" || echo "Failed to copy $fonts"
+done
 
 echo "Press Mod + Shift + c to refresh i3 config"
