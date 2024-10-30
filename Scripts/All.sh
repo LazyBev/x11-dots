@@ -5,6 +5,12 @@ set -eau
 # Variables
 user=$(whoami)
 
+# Pacman.conf
+sed -i '/Color/s/^#//g' /etc/pacman.conf
+sed -i '/ParallelDownloads/s/^#//g' /etc/pacman.conf
+sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
+sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
+
 # Packages
 git clone https://aur.archlinux.org/yay-bin.git
 sudo chown "$user:$user" -R yay-bin && cd yay-bin 
@@ -36,12 +42,6 @@ done
 mkdir -p "$HOME/.config/neofetch/" && sudo cp --parents -rpf "$HOME/dotfiles/neofetch/bk" "$HOME/.config/neofetch/"
 mkdir -p "$HOME/Pictures/" && sudo cp -rpf "$HOME/dotfiles/Pictures/bgpic.jpg" "$HOME/Pictures/"
 mkdir -p "$HOME/Videos/"
-
-# Pacman.conf
-sed -i '/Color/s/^#//g' /etc/pacman.conf
-sed -i '/ParallelDownloads/s/^#//g' /etc/pacman.conf
-sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
-sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
 ~/.config/emacs/bin/doom install
 ~/.config/emacs/bin/doom sync
