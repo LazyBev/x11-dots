@@ -119,7 +119,7 @@ sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
 sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
 # Install necessary packages based on selections
-pacman -Syu --noconfirm grub efibootmgr systemd i3 gcc "$cpu_ucode" networkmanager network-manager-applet pulseaudio
+pacman -Syu --noconfirm grub efibootmgr pavucontrol kitty systemd i3 gcc pulseaudio-bluetooth bluez bluez-utils "$cpu_ucode" networkmanager network-manager-applet pulseaudio
 
 # GPU Driver installation
 case "$gpu_driver" in
@@ -149,6 +149,13 @@ systemctl disable dhcpcd
 systemctl stop dhcpcd
 systemctl enable NetworkManager
 systemctl start NetworkManager
+
+# Bluetooth
+sudo systemctl enable bluetooth.service
+sudo systemctl start bluetooth.service
+lsusb | grep -i bluetooth
+sudo systemctl daemon-reload
+sudo systemctl restart pulseaudio
 
 EOF
 
