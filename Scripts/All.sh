@@ -99,5 +99,6 @@ sudo systemctl enable nvidia-persistenced.service
 
 curl -sS https://starship.rs/install.sh | sh
 echo "eval "$(starship init bash)"" | tee -a ~/.bashrc
+chsh -s /bin/bash
 
 reboot
