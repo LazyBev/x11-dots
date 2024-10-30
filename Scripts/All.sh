@@ -27,7 +27,7 @@ else
 fi
 
 # Install packages
-packages=(steam wine firefox flatpak bluez bluez-utils i3 git github-cli nmap wireshark-qt amd-ucode neovim vim john hydra aircrack-ng sqlmap hashcat nikto openbsd-netcat metasploit amd_ucode kitty systemd base xdg-desktop-portal xdg-desktop-portal-gtk base-devel efibootmgr sof-firmware mesa xf86-video-nouveau vulkan-mesa-layers lib32-vulkan-mesa-layers nvidia-prime arch-install-scripts nvidia-dkms nvidia-utils systemd linux linux-headers linux-firmware networkmanager network-manager-applet wireless_tools neofetch gvfs pavucontrol polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts nano rofi curl make cmake meson obsidian man-db xdotool thunar nitrogen flameshot zip unzip mpv btop emacs noto-fonts picom pulseaudio wireplumber dunst xarchiver eza thunar-archive-plugin)
+packages=(steam wine firefox flatpak pulseaudio-bluetooth bluez bluez-utils i3 git github-cli nmap wireshark-qt amd-ucode neovim vim john hydra aircrack-ng sqlmap hashcat nikto openbsd-netcat metasploit amd_ucode kitty systemd base xdg-desktop-portal xdg-desktop-portal-gtk base-devel efibootmgr sof-firmware mesa xf86-video-nouveau vulkan-mesa-layers lib32-vulkan-mesa-layers nvidia-prime arch-install-scripts nvidia-dkms nvidia-utils systemd linux linux-headers linux-firmware networkmanager network-manager-applet wireless_tools neofetch gvfs pavucontrol polkit-gnome lxappearance bottom fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts nano rofi curl make cmake meson obsidian man-db xdotool thunar nitrogen flameshot zip unzip mpv btop emacs noto-fonts picom pulseaudio wireplumber dunst xarchiver eza thunar-archive-plugin)
 yay -Syu "${packages[@]}"
 flatpak install --user https://sober.vinegarhq.org/sober.flatpakref
 
@@ -36,6 +36,7 @@ sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
 lsusb | grep -i bluetooth
 sudo systemctl daemon-reload
+sudo systemctl restart pulseaudio
 
 # Backup configurations
 backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
