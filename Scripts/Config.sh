@@ -38,7 +38,7 @@ sudo cp -rpf "$HOME/.config" "$backup_dir"
 echo "----- Backup made at $backup_dir ------"
 
 # Copy configurations
-for config in .emacs.d dunst fcitx5 fish i3 nvim rofi omf; do
+for config in .emacs.d dunst fcitx5 i3 nvim rofi omf; do
     sudo cp -rpf "$HOME/dotfiles/$config" "$HOME/.config/" || echo "Failed to copy $config"
 done
 
