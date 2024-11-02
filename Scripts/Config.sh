@@ -57,4 +57,4 @@ curl -sS https://starship.rs/install.sh | sh
 echo 'eval "$(starship init bash)"' >> ~/.bashrc
 chsh -s /bin/bash
 
-reboot
+echo -4 "Make sure to reboot..."
