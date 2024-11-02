@@ -4,13 +4,13 @@ set -e
 set -a
 set -u
 
-echo -n "Choose a script to run."
-echo -n "1) Install My Config"
-echo -n "2) Update Installed Config"
-echo -n "3) Nvidia GPU Script"
-echo -n "4) Gaming Script"
-echo -n "5) Bluetooth Script"
-echo -n "6) All"
+echo -e "Choose a script to run."
+echo -e "1) Install My Config"
+echo -e "2) Update Installed Config"
+echo -e "3) Nvidia GPU Script"
+echo -e "4) Gaming Script"
+echo -e "5) Bluetooth Script"
+echo -e "6) All"
 read -p ": " scr
 
 case "$scr" in
