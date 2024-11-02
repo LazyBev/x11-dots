@@ -7,5 +7,3 @@ sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
 lsusb | grep -i bluetooth
 sudo systemctl daemon-reload
-
-reboot
