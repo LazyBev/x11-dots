@@ -51,4 +51,4 @@ echo "Starting and enabling NVIDIA persistence daemon..."
 sudo systemctl start nvidia-persistenced.service
 sudo systemctl enable nvidia-persistenced.service
 
-reboot
+echo -e "Make sure to reboot..."
