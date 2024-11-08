@@ -52,6 +52,10 @@ mkdir -p "$HOME/.config/neofetch/" && sudo cp --parents -rpf "$HOME/dotfiles/neo
 mkdir -p "$HOME/Pictures/" && sudo cp -rpf "$HOME/dotfiles/Pictures/bgpic.jpg" "$HOME/Pictures/"
 mkdir -p "$HOME/Videos/"
 
+# Pulseaudio
+sudo sed -i '/load-module module-suspend-on-idle/s/^/# /' /etc/pulse/default.pa
+pulseaudio -k && pulseaudio --start
+
 # Install Starship
 curl -sS https://starship.rs/install.sh | sh
 echo 'eval "$(starship init bash)"' >> ~/.bashrc
