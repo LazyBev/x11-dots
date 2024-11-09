@@ -157,6 +157,10 @@ lsusb | grep -i bluetooth
 sudo systemctl daemon-reload
 sudo systemctl restart pulseaudio
 
+# Pulseaudio
+sudo sed -i '/load-module module-suspend-on-idle/s/^/# /' /etc/pulse/default.pa
+pulseaudio -k && pulseaudio --start
+
 EOF
 
 # Unmount the partitions
