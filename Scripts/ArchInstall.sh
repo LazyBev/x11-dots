@@ -18,10 +18,8 @@ password=$(prompt "Enter the password (default: password124)" "password124")
 locale=$(prompt "Enter the locale (default: en_GB.UTF-8)" "en_GB.UTF-8")
 timezone=$(prompt "Enter the timezone (default: Europe/London)" "Europe/London")
 
-# Prompt for partition sizes
-boot_size=$(prompt "Enter the size for the boot partition (e.g., 512M)" "512M")
-root_size=$(prompt "Enter the size for the root partition (e.g., 20G)" "20G")
-swap_size=$(prompt "Enter the size for the swap partition (e.g., 2G)" "2G")
+# Partitioning 
+cfdisk $disk
 
 # GPU Driver selection
 gpu_driver=$(prompt "Enter GPU driver (options: nvidia, amd, intel, open-source):" "nvidia")
@@ -39,35 +37,6 @@ if [[ "$disk" == /dev/nvme* ]]; then
 else
     disk_prefix=""
 fi
-
-# Partition the disk
-{
-echo o # Create a new empty GPT partition table
-echo n # New partition for boot
-echo p # Primary
-echo 1 # Partition number
-echo   # First sector (Accept default: will start at the beginning of the disk)
-echo +"$boot_size" # Size of the boot partition
-echo t # Set the type for this partition
-echo 1 # Type for EFI System (EFI boot partition)
-echo n # New partition for root
-echo p # Primary
-echo 2 # Partition number
-echo   # First sector (Accept default)
-echo +"$swap_size" # Size of the root partition
-echo t # Set the type for this partition
-echo 2 # Select the swap partition
-echo 19 # Type for Linux swap
-echo n # New partition for swap or additional partitions if required
-echo p # Primary
-echo 3 # Partition number
-echo   # First sector (Accept default)
-echo +"$root_size" # Size of the root partition
-echo t # Set the type for this partition
-echo 3 # Select the root partition
-echo 20 # Type for Linux filesystem
-echo w # Write the partition table
-} | fdisk "$disk"
 
 # Format the partitions
 mkfs.fat -F32 "$disk$disk_prefix"1 || { echo "Failed to format boot partition"; exit 1; }
