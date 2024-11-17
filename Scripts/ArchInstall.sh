@@ -52,13 +52,13 @@ mount "$disk$disk_prefix"1 /mnt/boot
 swapon "$disk$disk_prefix"3 || { echo "Failed to enable swap partition"; exit 1; }
 
 # Install the base system
-pacstrap /mnt base linux linux-firmware vim || { echo "Failed to install base system"; exit 1; }
+pacstrap -K /mnt base linux linux-firmware vim || { echo "Failed to install base system"; exit 1; }
 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # Chroot into the new system
-arch-chroot /mnt /bin/bash <<EOF
+arch-chroot /mnt <<EOF
 # Set timezone
 ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
 hwclock --systohc
