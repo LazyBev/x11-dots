@@ -1,7 +1,6 @@
 #!/bin/bash
 
-set -eaun
-exec > >(tee -i /var/log/arch_install.log) 2>&1
+set -eau
 
 trap 'echo "An error occurred. Cleaning up..."; umount -R /mnt || true; swapoff ${disk}${disk_prefix}3 || true; exit 1' ERR
 
@@ -33,6 +32,9 @@ echo "Initializing pacman keyring..."
 sudo pacman-key --init
 sudo pacman-key --populate archlinux
 sudo pacman-key --refresh-keys
+
+lsblk
+
 # Partition sizes
 boot_size=$(prompt "Enter boot partition size in MiB (default: 512)" "512")
 swap_size=$(prompt "Enter swap partition size in MiB (default: 2048)" "2048")
