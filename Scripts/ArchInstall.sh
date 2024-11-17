@@ -29,8 +29,6 @@ locale=$(prompt "Enter the locale (default: en_GB.UTF-8)" "en_GB.UTF-8")
 timezone=$(prompt "Enter the timezone (default: Europe/London)" "Europe/London")
 
 echo "Initializing pacman keyring..."
-sudo pacman-key --init
-sudo pacman-key --populate archlinux
 sudo pacman-key --refresh-keys
 
 lsblk
