@@ -98,7 +98,7 @@ sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 sudo pacman -Syu --noconfirm pavucontrol kitty gcc pulseaudio-bluetooth bluez bluez-utils "$cpu_ucode"-ucode networkmanager network-manager-applet pulseaudio 
 
 # Install graphical
-sudo pacman -Syu --noconfirm intel-media-driver Mesa xf86-video-amdgpu xf86-video-ati xorg-init xorg-server vulkan-intel libva-mesa-driver vulkan-radeon xf86-video-nouveau i3
+sudo pacman -S --noconfirm intel-media-driver Mesa xf86-video-amdgpu xf86-video-ati xorg-init xorg-server vulkan-intel libva-mesa-driver vulkan-radeon xf86-video-nouveau i3
 
 # GRUB Bootloader installation
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB || { echo "Failed to install GRUB"; exit 1; }
