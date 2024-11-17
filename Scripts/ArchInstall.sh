@@ -33,10 +33,26 @@ echo "Initializing pacman keyring..."
 sudo pacman-key --init
 sudo pacman-key --populate archlinux
 sudo pacman-key --refresh-keys
+# Partition sizes
+boot_size=$(prompt "Enter boot partition size in MiB (default: 512)" "512")
+swap_size=$(prompt "Enter swap partition size in MiB (default: 2048)" "2048")
+root_size=$(prompt "Enter root partition size in MiB (default: rest of the disk)" "100%")
 
-# Partitioning
-echo "Launching cfdisk for manual partitioning..."
-cfdisk "$disk"
+# Confirm disk operations
+read -p "WARNING: This will erase all data on $disk. Continue? (y/n): " confirm
+[[ "$confirm" != "y" ]] && exit 1
+
+# Wipe the disk and partition
+echo "Wiping $disk and creating partitions..."
+wipefs -a "$disk"
+parted -s "$disk" mklabel gpt
+
+# Partition the disk
+parted -s "$disk" mkpart ESP fat32 1MiB "$((boot_size + 1))MiB"
+parted -s "$disk" set 1 boot on
+parted -s "$disk" mkpart primary linux-swap "$((boot_size + 1))MiB" "$((boot_size + swap_size + 1))MiB"
+parted -s "$disk" mkpart primary ext4 "$((boot_size + swap_size + 1))MiB" "$root_size"
+
 
 # Determine disk prefix for NVMe or standard drives
 if [[ "$disk" == /dev/nvme* ]]; then
