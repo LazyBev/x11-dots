@@ -75,6 +75,9 @@ echo "$locale UTF-8" > /etc/locale.gen
 locale-gen
 echo "LANG=$locale" > /etc/locale.conf
 
+# Keyboard 
+loadkeys $keyboard
+
 # Hostname
 echo "$hostname" > /etc/hostname
 
