@@ -31,11 +31,8 @@ sudo pacman-key --refresh-keys
 # Partitioning 
 cfdisk $disk
 
-# GPU Driver selection
-gpu_driver=$(prompt "Enter GPU driver (options: nvidia, amd, intel, open-source):" "nvidia")
-
 # CPU Microcode selection
-cpu_ucode=$(prompt "Enter CPU microcode (options: amd-ucode, intel-ucode):" "amd-ucode")
+cpu_ucode=$(prompt "Enter CPU microcode (options: amd, intel):" "amd")
 
 # Confirm disk operations
 read -p "Are you sure you want to proceed with partitioning $disk? (y/n) " confirm
@@ -62,7 +59,7 @@ mount "$disk$disk_prefix"1 /mnt/boot
 swapon "$disk$disk_prefix"3 || { echo "Failed to enable swap partition"; exit 1; }
 
 # Install the base system
-pacstrap -K /mnt base linux linux-firmware vim || { echo "Failed to install base system"; exit 1; }
+pacstrap -K /mnt base linux linux-firmware grub efibootmgr systemd vim || { echo "Failed to install base system"; exit 1; }
 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -98,26 +95,10 @@ sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
 sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
 # Install necessary packages based on selections
-pacman -Syu --noconfirm grub efibootmgr pavucontrol kitty systemd i3 gcc pulseaudio-bluetooth bluez bluez-utils "$cpu_ucode" networkmanager network-manager-applet pulseaudio
+sudo pacman -Syu --noconfirm pavucontrol kitty gcc pulseaudio-bluetooth bluez bluez-utils "$cpu_ucode"-ucode networkmanager network-manager-applet pulseaudio 
 
-# GPU Driver installation
-case "$gpu_driver" in
-    nvidia)
-        pacman -S --noconfirm nvidia-dkms nvidia-utils
-        ;;
-    amd)
-        pacman -S --noconfirm xf86-video-amdgpu
-        ;;
-    intel)
-        pacman -S --noconfirm xf86-video-intel
-        ;;
-    open-source)
-        pacman -S --noconfirm mesa
-        ;;
-    *)
-        echo "Unknown GPU driver choice, skipping GPU driver installation."
-        ;;
-esac
+# Install graphical
+sudo pacman -Syu --noconfirm intel-media-driver Mesa xf86-video-amdgpu xf86-video-ati xorg-init xorg-server vulkan-intel libva-mesa-driver vulkan-radeon xf86-video-nouveau i3
 
 # GRUB Bootloader installation
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB || { echo "Failed to install GRUB"; exit 1; }
