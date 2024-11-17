@@ -15,8 +15,18 @@ disk=$(prompt "Enter the disk to install Arch Linux (e.g., /dev/sda)" "/dev/sda"
 hostname=$(prompt "Enter the hostname (default: archlinux)" "archlinux")
 user=$(prompt "Enter the username (default: user)" "user")
 password=$(prompt "Enter the password (default: password124)" "password124")
+keyboard=$(prompt "Enter key map for keyboard (default: UK)" "uk")
 locale=$(prompt "Enter the locale (default: en_GB.UTF-8)" "en_GB.UTF-8")
 timezone=$(prompt "Enter the timezone (default: Europe/London)" "Europe/London")
+
+echo "Initializing pacman keyring..."
+sudo pacman-key --init
+
+echo "Populating Arch Linux keyring..."
+sudo pacman-key --populate archlinux
+
+echo "Refreshing pacman keys..."
+sudo pacman-key --refresh-keys
 
 # Partitioning 
 cfdisk $disk
