@@ -25,7 +25,7 @@ fi
 hostname=$(prompt "Enter the hostname (default: archlinux)" "archlinux")
 user=$(prompt "Enter the username (default: user)" "user")
 password=$(prompt "Enter the password (default: password124)" "password124")
-keyboard=$(prompt "Enter key map for keyboard (default: UK)" "uk")
+keyboard=$(prompt "Enter key map for keyboard (default: uk)" "uk")
 locale=$(prompt "Enter the locale (default: en_GB.UTF-8)" "en_GB.UTF-8")
 timezone=$(prompt "Enter the timezone (default: Europe/London)" "Europe/London")
 
