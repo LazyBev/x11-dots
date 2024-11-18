@@ -159,7 +159,7 @@ case $de_choice in
     *) echo "Invalid choice. Exiting."; exit 1 ;;
 esac
 
-Install PulseAudio and related packages
+# Install PulseAudio and related packages
 echo "Installing and configuring PulseAudio..."
 sudo pacman -Sy --noconfirm pulseaudio pulseaudio-alsa pulseaudio-bluetooth alsa-utils pavucontrol
 
