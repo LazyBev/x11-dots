@@ -64,27 +64,17 @@ if [[ $auto == "auto" ]]; then
 
     # Partition the disk
     echo "Creating partitions on $disk..."
-    (
-    echo g    # Create a new GPT partition table
-    echo n    # Add a new partition for /boot
-    echo 1    # Partition number
-    echo      # Default - start at beginning of disk
-    echo +$boot_size # Size of /boot partition
-    echo t    # Change partition type
-    echo 1    # Set partition type to EFI (or BIOS boot if legacy)
-    echo n    # Add a new partition for swap
-    echo 2    # Partition number
-    echo      # Default - start after /boot
-    echo +$swap_size # Size of swap
-    echo t    # Change partition type
-    echo 2    # Select swap partition
-    echo 19   # Set partition type to Linux swap
-    echo n    # Add a new partition for /
-    echo 3    # Partition number
-    echo      # Default - start after swap
-    echo +$root_size # Size of / partition
-    echo w    # Write the partition table and exit
-    ) | fdisk "$disk"
+    parted "$disk" mklabel gpt # Create a new GPT partition table
+
+    # Create the /boot partition
+    parted -a optimal "$disk" mkpart primary fat32 1MiB "$boot_size"
+    parted "$disk" set 1 boot on # Set boot flag for /boot partition
+
+    # Create the swap partition
+    parted -a optimal "$disk" mkpart primary linux-swap "$boot_size" "$swap_size"
+
+    # Create the / partition
+    parted -a optimal "$disk" mkpart primary ext4 "$swap_size" "$root_size"
 else 
     echo "Launching cfdisk for manual partitioning"
     cfdisk "$disk"
