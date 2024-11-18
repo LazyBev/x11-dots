@@ -12,6 +12,8 @@ prompt() {
     echo "${input:-$default_value}"
 }
 
+lsblk
+
 # Ask for user input
 disk=$(prompt "Enter the disk to install Arch Linux (e.g., /dev/sda)" "/dev/sda")
 
