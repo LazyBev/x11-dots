@@ -79,6 +79,11 @@ genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt /bin/bash <<EOF
 set -e 
 
+install_packages() {
+    echo "Installing packages: $*"
+    sudo pacman -S --noconfirm $*
+}
+
 # Set timezone
 ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
 hwclock --systohc
@@ -107,7 +112,7 @@ sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
 sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
 # Install Xorg
-pacman -S --noconfirm xorg-server xorg-xinit
+pacman -S --noconfirm xorg-server xorg-xinit mesa
 
 # Prompt for desktop environment selection
 echo "Select a desktop environment to install:"
@@ -120,23 +125,23 @@ read -p "Enter your choice (1-5): " de_choice
 
 case $de_choice in
     1)
-        pacman -S --noconfirm gnome gnome-shell gnome-session gdm
+        install_packages gnome gnome-shell gnome-session gdm
         systemctl enable gdm
         ;;
     2)
-        pacman -S --noconfirm plasma kde-applications sddm
+        install_packages plasma kde-applications sddm
         systemctl enable sddm
         ;;
     3)
-        pacman -S --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter
+        install_packages xfce4 xfce4-goodies lightdm lightdm-gtk-greeter
         systemctl enable lightdm
         ;;
     4)
-        pacman -S --noconfirm mate mate-extra lightdm
+        install_packages mate mate-extra lightdm
         systemctl enable lightdm
         ;;
     5)
-        pacman -S --noconfirm i3 ly
+        install_packages i3 ly
         systemctl enable ly
         ;;
     *)
@@ -145,13 +150,29 @@ case $de_choice in
         ;;
 esac
 
+# Audio and media
+echo "Installing audio and media packages..."
+install_packages pipewire pipewire-pulse alsa-utils pavucontrol vlc
+
+# Network and Internet
+echo "Installing network and internet packages..."
+install_packages networkmanager nm-connection-editor firefox
+
+# Utilities
+echo "Installing utilities..."
+install_packages nano htop neofetch file-roller
+
+# Fonts
+echo "Installing fonts..."
+install_packages ttf-dejavu ttf-liberation noto-font
+
+# Enable essential services
+echo "Enabling essential services..."
+sudo systemctl enable NetworkManager
+
 # Configure GRUB
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
-
-# Enable essential services
-systemctl enable NetworkManager
-systemctl enable bluetooth.service
 EOF
 
 # Unmount the partitions
