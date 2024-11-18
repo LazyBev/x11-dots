@@ -32,6 +32,7 @@ export timezone=$(prompt "Enter the timezone" "Europe/London")
 export cpu=$(prompt "Enter your cpu's manufacturer" "amd") 
 
 timedatectl set-ntp true
+loadkeys "$keyboard"
 
 lsblk
 
@@ -92,6 +93,7 @@ ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
 hwclock --systohc
 
 # Localization
+loadkeys "$keyboard"
 echo "$locale UTF-8" > /etc/locale.gen
 locale-gen
 echo "LANG=$locale" > /etc/locale.conf
