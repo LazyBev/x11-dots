@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eau
+set -au
 
 trap 'echo "An error occurred. Cleaning up..."; umount -R /mnt || true; swapoff ${disk}${disk_prefix}3 || true; exit 1' ERR
 
