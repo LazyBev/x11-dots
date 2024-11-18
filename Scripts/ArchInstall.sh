@@ -151,7 +151,7 @@ sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
 sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
 # Install Xorg
-pacman -Syu --noconfirm xorg-server xorg-xinit mesa
+install_packages xorg-server xorg-xinit mesa
 
 # Prompt for desktop environment selection
 echo "Select a desktop environment to install:"
