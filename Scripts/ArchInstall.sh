@@ -30,9 +30,6 @@ keyboard=$(prompt "Enter key map for keyboard (default: uk)" "uk")
 locale=$(prompt "Enter the locale (default: en_GB.UTF-8)" "en_GB.UTF-8")
 timezone=$(prompt "Enter the timezone (default: Europe/London)" "Europe/London")
 
-echo "Initializing pacman keyring..."
-sudo pacman-key --refresh-keys
-
 lsblk
 
 # Partition sizes
