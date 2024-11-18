@@ -15,7 +15,7 @@ prompt() {
 lsblk
 
 # Ask for user input
-export disk=$(prompt "Enter the disk to install Arch Linux (e.g., /dev/sda)" "/dev/sda")
+export disk=$(prompt "Enter the disk to install Arch Linux (e.g., /dev/nvme0n1)" "/dev/nvme0n1")
 
 # Validate disk input
 if [[ ! -b "$disk" ]]; then
@@ -23,7 +23,7 @@ if [[ ! -b "$disk" ]]; then
     exit 1
 fi 
 
-export hostname=$(prompt "Enter the hostname" "archlinux")
+export hostname=$(prompt "Enter the hostname" "gentuwu")
 export user=$(prompt "Enter the username" "user")
 export password=$(prompt "Enter the password" "password124")
 export keyboard=$(prompt "Enter key map for keyboard" "uk")
@@ -43,7 +43,7 @@ lsblk
 # Prompt for partition sizes
 read -p "Enter size for /boot partition (e.g., 512M): " boot_size
 read -p "Enter size for swap partition (e.g., 2G): " swap_size
-read -p "Enter size for /root partition (e.g., 20G): " root_size
+read -p "Enter size for /root partition (e.g., 25G): " root_size
 echo "The remaining space will be used for /home."
 
 # Partition the disk
@@ -107,7 +107,7 @@ lsblk
 
 # Install the base system
 echo "Installing base system..."
-pacstrap -K /mnt base linux sudo linux-firmware grub efibootmgr vim "$cpu"-code
+pacstrap -K /mnt base linux sudo linux-firmware grub efibootmgr vim "$cpu"-ucode
 
 # Generate fstab
 echo "Generating fstab..."
