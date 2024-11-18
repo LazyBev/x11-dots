@@ -110,14 +110,15 @@ fi
 # Format the partitions
 echo "Formatting partitions..."
 mkfs.fat -F32 "${disk}${disk_prefix}1"
-mkfs.ext4 "${disk}${disk_prefix}2"
-mkswap "${disk}${disk_prefix}3"
+mkfs.ext4 "${disk}${disk_prefix}3"
+mkswap "${disk}${disk_prefix}2"
+mkfs.ext4 "${disk}${disk_prefix}4"
 
 # Mount the filesystems
 mount "${disk}${disk_prefix}2" /mnt
-mkdir -p /mnt/boot
-mount "${disk}${disk_prefix}1" /mnt/boot
+mount --mkdir "${disk}${disk_prefix}1" /mnt/boot
 swapon "${disk}${disk_prefix}3"
+mount --mkdir "${disk}${disk_prefix}1" /mnt/home
 
 lsblk
 
