@@ -116,7 +116,7 @@ lsblk
 
 # Install the base system
 echo "Installing base system..."
-pacstrap -K /mnt base linux sudo linux-firmware grub efibootmgr vim "$cpu"-ucode
+pacstrap -K /mnt base linux sudo linux-firmware lib32-glibc grub efibootmgr vim "$cpu"-ucode
 
 # Generate fstab
 echo "Generating fstab..."
