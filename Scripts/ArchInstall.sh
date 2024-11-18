@@ -190,9 +190,9 @@ sudo pacman -Sy --noconfirm nano htop neofetch file-roller
 
 # Fonts
 echo "Installing fonts..."
-sudo pacman -Sy --noconfirm ttf-dejavu ttf-liberation noto-font
+sudo pacman -Sy --noconfirm ttf-dejavu ttf-liberation
 
-# Enable essential services
+#essential services
 echo "Enabling essential services..."
 sudo systemctl enable NetworkManager
 
