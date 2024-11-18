@@ -55,7 +55,7 @@ export auto=$(prompt "Manual or auto disk partitioning" "auto")
 echo "Wiping $disk and creating partitions..."
 wipefs -af "$disk"
 
-if [[ $auto="auto" ]]; then
+if [[ $auto == "auto" ]]; then
     # Prompt for partition sizes
     read -p "Enter size for /boot partition (e.g., 512M): " boot_size
     read -p "Enter size for swap partition (e.g., 2G): " swap_size
@@ -90,6 +90,7 @@ if [[ $auto="auto" ]]; then
     echo w    # Write the partition table and exit
     ) | fdisk "$disk"
 else 
+    echo "Launching cfdisk for manual partitioning"
     cfdisk "$disk"
 fi 
 
