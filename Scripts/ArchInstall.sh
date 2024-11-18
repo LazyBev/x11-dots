@@ -160,9 +160,9 @@ case $de_choice in
     *) echo "Invalid choice. Exiting." ; exit 1 ;;
 esac
 
-# Audio and media
-echo "Installing audio and media packages..."
-sudo pacman -Sy --noconfirm pipewire pipewire-pulse alsa-utils pavucontrol vlc
+Install PulseAudio and related packages
+echo "Installing and configuring PulseAudio..."
+sudo pacman -Sy --noconfirm pulseaudio pulseaudio-alsa pulseaudio-bluetooth alsa-utils pavucontrol
 
 # Network and Internet
 echo "Installing network and internet packages..."
@@ -176,24 +176,32 @@ sudo pacman -Sy --noconfirm nano htop neofetch file-roller
 echo "Installing fonts..."
 sudo pacman -Sy --noconfirm ttf-dejavu ttf-liberation
 
-# Enable essential services
+# Enable Network
 echo "Enabling essential services..."
-sudo systemctl enable NetworkManager
+sudo systemctl --user enable NetworkManager 
+
+# Enable PulseAudio services
+echo "Enabling PulseAudio services..."
+sudo systemctl --user enable pulseaudio.service pulseaudio.socket
+
+# Ensure ALSA utilities are available
+echo "Configuring ALSA for audio..."
+sudo alsactl init
 
 # Enable time synchronization (choose chrony or ntpd)
 echo "Enabling time synchronization..."
 sudo pacman -Sy --noconfirm chrony
-sudo systemctl enable chronyd
+sudo systemctl --user enable chronyd
 
 # Enable power management (useful for laptops)
 echo "Enabling power management..."
 sudo pacman -Sy --noconfirm tlp
-sudo systemctl enable tlp
+sudo systemctl --user enable tlp
 
 # Enable firewall for added security
 echo "Installing and enabling firewall..."
 sudo pacman -Sy --noconfirm ufw
-sudo systemctl enable ufw
+sudo systemctl --user enable ufw
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw enable
@@ -205,12 +213,12 @@ sudo sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
 # Desktop environment services (already enabled in your script)
 case $de_choice in
-    1) systemctl enable gdm ;;
-    2) systemctl enable sddm ;;
-    3) systemctl enable lightdm ;;
-    4) systemctl enable lightdm ;;
-    5) systemctl enable ly ;;
-	*) exit 1 ;;
+    1) systemctl --user enable gdm ;;
+    2) systemctl --user enable sddm ;;
+    3) systemctl --user enable lightdm ;;
+    4) systemctl --user enable lightdm ;;
+    5) systemctl --user enable ly ;;
+    *) exit 1 ;;
 esac
 
 # Configure GRUB
