@@ -15,7 +15,7 @@ prompt() {
 lsblk
 
 # Ask for user input
-disk=$(prompt "Enter the disk to install Arch Linux (e.g., /dev/sda)" "/dev/sda")
+export disk=$(prompt "Enter the disk to install Arch Linux (e.g., /dev/sda)" "/dev/sda")
 
 # Validate disk input
 if [[ ! -b "$disk" ]]; then
@@ -23,12 +23,13 @@ if [[ ! -b "$disk" ]]; then
     exit 1
 fi 
 
-hostname=$(prompt "Enter the hostname" "archlinux")
-user=$(prompt "Enter the username" "user")
-password=$(prompt "Enter the password" "password124")
-keyboard=$(prompt "Enter key map for keyboard" "uk")
-locale=$(prompt "Enter the locale" "en_GB.UTF-8")
-timezone=$(prompt "Enter the timezone" "Europe/London")
+export hostname=$(prompt "Enter the hostname" "archlinux")
+export user=$(prompt "Enter the username" "user")
+export password=$(prompt "Enter the password" "password124")
+export keyboard=$(prompt "Enter key map for keyboard" "uk")
+export locale=$(prompt "Enter the locale" "en_GB.UTF-8")
+export timezone=$(prompt "Enter the timezone" "Europe/London")
+export cpu=$(prompt "Enter your cpu's manufacturer" "amd") 
 
 lsblk
 
@@ -44,9 +45,9 @@ cfdisk "$disk"
 
 # Determine disk prefix for NVMe or standard drives
 if [[ "$disk" == /dev/nvme* ]]; then
-    disk_prefix="p"
+    export disk_prefix="p"
 else
-    disk_prefix=""
+    export disk_prefix=""
 fi
 
 # Validate partition existence
@@ -69,7 +70,7 @@ swapon "${disk}${disk_prefix}3"
 
 # Install the base system
 echo "Installing base system..."
-pacstrap -K /mnt base linux linux-firmware grub efibootmgr vim
+pacstrap -K /mnt base linux linux-firmware grub efibootmgr vim "$cpu"-code
 
 # Generate fstab
 echo "Generating fstab..."
