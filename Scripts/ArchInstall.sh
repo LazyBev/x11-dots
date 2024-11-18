@@ -179,10 +179,6 @@ sudo pacman -Sy --noconfirm ttf-dejavu ttf-liberation
 echo "Enabling essential services..."
 sudo systemctl enable NetworkManager 
 
-# Ensure ALSA utilities are available
-echo "Configuring ALSA for audio..."
-sudo alsactl init
-
 # Enable time synchronization (choose chrony or ntpd)
 echo "Enabling time synchronization..."
 sudo pacman -Sy --noconfirm chrony
