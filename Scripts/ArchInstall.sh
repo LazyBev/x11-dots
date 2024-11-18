@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -au
+set -eau
 
 trap 'echo "An error occurred. Cleaning up..."; umount -R /mnt || true; swapoff ${disk}${disk_prefix}3 || true; exit 1' ERR
 
@@ -43,7 +43,7 @@ read -p "WARNING: This will erase all data on $disk. Continue? (y/n): " confirm
 
 # Wipe the disk and partition
 echo "Wiping $disk and creating partitions..."
-wipefs -a "$disk"
+wipefs -af "$disk"
 parted -s "$disk" mklabel gpt
 
 # Partition the disk
