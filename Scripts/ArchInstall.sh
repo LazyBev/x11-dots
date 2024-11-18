@@ -31,6 +31,15 @@ export locale=$(prompt "Enter the locale" "en_GB.UTF-8")
 export timezone=$(prompt "Enter the timezone" "Europe/London")
 export cpu=$(prompt "Enter your cpu's manufacturer" "amd") 
 
+# Prompt for desktop environment selection
+echo "Select a desktop environment to install:"
+echo "1) GNOME"
+echo "2) KDE Plasma"
+echo "3) XFCE"
+echo "4) MATE"
+echo "5) i3 with ly (Window Manager)"
+export de_choice=$(prompt "Enter your choice (1-5)" "5") 
+
 timedatectl set-ntp true
 loadkeys "$keyboard"
 
@@ -112,15 +121,6 @@ pacstrap -K /mnt base linux sudo linux-firmware grub efibootmgr vim "$cpu"-ucode
 # Generate fstab
 echo "Generating fstab..."
 genfstab -U /mnt >> /mnt/etc/fstab 
-
-# Prompt for desktop environment selection
-echo "Select a desktop environment to install:"
-echo "1) GNOME"
-echo "2) KDE Plasma"
-echo "3) XFCE"
-echo "4) MATE"
-echo "5) i3 with ly (Window Manager)"
-export de_choice=$(prompt "Enter your choice (1-5)" "5") 
 
 # Chroot into the new system
 arch-chroot /mnt /bin/bash <<EOF
