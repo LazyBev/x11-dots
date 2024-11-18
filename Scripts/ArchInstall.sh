@@ -161,7 +161,7 @@ sudo pacman -Syu --noconfirm xorg-server xorg-xinit mesa
 
 # Install PulseAudio and related packages
 echo "Installing and configuring PulseAudio..."
-sudo pacman -Sy --noconfirm pulseaudio pulseaudio-alsa pulseaudio-bluetooth alsa-utils pavucontrol
+sudo pacman -Sy --noconfirm pulseaudio pulseaudio-alsa pulseaudio-bluetooth alsa-utils pavucontrol pacmd pactl
 
 # Network and Internet
 echo "Installing network and internet packages..."
@@ -178,10 +178,6 @@ sudo pacman -Sy --noconfirm ttf-dejavu ttf-liberation
 # Enable Network
 echo "Enabling essential services..."
 sudo systemctl enable NetworkManager 
-
-# Enable PulseAudio services
-echo "Enabling PulseAudio services..."
-sudo systemctl enable pulseaudio.service pulseaudio.socket
 
 # Ensure ALSA utilities are available
 echo "Configuring ALSA for audio..."
