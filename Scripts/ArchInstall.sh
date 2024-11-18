@@ -26,8 +26,7 @@ fi
 
 export hostname=$(prompt "Enter the hostname" "gentuwu")
 export user=$(prompt "Enter the username" "user")
-export password=""
-read -s -p "Enter the password: " password
+export password=""; read -s -p "Enter the password: " password
 export keyboard=$(prompt "Enter key map for keyboard" "uk")
 export locale=$(prompt "Enter the locale" "en_GB.UTF-8")
 export timezone=$(prompt "Enter the timezone" "Europe/London")
@@ -157,7 +156,7 @@ case $de_choice in
     3) sudo pacman -Sy --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter ;;
     4) sudo pacman -Sy --noconfirm mate mate-extra lightdm ;;
     5) su do pacman -Sy --noconfirm i3 ly ;;
-    *) echo "Invalid choice. Exiting." ; exit 1 ;;
+    *) echo "Invalid choice. Exiting."; exit 1 ;;
 esac
 
 Install PulseAudio and related packages
