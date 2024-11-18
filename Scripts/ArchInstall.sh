@@ -100,9 +100,9 @@ mkfs.ext4 "${disk}${disk_prefix}3"
 mkswap "${disk}${disk_prefix}2"
 
 # Mount the filesystems
-mount "${disk}${disk_prefix}2" /mnt
+mount "${disk}${disk_prefix}3" /mnt
 mount --mkdir "${disk}${disk_prefix}1" /mnt/boot
-swapon "${disk}${disk_prefix}3"
+swapon "${disk}${disk_prefix}2"
 
 lsblk
 
