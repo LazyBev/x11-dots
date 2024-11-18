@@ -70,7 +70,7 @@ swapon "${disk}${disk_prefix}3"
 
 # Install the base system
 echo "Installing base system..."
-pacstrap -K /mnt base linux linux-firmware grub efibootmgr vim "$cpu"-code
+pacstrap -K /mnt base linux sudo linux-firmware grub efibootmgr vim "$cpu"-code
 
 # Generate fstab
 echo "Generating fstab..."
