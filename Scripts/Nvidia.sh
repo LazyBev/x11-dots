@@ -46,9 +46,4 @@ echo "Checking NVIDIA power management status..."
 cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_status
 cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_suspended_time
 
-# Start and enable the NVIDIA persistence daemon
-echo "Starting and enabling NVIDIA persistence daemon..."
-sudo systemctl start nvidia-persistenced.service
-sudo systemctl enable nvidia-persistenced.service
-
 echo -e "Make sure to reboot..."
