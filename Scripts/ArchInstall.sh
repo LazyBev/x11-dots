@@ -66,14 +66,12 @@ if [[ $auto == "auto" ]]; then
     echo "Creating partitions on $disk..."
     (
     echo g    # Create a new GPT partition table
-    
     echo n    # Add a new partition for /boot
     echo 1    # Partition number
     echo      # Default - start at beginning of disk
     echo +$boot_size # Size of /boot partition
     echo t    # Change partition type
     echo 1    # Set partition type to EFI (or BIOS boot if legacy)
-    
     echo n    # Add a new partition for swap
     echo 2    # Partition number
     echo      # Default - start after /boot
@@ -81,12 +79,10 @@ if [[ $auto == "auto" ]]; then
     echo t    # Change partition type
     echo 2    # Select swap partition
     echo 19   # Set partition type to Linux swap
-    
     echo n    # Add a new partition for /
     echo 3    # Partition number
     echo      # Default - start after swap
     echo +$root_size # Size of / partition
-    
     echo w    # Write the partition table and exit
     ) | fdisk "$disk"
 else 
