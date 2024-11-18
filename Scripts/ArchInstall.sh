@@ -189,14 +189,6 @@ echo "Enabling power management..."
 sudo pacman -Sy --noconfirm tlp
 sudo systemctl enable tlp
 
-# Enable firewall for added security
-echo "Installing and enabling firewall..."
-sudo pacman -Sy --noconfirm ufw
-sudo systemctl enable ufw
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
-sudo ufw enable
-
 # Enable multilib repository (already handled, but confirm)
 echo "Configuring multilib repository..."
 sudo sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
