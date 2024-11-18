@@ -3,6 +3,7 @@
 set -eau
 
 trap 'echo "An error occurred. Cleaning up..."; umount -R /mnt || true; swapoff ${disk}${disk_prefix}2 || true; exit 1' ERR
+exec > >(tee -i install.log) 2>&1
 
 # Function to prompt for user input with a default value
 prompt() {
@@ -25,7 +26,8 @@ fi
 
 export hostname=$(prompt "Enter the hostname" "gentuwu")
 export user=$(prompt "Enter the username" "user")
-export password=$(prompt "Enter the password" "password124")
+export password=""
+read -s -p "Enter the password: " password
 export keyboard=$(prompt "Enter key map for keyboard" "uk")
 export locale=$(prompt "Enter the locale" "en_GB.UTF-8")
 export timezone=$(prompt "Enter the timezone" "Europe/London")
@@ -150,30 +152,12 @@ sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 sudo pacman -Syu --noconfirm xorg-server xorg-xinit mesa
 
 case $de_choice in
-    1)
-        sudo pacman -Sy --noconfirm gnome gnome-shell gnome-session gdm
-        systemctl enable gdm
-        ;;
-    2)
-        sudo pacman -Sy --noconfirm plasma kde-applications sddm
-        systemctl enable sddm
-        ;;
-    3)
-        sudo pacman -Sy --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter
-        systemctl enable lightdm
-        ;;
-    4)
-        sudo pacman -Sy --noconfirm mate mate-extra lightdm
-        systemctl enable lightdm
-        ;;
-    5)
-        sudo pacman -Sy --noconfirm i3 ly
-        systemctl enable ly
-        ;;
-    *)
-        echo "Invalid choice. Exiting."
-        exit 1
-        ;;
+    1) sudo pacman -Sy --noconfirm gnome gnome-shell gnome-session gdm ;;
+    2) sudo pacman -Sy --noconfirm plasma kde-applications sddm ;;
+    3) sudo pacman -Sy --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter ;;
+    4) sudo pacman -Sy --noconfirm mate mate-extra lightdm ;;
+    5) su do pacman -Sy --noconfirm i3 ly ;;
+    *) echo "Invalid choice. Exiting." ; exit 1 ;;
 esac
 
 # Audio and media
@@ -192,9 +176,42 @@ sudo pacman -Sy --noconfirm nano htop neofetch file-roller
 echo "Installing fonts..."
 sudo pacman -Sy --noconfirm ttf-dejavu ttf-liberation
 
-#essential services
+# Enable essential services
 echo "Enabling essential services..."
 sudo systemctl enable NetworkManager
+
+# Enable time synchronization (choose chrony or ntpd)
+echo "Enabling time synchronization..."
+sudo pacman -Sy --noconfirm chrony
+sudo systemctl enable chronyd
+
+# Enable power management (useful for laptops)
+echo "Enabling power management..."
+sudo pacman -Sy --noconfirm tlp
+sudo systemctl enable tlp
+
+# Enable firewall for added security
+echo "Installing and enabling firewall..."
+sudo pacman -Sy --noconfirm ufw
+sudo systemctl enable ufw
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw enable
+
+# Enable multilib repository (already handled, but confirm)
+echo "Configuring multilib repository..."
+sudo sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
+sudo sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
+
+# Desktop environment services (already enabled in your script)
+case $de_choice in
+    1) systemctl enable gdm ;;
+    2) systemctl enable sddm ;;
+    3) systemctl enable lightdm ;;
+    4) systemctl enable lightdm ;;
+    5) systemctl enable ly ;;
+	*) exit 1 ;;
+esac
 
 # Configure GRUB
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
