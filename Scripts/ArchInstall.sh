@@ -26,7 +26,7 @@ fi
 
 export hostname=$(prompt "Enter the hostname" "gentuwu")
 export user=$(prompt "Enter the username" "user")
-export password=""; read -s -p "Enter the password: " password
+export password=""; read -sp "Enter the password: " password; echo
 export keyboard=$(prompt "Enter key map for keyboard" "uk")
 export locale=$(prompt "Enter the locale" "en_GB.UTF-8")
 export timezone=$(prompt "Enter the timezone" "Europe/London")
@@ -155,7 +155,7 @@ case $de_choice in
     2) sudo pacman -Sy --noconfirm plasma kde-applications sddm ;;
     3) sudo pacman -Sy --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter ;;
     4) sudo pacman -Sy --noconfirm mate mate-extra lightdm ;;
-    5) su do pacman -Sy --noconfirm i3 ly ;;
+    5) sudo pacman -Sy --noconfirm i3 ly ;;
     *) echo "Invalid choice. Exiting."; exit 1 ;;
 esac
 
