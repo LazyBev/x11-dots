@@ -106,9 +106,6 @@ sed -i '/ParallelDownloads/s/^#//g' /etc/pacman.conf
 sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
 sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
-# Install basic packages
-pacman -Syu --noconfirm pavucontrol kitty gcc pulseaudio-bluetooth bluez bluez-utils networkmanager network-manager-applet
-
 # Install Xorg
 pacman -S --noconfirm xorg-server xorg-xinit
 
@@ -121,7 +118,7 @@ echo "4) MATE"
 echo "5) i3 with ly (Window Manager)"
 read -p "Enter your choice (1-5): " de_choice
 
-case \$de_choice in
+case $de_choice in
     1)
         pacman -S --noconfirm gnome gnome-shell gnome-session gdm
         systemctl enable gdm
@@ -139,7 +136,7 @@ case \$de_choice in
         systemctl enable lightdm
         ;;
     5)
-        pacman -S --noconfirm i3-wm i3status dmenu ly
+        pacman -S --noconfirm i3 ly
         systemctl enable ly
         ;;
     *)
@@ -160,7 +157,6 @@ EOF
 # Unmount the partitions
 echo "Unmounting partitions..."
 umount -R /mnt
-swapoff "${disk}${disk_prefix}3"
 
 # Confirm reboot
 read -p "Installation complete. Reboot now? (y/n): " confirm
