@@ -31,6 +31,8 @@ export locale=$(prompt "Enter the locale" "en_GB.UTF-8")
 export timezone=$(prompt "Enter the timezone" "Europe/London")
 export cpu=$(prompt "Enter your cpu's manufacturer" "amd") 
 
+timedatectl set-ntp true
+
 lsblk
 
 # Confirm disk operations
