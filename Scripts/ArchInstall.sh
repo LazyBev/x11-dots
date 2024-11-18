@@ -147,9 +147,6 @@ sed -i '/ParallelDownloads/s/^#//g' /etc/pacman.conf
 sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
 sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
-# Install Xorg
-sudo pacman -Syu --noconfirm xorg-server xorg-xinit mesa
-
 case $de_choice in
     1) sudo pacman -Sy --noconfirm gnome gnome-shell gnome-session gdm ;;
     2) sudo pacman -Sy --noconfirm plasma kde-applications sddm ;;
@@ -157,7 +154,10 @@ case $de_choice in
     4) sudo pacman -Sy --noconfirm mate mate-extra lightdm ;;
     5) sudo pacman -Sy --noconfirm i3 ly ;;
     *) echo "Invalid choice. Exiting."; exit 1 ;;
-esac
+esac 
+
+# Install Xorg
+sudo pacman -Syu --noconfirm xorg-server xorg-xinit mesa
 
 # Install PulseAudio and related packages
 echo "Installing and configuring PulseAudio..."
@@ -177,11 +177,11 @@ sudo pacman -Sy --noconfirm ttf-dejavu ttf-liberation
 
 # Enable Network
 echo "Enabling essential services..."
-sudo systemctl --user enable NetworkManager 
+sudo systemctl enable NetworkManager 
 
 # Enable PulseAudio services
 echo "Enabling PulseAudio services..."
-sudo systemctl --user enable pulseaudio.service pulseaudio.socket
+sudo systemctl enable pulseaudio.service pulseaudio.socket
 
 # Ensure ALSA utilities are available
 echo "Configuring ALSA for audio..."
@@ -190,17 +190,17 @@ sudo alsactl init
 # Enable time synchronization (choose chrony or ntpd)
 echo "Enabling time synchronization..."
 sudo pacman -Sy --noconfirm chrony
-sudo systemctl --user enable chronyd
+sudo systemctl enable chronyd
 
 # Enable power management (useful for laptops)
 echo "Enabling power management..."
 sudo pacman -Sy --noconfirm tlp
-sudo systemctl --user enable tlp
+sudo systemctl enable tlp
 
 # Enable firewall for added security
 echo "Installing and enabling firewall..."
 sudo pacman -Sy --noconfirm ufw
-sudo systemctl --user enable ufw
+sudo systemctl enable ufw
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw enable
