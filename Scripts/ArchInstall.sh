@@ -2,7 +2,7 @@
 
 set -eau
 
-trap 'echo "An error occurred. Cleaning up..."; umount -R /mnt || true; swapoff ${disk}${disk_prefix}3 || true; exit 1' ERR
+trap 'echo "An error occurred. Cleaning up..."; umount -R /mnt || true; swapoff ${disk}${disk_prefix}2 || true; exit 1' ERR
 
 # Function to prompt for user input with a default value
 prompt() {
