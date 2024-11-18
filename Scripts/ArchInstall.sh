@@ -173,7 +173,7 @@ case $de_choice in
         ;;
     5)
         install_packages i3 ly
-        systemctl enable ly
+        systemctl enable ly.service
         ;;
     *)
         echo "Invalid choice. Exiting."
