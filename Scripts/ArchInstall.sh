@@ -32,11 +32,6 @@ timezone=$(prompt "Enter the timezone" "Europe/London")
 
 lsblk
 
-# Partition sizes
-boot_size=$(prompt "Enter boot partition size in Gb" "1")
-swap_size=$(prompt "Enter swap partition size in Mb" "4096")
-root_size=$(prompt "Enter root partition size in Mb" "")
-
 # Confirm disk operations
 read -p "WARNING: This will erase all data on $disk. Continue? (y/n): " confirm
 [[ "$confirm" != "y" ]] && exit 1
@@ -44,13 +39,8 @@ read -p "WARNING: This will erase all data on $disk. Continue? (y/n): " confirm
 # Wipe the disk and partition
 echo "Wiping $disk and creating partitions..."
 wipefs -af "$disk"
-parted -s "$disk" mklabel gpt
 
-# Partition the disk
-parted -s "$disk" mkpart ESP fat32 1 "$boot_size" 
-parted -s "$disk" set 1 boot on
-parted -s "$disk" mkpart primary linux-swap "$((boot_size + 1))MiB" "$((boot_size + swap_size + 1))MiB"
-parted -s "$disk" mkpart primary ext4 "$((boot_size + swap_size + 1))MiB" "$root_size"
+cfdisk "$disk"
 
 # Determine disk prefix for NVMe or standard drives
 if [[ "$disk" == /dev/nvme* ]]; then
@@ -125,7 +115,7 @@ sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
 # Install additional packages 
 
-cpu=$(prompt "Enter your cpu's manufacturer " "amd") 
+cpu=$(prompt "Enter your cpu's manufacturer" "amd") 
 
 pacman -Syu --noconfirm pavucontrol kitty gcc pulseaudio-bluetooth bluez bluez-utils networkmanager network-manager-applet
 pacman -S --noconfirm xorg-server xorg-init i3 grub "$cpu"-ucode
