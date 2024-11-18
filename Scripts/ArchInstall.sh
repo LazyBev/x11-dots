@@ -53,7 +53,6 @@ parted -s "$disk" set 1 boot on
 parted -s "$disk" mkpart primary linux-swap "$((boot_size + 1))MiB" "$((boot_size + swap_size + 1))MiB"
 parted -s "$disk" mkpart primary ext4 "$((boot_size + swap_size + 1))MiB" "$root_size"
 
-
 # Determine disk prefix for NVMe or standard drives
 if [[ "$disk" == /dev/nvme* ]]; then
     disk_prefix="p"
@@ -89,8 +88,6 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 # Chroot into the new system
 arch-chroot /mnt /bin/bash <<EOF
-set -e
-
 # Set timezone
 ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
 hwclock --systohc
