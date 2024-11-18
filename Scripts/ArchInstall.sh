@@ -23,19 +23,19 @@ if [[ ! -b "$disk" ]]; then
     exit 1
 fi 
 
-hostname=$(prompt "Enter the hostname (default: archlinux)" "archlinux")
-user=$(prompt "Enter the username (default: user)" "user")
-password=$(prompt "Enter the password (default: password124)" "password124")
-keyboard=$(prompt "Enter key map for keyboard (default: uk)" "uk")
-locale=$(prompt "Enter the locale (default: en_GB.UTF-8)" "en_GB.UTF-8")
-timezone=$(prompt "Enter the timezone (default: Europe/London)" "Europe/London")
+hostname=$(prompt "Enter the hostname" "archlinux")
+user=$(prompt "Enter the username" "user")
+password=$(prompt "Enter the password" "password124")
+keyboard=$(prompt "Enter key map for keyboard" "uk")
+locale=$(prompt "Enter the locale" "en_GB.UTF-8")
+timezone=$(prompt "Enter the timezone" "Europe/London")
 
 lsblk
 
 # Partition sizes
-boot_size=$(prompt "Enter boot partition size in MiB (default: 512)" "512")
-swap_size=$(prompt "Enter swap partition size in MiB (default: 2048)" "2048")
-root_size=$(prompt "Enter root partition size in MiB (default: rest of the disk)" "100%")
+boot_size=$(prompt "Enter boot partition size in Gb" "1")
+swap_size=$(prompt "Enter swap partition size in Mb" "4096")
+root_size=$(prompt "Enter root partition size in Mb" "")
 
 # Confirm disk operations
 read -p "WARNING: This will erase all data on $disk. Continue? (y/n): " confirm
@@ -47,7 +47,7 @@ wipefs -af "$disk"
 parted -s "$disk" mklabel gpt
 
 # Partition the disk
-parted -s "$disk" mkpart ESP fat32 1MiB "$((boot_size + 1))MiB"
+parted -s "$disk" mkpart ESP fat32 1 "$boot_size" 
 parted -s "$disk" set 1 boot on
 parted -s "$disk" mkpart primary linux-swap "$((boot_size + 1))MiB" "$((boot_size + swap_size + 1))MiB"
 parted -s "$disk" mkpart primary ext4 "$((boot_size + swap_size + 1))MiB" "$root_size"
@@ -87,6 +87,15 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 # Chroot into the new system
 arch-chroot /mnt /bin/bash <<EOF
+set -e 
+
+prompt() {
+    local prompt_text="$1"
+    local default_value="$2"
+    read -p "$prompt_text [$default_value]: " input
+    echo "${input:-$default_value}"
+}
+
 # Set timezone
 ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
 hwclock --systohc
@@ -114,9 +123,12 @@ sed -i '/ParallelDownloads/s/^#//g' /etc/pacman.conf
 sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
 sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
-# Install additional packages
+# Install additional packages 
+
+cpu=$(prompt "Enter your cpu's manufacturer " "amd") 
+
 pacman -Syu --noconfirm pavucontrol kitty gcc pulseaudio-bluetooth bluez bluez-utils networkmanager network-manager-applet
-pacman -S --noconfirm xorg-server xorg-init i3 grub "$cpu_ucode"-ucode
+pacman -S --noconfirm xorg-server xorg-init i3 grub "$cpu"-ucode
 
 # Configure GRUB
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
