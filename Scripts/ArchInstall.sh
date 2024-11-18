@@ -118,11 +118,6 @@ genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt /bin/bash <<EOF
 set -e 
 
-install_packages() {
-    echo "Installing packages: $*"
-    sudo pacman -Sy --noconfirm $*
-}
-
 # Set timezone
 ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
 hwclock --systohc
@@ -152,28 +147,28 @@ sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
 sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
 # Install Xorg
-install_packages xorg-server xorg-xinit mesa
+sudo pacman -Syu --noconfirm xorg-server xorg-xinit mesa
 
 case $de_choice in
     1)
-        install_packages gnome gnome-shell gnome-session gdm
+        sudo pacman -Sy --noconfirm gnome gnome-shell gnome-session gdm
         systemctl enable gdm
         ;;
     2)
-        install_packages plasma kde-applications sddm
+        sudo pacman -Sy --noconfirm plasma kde-applications sddm
         systemctl enable sddm
         ;;
     3)
-        install_packages xfce4 xfce4-goodies lightdm lightdm-gtk-greeter
+        sudo pacman -Sy --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter
         systemctl enable lightdm
         ;;
     4)
-        install_packages mate mate-extra lightdm
+        sudo pacman -Sy --noconfirm mate mate-extra lightdm
         systemctl enable lightdm
         ;;
     5)
-        install_packages i3 ly
-        systemctl enable ly.service
+        sudo pacman -Sy --noconfirm i3 ly
+        systemctl enable ly
         ;;
     *)
         echo "Invalid choice. Exiting."
@@ -183,19 +178,19 @@ esac
 
 # Audio and media
 echo "Installing audio and media packages..."
-install_packages pipewire pipewire-pulse alsa-utils pavucontrol vlc
+sudo pacman -Sy --noconfirm pipewire pipewire-pulse alsa-utils pavucontrol vlc
 
 # Network and Internet
 echo "Installing network and internet packages..."
-install_packages networkmanager nm-connection-editor firefox
+sudo pacman -Sy --noconfirm networkmanager nm-connection-editor firefox
 
 # Utilities
 echo "Installing utilities..."
-install_packages nano htop neofetch file-roller
+sudo pacman -Sy --noconfirm nano htop neofetch file-roller
 
 # Fonts
 echo "Installing fonts..."
-install_packages ttf-dejavu ttf-liberation noto-font
+sudo pacman -Sy --noconfirm ttf-dejavu ttf-liberation noto-font
 
 # Enable essential services
 echo "Enabling essential services..."
