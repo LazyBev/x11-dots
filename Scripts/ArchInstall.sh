@@ -49,43 +49,49 @@ read -p "WARNING: This will erase all data on $disk. Continue? (y/n): " confirm
 
 lsblk 
 
-# Prompt for partition sizes
-read -p "Enter size for /boot partition (e.g., 512M): " boot_size
-read -p "Enter size for swap partition (e.g., 2G): " swap_size
-read -p "Enter size for /root partition (e.g., 25G): " root_size
-echo "The remaining space will be used for /home."
-
-# Partition the disk
-echo "Creating partitions on $disk..."
-(
-echo g    # Create a new GPT partition table
-echo n    # Add a new partition for /boot
-echo 1    # Partition number
-echo      # Default - start at beginning of disk
-echo +$boot_size # Size of /boot partition
-echo t    # Change partition type
-echo 1    # Set partition type to EFI (or BIOS boot if legacy)
-echo n    # Add a new partition for swap
-echo 2    # Partition number
-echo      # Default - start after /boot
-echo +$swap_size # Size of swap
-echo t    # Change partition type
-echo 2    # Select swap partition
-echo 19   # Set partition type to Linux swap
-echo n    # Add a new partition for /
-echo 3    # Partition number
-echo      # Default - start after swap
-echo +$root_size # Size of / partition
-echo n    # Add a new partition for /home
-echo 4    # Partition number
-echo      # Default - start after /
-echo      # Use the remaining space
-echo w    # Write the partition table and exit
-) | fdisk "$disk"
+export auto=$(prompt "Manual or auto disk partitioning" "auto")
 
 # Wipe the disk and partition
 echo "Wiping $disk and creating partitions..."
 wipefs -af "$disk"
+
+if [[ $auto="auto" ]]; then
+    # Prompt for partition sizes
+    read -p "Enter size for /boot partition (e.g., 512M): " boot_size
+    read -p "Enter size for swap partition (e.g., 2G): " swap_size
+    read -p "Enter size for /root partition (e.g., 25G): " root_size
+    echo "The remaining space will be used for /home."
+
+    # Partition the disk
+    echo "Creating partitions on $disk..."
+    (
+    echo g    # Create a new GPT partition table
+    echo n    # Add a new partition for /boot
+    echo 1    # Partition number
+    echo      # Default - start at beginning of disk
+    echo +$boot_size # Size of /boot partition
+    echo t    # Change partition type
+    echo 1    # Set partition type to EFI (or BIOS boot if legacy)
+    echo n    # Add a new partition for swap
+    echo 2    # Partition number
+    echo      # Default - start after /boot
+    echo +$swap_size # Size of swap
+    echo t    # Change partition type
+    echo 2    # Select swap partition
+    echo 19   # Set partition type to Linux swap
+    echo n    # Add a new partition for /
+    echo 3    # Partition number
+    echo      # Default - start after swap
+    echo +$root_size # Size of / partition
+    echo n    # Add a new partition for /home
+    echo 4    # Partition number
+    echo      # Default - start after /
+    echo      # Use the remaining space
+    echo w    # Write the partition table and exit
+    ) | fdisk "$disk"
+else 
+    cfdisk "$disk"
+fi 
 
 # Determine disk prefix for NVMe or standard drives
 if [[ "$disk" == /dev/nvme* ]]; then
