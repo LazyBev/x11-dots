@@ -57,19 +57,19 @@ fi
 
 # Format the partitions
 echo "Formatting partitions..."
-mkfs.fat -F32 "${disk}${disk_prefix}1" || { echo "Failed to format boot partition"; exit 1; }
-mkfs.ext4 "${disk}${disk_prefix}2" || { echo "Failed to format root partition"; exit 1; }
-mkswap "${disk}${disk_prefix}3" || { echo "Failed to format swap partition"; exit 1; }
+mkfs.fat -F32 "${disk}${disk_prefix}1"
+mkfs.ext4 "${disk}${disk_prefix}2"
+mkswap "${disk}${disk_prefix}3"
 
 # Mount the filesystems
 mount "${disk}${disk_prefix}2" /mnt
 mkdir -p /mnt/boot
 mount "${disk}${disk_prefix}1" /mnt/boot
-swapon "${disk}${disk_prefix}3" || { echo "Failed to enable swap partition"; exit 1; }
+swapon "${disk}${disk_prefix}3"
 
 # Install the base system
 echo "Installing base system..."
-pacstrap -K /mnt base linux linux-firmware grub efibootmgr systemd vim || { echo "Failed to install base system"; exit 1; }
+pacstrap -K /mnt base linux linux-firmware grub efibootmgr vim
 
 # Generate fstab
 echo "Generating fstab..."
@@ -78,13 +78,6 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # Chroot into the new system
 arch-chroot /mnt /bin/bash <<EOF
 set -e 
-
-prompt() {
-    local prompt_text="$1"
-    local default_value="$2"
-    read -p "$prompt_text [$default_value]: " input
-    echo "${input:-$default_value}"
-}
 
 # Set timezone
 ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
@@ -113,25 +106,61 @@ sed -i '/ParallelDownloads/s/^#//g' /etc/pacman.conf
 sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
 sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
-# Install additional packages 
-
-cpu=$(prompt "Enter your cpu's manufacturer" "amd") 
-
+# Install basic packages
 pacman -Syu --noconfirm pavucontrol kitty gcc pulseaudio-bluetooth bluez bluez-utils networkmanager network-manager-applet
-pacman -S --noconfirm xorg-server xorg-init i3 grub "$cpu"-ucode
+
+# Install Xorg
+pacman -S --noconfirm xorg-server xorg-xinit
+
+# Prompt for desktop environment selection
+echo "Select a desktop environment to install:"
+echo "1) GNOME"
+echo "2) KDE Plasma"
+echo "3) XFCE"
+echo "4) MATE"
+echo "5) i3 with ly (Window Manager)"
+read -p "Enter your choice (1-5): " de_choice
+
+case \$de_choice in
+    1)
+        pacman -S --noconfirm gnome gnome-shell gnome-session gdm
+        systemctl enable gdm
+        ;;
+    2)
+        pacman -S --noconfirm plasma kde-applications sddm
+        systemctl enable sddm
+        ;;
+    3)
+        pacman -S --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter
+        systemctl enable lightdm
+        ;;
+    4)
+        pacman -S --noconfirm mate mate-extra lightdm
+        systemctl enable lightdm
+        ;;
+    5)
+        pacman -S --noconfirm i3-wm i3status dmenu ly
+        systemctl enable ly
+        ;;
+    *)
+        echo "Invalid choice. Exiting."
+        exit 1
+        ;;
+esac
 
 # Configure GRUB
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
-# Enable services
+# Enable essential services
 systemctl enable NetworkManager
 systemctl enable bluetooth.service
 EOF
 
 # Unmount the partitions
 echo "Unmounting partitions..."
-umount -R /mnt || { echo "Failed to unmount partitions"; exit 1; }
+umount -R /mnt
+swapoff "${disk}${disk_prefix}3"
 
 # Confirm reboot
 read -p "Installation complete. Reboot now? (y/n): " confirm
