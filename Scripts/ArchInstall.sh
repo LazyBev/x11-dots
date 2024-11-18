@@ -128,7 +128,7 @@ set -e
 
 install_packages() {
     echo "Installing packages: $*"
-    sudo pacman -S --noconfirm $*
+    sudo pacman -Sy --noconfirm $*
 }
 
 # Set timezone
