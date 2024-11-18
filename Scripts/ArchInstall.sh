@@ -87,11 +87,6 @@ if [[ $auto == "auto" ]]; then
     echo      # Default - start after swap
     echo +$root_size # Size of / partition
     
-    echo n    # Add a new partition for /home
-    echo 4    # Partition number
-    echo      # Default - start after /
-    echo      # Use the remaining space
-    
     echo w    # Write the partition table and exit
     ) | fdisk "$disk"
 else 
@@ -117,13 +112,11 @@ echo "Formatting partitions..."
 mkfs.fat -F32 "${disk}${disk_prefix}1"
 mkfs.ext4 "${disk}${disk_prefix}3"
 mkswap "${disk}${disk_prefix}2"
-mkfs.ext4 "${disk}${disk_prefix}4"
 
 # Mount the filesystems
 mount "${disk}${disk_prefix}2" /mnt
 mount --mkdir "${disk}${disk_prefix}1" /mnt/boot
 swapon "${disk}${disk_prefix}3"
-mount --mkdir "${disk}${disk_prefix}1" /mnt/home
 
 lsblk
 
