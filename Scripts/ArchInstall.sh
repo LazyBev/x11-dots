@@ -34,17 +34,15 @@ export cpu=$(prompt "Enter your cpu's manufacturer" "amd")
 timedatectl set-ntp true
 loadkeys "$keyboard"
 
-lsblk
-
 # Confirm disk operations
 read -p "WARNING: This will erase all data on $disk. Continue? (y/n): " confirm
 [[ "$confirm" != "y" ]] && exit 1
 
+lsblk 
+
 # Wipe the disk and partition
 echo "Wiping $disk and creating partitions..."
 wipefs -af "$disk"
-
-cfdisk "$disk"
 
 # Determine disk prefix for NVMe or standard drives
 if [[ "$disk" == /dev/nvme* ]]; then
