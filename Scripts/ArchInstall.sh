@@ -30,7 +30,7 @@ export password=""; read -sp "Enter the password: " password; echo
 export keyboard=$(prompt "Enter key map for keyboard" "uk")
 export locale=$(prompt "Enter the locale" "en_GB.UTF-8")
 export timezone=$(prompt "Enter the timezone" "Europe/London")
-export cpu=$(prompt "Enter your cpu's manufacturer" "amd") 
+export cpu=$(prompt "Enter your cpu's manufacturer" "amd")
 
 # Prompt for desktop environment selection
 echo "Select a desktop environment to install:"
@@ -210,6 +210,41 @@ esac
 # Configure GRUB
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
+
+local prompt_text="Enter in any additional packages you wanna install (Type "None" for no package)"
+local default_value="None"
+read -p "$prompt_text [$default_value]: " input
+additional="${input:-$default_value}"
+
+# Check if the user entered additional packages
+if [[ "$additional" != "None" && "$additional" != "" ]]; then
+    echo "Checking if additional packages exist: $additional"
+    
+    # Split the entered package names into an array (in case multiple packages are entered)
+    IFS=' ' read -r -a packages <<< "$additional"
+    
+    # Loop through each package to check if it exists
+    for i in "${!packages[@]}"; do
+        while ! pacman -Ss "^${packages[$i]}$" &>/dev/null || packages[$i] != "None"; do
+            if [[ "${packages[$i]}" == "None" ]]; then
+                echo "Skipping package installation for index $((i + 1))"
+                break
+            fi
+            echo "Package '${packages[$i]}' not found in the official repositories. Please enter a valid package."
+            read -p "Enter package ${i+1} again (Type "None" for no package): " packages[$i]
+        done
+        if [[ ${packages[$i]} != "None" ]]; then
+            echo "Package '${packages[$i]}' found. Installing..."
+        else
+            echo "No packages to install..."
+        fi
+    done
+
+    # Install the valid packages
+    pacman -Sy --noconfirm "${packages[@]}"
+else
+    echo "No additional packages will be installed."
+fi
 EOF
 
 # Unmount the partitions
