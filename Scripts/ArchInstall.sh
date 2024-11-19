@@ -152,7 +152,7 @@ case $de_choice in
     2) sudo pacman -Sy --noconfirm plasma kde-applications sddm ;;
     3) sudo pacman -Sy --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter ;;
     4) sudo pacman -Sy --noconfirm mate mate-extra lightdm ;;
-    5) sudo pacman -Sy --noconfirm i3 ly ;;
+    5) sudo pacman -Sy --noconfirm i3 ly dmenu kitty ;;
     *) echo "Invalid choice. Exiting."; exit 1 ;;
 esac 
 
