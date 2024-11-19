@@ -104,10 +104,9 @@ mkswap "${disk}${disk_prefix}2"
 mount "${disk}${disk_prefix}3" /mnt
 mount --mkdir "${disk}${disk_prefix}1" /mnt/boot
 swapon "${disk}${disk_prefix}2"
-mount --bind /dev /mnt/dev
-mount --bind /proc /mnt/proc
-mount --bind /sys /mnt/sys
-mount --bind /run /mnt/run
+for mntpnt in dev proc sys run; do 
+    mount --bind /"$mntpnt" /mnt/"mntpnt"
+done 
 
 lsblk
 
