@@ -102,7 +102,8 @@ mkswap "${disk}${disk_prefix}2"
 
 # Mount the filesystems
 mount "${disk}${disk_prefix}3" /mnt
-mount --mkdir "${disk}${disk_prefix}1" /mnt/boot
+mkdir -p /mnt/boot
+mount "${disk}${disk_prefix}1" /mnt/boot
 swapon "${disk}${disk_prefix}2"
 for mntpnt in dev proc sys run; do 
     mount --bind /"$mntpnt" /mnt/"$mntpnt"
