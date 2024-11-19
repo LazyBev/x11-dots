@@ -112,7 +112,7 @@ lsblk
 
 # Install the base system
 echo "Installing base system..."
-pacstrap -K /mnt base linux sudo linux-firmware lib32-glibc grub efibootmgr vim "$cpu"-ucode
+pacstrap -K /mnt base base-devel linux sudo linux-firmware lib32-glibc grub efibootmgr vim "$cpu"-ucode
 
 # Generate fstab
 echo "Generating fstab..."
@@ -168,7 +168,7 @@ sudo pacman -Sy --noconfirm pulseaudio pulseaudio-alsa pulseaudio-bluetooth alsa
 
 # Network and Internet
 echo "Installing network and internet packages..."
-sudo pacman -Sy --noconfirm networkmanager nm-connection-editor firefox
+sudo pacman -Sy --noconfirm networkmanager nm-connection-editor network-manager-applet firefox
 
 # Utilities
 echo "Installing utilities..."
