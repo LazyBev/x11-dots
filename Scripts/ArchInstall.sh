@@ -196,11 +196,11 @@ sudo sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
 
 # Desktop environment services (already enabled in your script)
 case $de_choice in
-    1) systemctl --user enable gdm ;;
-    2) systemctl --user enable sddm ;;
-    3) systemctl --user enable lightdm ;;
-    4) systemctl --user enable lightdm ;;
-    5) systemctl --user enable ly ;;
+    1) systemctl enable gdm ;;
+    2) systemctl enable sddm ;;
+    3) systemctl enable lightdm ;;
+    4) systemctl enable lightdm ;;
+    5) systemctl enable ly ;;
     *) exit 1 ;;
 esac
 
