@@ -59,6 +59,6 @@ pulseaudio -k && pulseaudio --start
 # Install Starship
 curl -sS https://starship.rs/install.sh | sh
 echo 'eval "$(starship init bash)"' >> ~/.bashrc
-chsh -s /bin/bash
+echo "alias battery='upower -i \$(upower -e | grep \"BAT\") | grep -E \"state|percentage\"'" >> ~/.bashrc
 
 echo -e "Make sure to reboot..."
