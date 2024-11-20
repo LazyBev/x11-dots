@@ -57,29 +57,20 @@ echo "Wiping $disk and creating partitions..."
 wipefs -af "$disk"
 
 if [[ $auto == "auto" ]]; then
-    # Prompt for partition sizes
-    read -p "Enter size for /boot partition (e.g., 512M): " boot_size
-    read -p "Enter size for swap partition (e.g., 2G): " swap_size
-    read -p "Enter size for /root partition (e.g., 25G): " root_size
-    echo "The remaining space will be used for /home."
+    # Automatically calculate partition sizes based on disk size
+    disk_size=$(lsblk -b -n -d -o SIZE "$disk" | awk '{print int($1 / 1024 / 1024)}')
+    boot_size=1024
+    root_size=$((disk_size - boot_size))
 
-    # Partition the disk
-    echo "Creating partitions on $disk..."
-    parted "$disk" mklabel gpt # Create a new GPT partition table
-
-    # Create the /boot partition
-    parted -a optimal "$disk" mkpart primary fat32 1MiB "$boot_size"
-    parted "$disk" set 1 boot on # Set boot flag for /boot partition
-
-    # Create the swap partition
-    parted -a optimal "$disk" mkpart primary linux-swap "$boot_size" "$swap_size"
-
-    # Create the / partition
-    parted -a optimal "$disk" mkpart primary ext4 "$swap_size" "$root_size"
-else 
+    echo "Auto-partitioning: /boot=${boot_size}MiB, /root=${root_size}MiB"
+    parted "$disk" mklabel gpt
+    parted "$disk" mkpart primary fat32 1MiB "${boot_size}MiB"
+    parted "$disk" set 1 boot on
+    parted "$disk" mkpart primary ext4 "$((boot_size))MiB" "$((disk_size - boot_size))MiB"
+else
     echo "Launching cfdisk for manual partitioning"
     cfdisk "$disk"
-fi 
+fi
 
 # Determine disk prefix for NVMe or standard drives
 if [[ "$disk" == /dev/nvme* ]]; then
