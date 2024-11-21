@@ -87,7 +87,7 @@ fi
 
 # Format the partitions
 echo "Formatting partitions..."
-mkfs.fat -F32 "${disk}${disk_prefix}1"
+mkfs.vfat -F 32 "${disk}${disk_prefix}1"
 mkfs.ext4 "${disk}${disk_prefix}3"
 mkswap "${disk}${disk_prefix}2"
 
