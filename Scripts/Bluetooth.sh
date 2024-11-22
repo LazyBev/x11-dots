@@ -2,7 +2,7 @@
 
 set -e
 
-sudo pacman -S bluez bluez-utils blueman
+sudo pacman -S bluez bluez-utils blueman pulseaudio-bluetooth
 sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
 sudo systemctl daemon-reload
