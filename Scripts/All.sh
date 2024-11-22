@@ -115,6 +115,14 @@ sudo systemctl enable nvidia-persistenced.service
 # Install Starship
 curl -sS https://starship.rs/install.sh | sh
 echo 'eval "$(starship init bash)"' >> ~/.bashrc
-chsh -s /bin/bash
 
-echo -e "Make sure to reboot..."
+# Prompt the user to reboot
+read -p "Would you like to reboot now? [y/N]: " reboot_choice
+case $reboot_choice in
+    y | Y)
+        run_command reboot
+        ;;
+    *)
+        echo "Reboot skipped. Please reboot manually if necessary."
+        ;;
+esac
