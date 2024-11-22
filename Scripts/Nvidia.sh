@@ -48,4 +48,13 @@ echo "Checking NVIDIA power management status..."
 cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_status
 cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_suspended_time
 
-echo -e "Make sure to reboot..."
+# Prompt the user to reboot
+read -p "Would you like to reboot now? [y/N]: " reboot_choice
+case $reboot_choice in
+    y | Y)
+        run_command reboot
+        ;;
+    *)
+        echo "Reboot skipped. Please reboot manually if necessary."
+        ;;
+esac
