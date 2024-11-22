@@ -22,8 +22,7 @@ sudo bash -c '{
 if [[ ! -d yay-bin ]]; then
     git clone https://aur.archlinux.org/yay-bin.git
     sudo chown "$user:$user" -R yay-bin && cd yay-bin
-    makepkg -si
-    cd ..
+    makepkg -si && cd .. && rm -rf yay
 else
     echo "yay-bin already exists. Skipping installation."
 fi
