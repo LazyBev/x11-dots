@@ -240,11 +240,13 @@ EOF
 echo "Unmounting partitions..."
 umount -R /mnt
 
-# Confirm reboot
-read -p "Installation complete. Reboot now? (y/n): " confirm
-if [[ "$confirm" == "y" ]]; then
-    echo "Rebooting..."
-    reboot
-else
-    echo "Reboot skipped. Exiting."
-fi
+# Prompt the user to reboot
+read -p "Would you like to reboot now? [y/N]: " reboot_choice
+case $reboot_choice in
+    y | Y)
+        run_command reboot
+        ;;
+    *)
+        echo "Reboot skipped. Please reboot manually if necessary."
+        ;;
+esac
