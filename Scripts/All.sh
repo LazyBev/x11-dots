@@ -85,7 +85,8 @@ pulseaudio -k && pulseaudio --start
 
 # Install the necessary packages
 prop=""
-NVIDIA_VENDOR="0x10de"
+NVIDIA_VENDOR="0x$(lspci -nn | grep -i nvidia | sed -n 's/.*\[\([0-9A-Fa-f]\+\):[0-9A-Fa-f]\+\].*/\1/p' | head -n 1
+)"
 
 # Check available graphics providers and OpenGL renderer
 xrandr --listproviders && glxinfo | grep "OpenGL renderer"
