@@ -6,10 +6,16 @@ sudo pacman -S bluez bluez-utils blueman
 sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
 sudo systemctl daemon-reload
-echo "alias blueman='blueman-manager'" >> ~/.bashrc
-source ~/.bashrc
 
-# Prompt the user to reboot
+# Check if the alias already exists in .bashrc
+if ! grep -q "alias blueman=" ~/.bashrc; then
+    echo "Adding Blueman alias to .bashrc..."
+    echo "alias blueman='blueman-manager'" >> ~/.bashrc
+    source ~/.bashrc
+else
+    echo "Blueman alias already exists in .bashrc. Skipping addition."
+fi
+
 read -p "Would you like to reboot now? [y/N]: " reboot_choice
 case $reboot_choice in
     y | Y)
