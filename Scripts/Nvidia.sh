@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Variables
 prop=""
 NVIDIA_VENDOR="0x10de"
