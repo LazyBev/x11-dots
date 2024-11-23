@@ -171,10 +171,8 @@ sudo pacman -Sy --noconfirm ttf-dejavu ttf-liberation
 echo "Enabling audio..."
 systemctl enable pulseaudio.service
 systemctl start pulseaudio.service
-cat << AUD | sudo tee /etc/asound.conf > /dev/null
-defaults.pcm.card 0
-defaults.ctl.card 0
-AUD
+sudo bash -c 'echo "defaults.pcm.card 0" > /etc/asound.conf'
+sudo bash -c 'echo "defaults.ctl.card 0" >> /etc/asound.conf'
 
 # Enable Network
 echo "Enabling essential services..."
