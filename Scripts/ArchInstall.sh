@@ -167,6 +167,15 @@ sudo pacman -Sy --noconfirm nano htop neofetch file-roller
 echo "Installing fonts..."
 sudo pacman -Sy --noconfirm ttf-dejavu ttf-liberation
 
+# Enabling audio
+echo "Enabling audio..."
+systemctl enable pulseaudio.service
+systemctl start pulseaudio.service
+cat << AUD | sudo tee /etc/asound.conf > /dev/null
+defaults.pcm.card 0
+defaults.ctl.card 0
+AUD
+
 # Enable Network
 echo "Enabling essential services..."
 sudo systemctl enable NetworkManager 
