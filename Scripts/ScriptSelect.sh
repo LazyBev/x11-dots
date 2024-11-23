@@ -13,34 +13,38 @@ echo -e "5) Bluetooth Script"
 echo -e "6) All"
 read -p ": " scr
 
+for FILE in Config.sh UpdateConfig.sh Nvidia.sh Gaming.sh Bluetooth.sh All.sh; do
+    # Check if the file is executable
+    if [[ -x "$FILE" ]]; then
+        echo "The file '$FILE' is executable."
+    else
+        echo "Making '$FILE' executable."
+        sudo chmod +x "$FILE"
+    fi
+done
+
 case "$scr" in
   1)
-    sudo chmod +x ./Config.sh
     ./Config.sh
     ;;
   
   2)
-    sudo chmod +x ./UpdateConfig.sh
     ./UpdateConfig.sh
     ;;
   
   3)
-    sudo chmod +x ./Nvidia.sh
     ./Nvidia.sh
     ;;
 
   4)
-    sudo chmod +x ./Gaming.sh
     ./Gaming.sh
     ;;
   
   5)
-    sudo chmod +x ./Bluetooth.sh
     ./Bluetooth.sh
     ;;
     
   6)
-    sudo chmod +x ./All.sh
     ./All.sh
     ;;
     
