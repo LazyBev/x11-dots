@@ -18,14 +18,22 @@ sudo bash -c '{
     grep -q "ILoveCandy" /etc/pacman.conf || sed -i "/#Color/a ILoveCandy" /etc/pacman.conf
 } || { echo "Failed to update pacman.conf"; exit 1; }'
 
-# Install yay
-if [[ ! -d yay-bin ]]; then
-    git clone https://aur.archlinux.org/yay-bin.git
-    sudo chown "$user:$user" -R yay-bin && cd yay-bin
-    makepkg -si
-    cd ..
-else
-    echo "yay-bin already exists. Skipping installation."
+# Check if yay is installed
+if ! command -v yay &> /dev/null; then
+    echo "yay is not installed. Please install yay first."
+    read -p "Would you like to install yay now? [y/N]: " yay_choice
+    case $yay_choice in
+        y | Y)
+            # Install yay
+            git clone https://aur.archlinux.org/yay-bin.git
+            sudo chown "$user:$user" -R yay-bin && cd yay-bin
+            makepkg -si && cd .. && rm -rf yay
+            ;;
+        *)
+            echo "Exiting. Please install yay to proceed."
+            exit 1
+            ;;
+    esac
 fi
 
 # Install packages
