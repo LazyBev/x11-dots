@@ -1,8 +1,6 @@
 #!/bin/bash
 
 set -e
-set -a
-set -u
 
 echo -e "Choose a script to run."
 echo -e "1) Install My Config"
@@ -33,15 +31,15 @@ case "$scr" in
     ;;
   
   3)
-    ./Nvidia.sh
+    ./Nvidia.sh -r
     ;;
 
   4)
-    ./Gaming.sh
+    ./Gaming.sh -r
     ;;
   
   5)
-    ./Bluetooth.sh
+    ./Bluetooth.sh -r
     ;;
     
   6)
