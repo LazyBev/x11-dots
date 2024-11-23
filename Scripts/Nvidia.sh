@@ -52,7 +52,7 @@ cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_suspended_time
 read -p "Would you like to reboot now? [y/N]: " reboot_choice
 case $reboot_choice in
     y | Y)
-        run_command reboot
+        reboot
         ;;
     *)
         echo "Reboot skipped. Please reboot manually if necessary."
