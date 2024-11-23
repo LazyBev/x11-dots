@@ -138,6 +138,7 @@ sed -i '/Color/s/^#//g' /etc/pacman.conf
 sed -i '/ParallelDownloads/s/^#//g' /etc/pacman.conf
 sed -i '/#\[multilib\]/s/^#//' /etc/pacman.conf
 sed -i '/#Include = \/etc\/pacman\.d\/mirrorlist/s/^#//' /etc/pacman.conf
+sed -i '/#DisableSandbox/a ILoveCandy' /etc/pacman.conf
 
 case $de_choice in
     1) sudo pacman -Sy --noconfirm gnome gnome-shell gnome-session gdm ;;
