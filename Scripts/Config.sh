@@ -10,6 +10,10 @@ user=$(whoami)
 
 # Update pacman.conf
 sudo bash -c '{
+    # Backup the pacman.conf before modifying
+    cp /etc/pacman.conf /etc/pacman.conf.bak || { echo "Failed to back up pacman.conf"; exit 1; }
+
+    # Configuring .conf
     sed -i "/Color/s/^#//g" /etc/pacman.conf
     sed -i "/ParallelDownloads/s/^#//g" /etc/pacman.conf
     sed -i "/#\\[multilib\\]/s/^#//" /etc/pacman.conf
