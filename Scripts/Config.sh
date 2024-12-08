@@ -9,17 +9,15 @@ trap 'echo "An error occurred. Exiting..."; exit 1;' ERR
 user=$(whoami)
 
 # Update pacman.conf
-sudo bash -c '{
-    # Backup the pacman.conf before modifying
-    cp /etc/pacman.conf /etc/pacman.conf.bak || { echo "Failed to back up pacman.conf"; exit 1; }
+# Backup the pacman.conf before modifying
+sudo cp /etc/pacman.conf /etc/pacman.conf.bak || { echo "Failed to back up pacman.conf"; exit 1; }
 
-    # Configuring .conf
-    sed -i "/Color/s/^#//g" /etc/pacman.conf
-    sed -i "/ParallelDownloads/s/^#//g" /etc/pacman.conf
-    sed -i "/#\\[multilib\\]/s/^#//" /etc/pacman.conf
-    sed -i "/#Include = \\/etc\\/pacman\\.d\\/mirrorlist/s/^#//" /etc/pacman.conf
-    sudo sed -i '/#DisableSandbox/a ILoveCandy' /etc/pacman.conf
-} || { echo "Failed to update pacman.conf"; exit 1; }'
+# Configuring .conf
+sudo sed -i "/Color/s/^#//g" /etc/pacman.conf
+sudo sed -i "/ParallelDownloads/s/^#//g" /etc/pacman.conf
+sudo sed -i "/#\\[multilib\\]/s/^#//" /etc/pacman.conf
+sudo sed -i "/#Include = \\/etc\\/pacman\\.d\\/mirrorlist/s/^#//" /etc/pacman.conf
+sudo sed -i '/#DisableSandbox/a ILoveCandy' /etc/pacman.conf
 
 # Install yay
 if [[ ! -d yay-bin ]]; then
