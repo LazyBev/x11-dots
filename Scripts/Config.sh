@@ -48,6 +48,9 @@ for fonts in fonts/MartianMono fonts/SF-Mono-Powerline fonts/fontconfig; do
     sudo cp -rpf "$HOME/dotfiles/$fonts" "$HOME/.local/share/fonts/" || echo "Failed to copy $fonts"
 done
 
+wget https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf
+mv NotoColorEmoji.ttf ~/.local/share/fonts
+
 mkdir -p "$HOME/.config/neofetch/" && sudo cp --parents -rpf "$HOME/dotfiles/neofetch/bk" "$HOME/.config/neofetch/"
 mkdir -p "$HOME/Pictures/" && sudo cp -rpf "$HOME/dotfiles/Pictures/bgpic.jpg" "$HOME/Pictures/"
 mkdir -p "$HOME/Videos/"
