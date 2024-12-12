@@ -12,11 +12,41 @@ user=$(whoami)
 sudo cp /etc/pacman.conf /etc/pacman.conf.bak || { echo "Failed to back up pacman.conf"; exit 1;}
 
 # Configuring pacman.conf
-sudo sed -i "/Color/s/^#//g" /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
-sudo sed -i "/ParallelDownloads/s/^#//g" /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
-sudo sed -i "/#\\[multilib\\]/s/^#//" /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
-sudo sed -i "/#Include = \\/etc\\/pacman\\.d\\/mirrorlist/s/^#//" /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
+sudo sed -i '/Color/s/^#//g' /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
+sudo sed -i '/ParallelDownloads/s/^#//g' /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
+sudo sed -i '/#\\[multilib\\]/s/^#//' /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
+sudo sed -i '/#Include = \\/etc\\/pacman\\.d\\/mirrorlist/s/^#//' /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
 sudo sed -i '/#DisableSandbox/a ILoveCandy' /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
+
+# Custom bash theme
+if grep -i "LS_COLORS" ~/.bashrc; then
+    sudo sed -i '/LS_COLORS/c\export LS_COLORS="di=35;1:fi=33:ex=36;1"' ~/.bashrc
+else
+    echo 'export LS_COLORS="di=35;1:fi=33:ex=36;1"' >> ~/.bashrc
+fi
+
+# Adding parse_git_branch function
+if ! grep -q "parse_git_branch" ~/.bashrc; then
+    echo '' >> ~/.bashrc
+    echo '# Function to parse the current Git branch' >> ~/.bashrc
+    echo 'parse_git_branch() {' >> ~/.bashrc
+    echo '    git branch 2>/dev/null | grep -E "^\*" | sed -E "s/^\* (.+)/(\1)/"' >> ~/.bashrc
+    echo '}' >> ~/.bashrc
+fi
+
+# PS1
+if grep -i "PS1" ~/.bashrc; then
+    sudo sed -i '/PS1/c\export PS1='\[\033[01;34m\][\[\033[01;35m\]\u\[\033[00m\]:\[\033[01;36m\]\h\[\033[00m\] <> \[\033[01;34m\]\w\[\033[01;34m\]] \[\033[01;33m\]$(parse_git_branch)\[\033[00m\]'' ~/.bashrc
+else
+    echo 'export PS1='\[\033[01;34m\][\[\033[01;35m\]\u\[\033[00m\]:\[\033[01;36m\]\h\[\033[00m\] <> \[\033[01;34m\]\w\[\033[01;34m\]] \[\033[01;33m\]$(parse_git_branch)\[\033[00m\]'' >> ~/.bashrc
+fi
+
+# Ls alias
+if grep -i "PS1" ~/.bashrc; then
+    sudo sed -i '/alias ls/c\alias ls="eza -al --color=auto"' ~/.bashrc
+else
+    echo 'alias ls="eza -al --color=auto"' >> ~/.bashrc
+fi
 
 # Check if yay is installed
 if ! command -v yay &> /dev/null; then
