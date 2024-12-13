@@ -422,8 +422,10 @@ EOL
 esac
 
 # Install packages that i sue on my system
-packages=(git lazygit github-cli xdg-desktop-portal hwinfo arch-install-scripts networkmanager wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul ttf-dejavu ttf-liberation ttf-joypixels unifont rofi curl make cmake meson obsidian man-db man-pages mandoc xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
+packages=(git lazygit github-cli xdg-desktop-portal tlp hwinfo arch-install-scripts networkmanager wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul ttf-dejavu ttf-liberation ttf-joypixels unifont rofi curl make cmake meson obsidian man-db man-pages mandoc xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
 install_packages "${packages[@]}"
+
+sudo systemctl enable tlp
 
 # Backup configurations
 echo "---- Making backup at $backup_dir -----"
