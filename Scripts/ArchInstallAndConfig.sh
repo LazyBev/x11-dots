@@ -247,8 +247,8 @@ systemctl --global enable pipewire.service wireplumber.service
         
 # Configure ALSA to use PipeWire
 echo "Configuring ALSA to use PipeWire..."
-echo "defaults.pcm.card 0" > /etc/asound.conf'
-echo "defaults.ctl.card 0" >> /etc/asound.conf'
+echo "defaults.pcm.card 0" > /etc/asound.conf
+echo "defaults.ctl.card 0" >> /etc/asound.conf
 
 # Network
 echo "Installing network and internet packages..."
