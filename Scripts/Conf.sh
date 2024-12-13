@@ -272,7 +272,6 @@ case $choice in
         ;;
 esac
 
-
 # Roblox
 read -p "Do you want to install Roblox? [y/N]: " choice
 case $choice in
@@ -357,10 +356,8 @@ case "$choice" in
         ;;
 esac
 
-git github-cli
-
 # Install packages
-packages=(xdg-desktop-portal xdg-desktop-portal-gtk base-devel arch-install-scripts networkmanager wireless_tools neofetch gvfs polkit-gnome lxappearance fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts rofi curl make cmake meson obsidian man-db xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
+packages=(git github-cli xdg-desktop-portal xdg-desktop-portal-gtk base-devel arch-install-scripts networkmanager wireless_tools neofetch gvfs polkit-gnome lxappearance fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts rofi curl make cmake meson obsidian man-db xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
 yay -Syu "${packages[@]}"
 
 # Backup configurations
