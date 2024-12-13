@@ -82,14 +82,12 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-bindsym $mod+v exec vesktop
-bindsym $mod+b exec firefox
+bindsym $mod+v exec discord
+bindsym $mod+b exec qutebrowser
 bindsym $mod+s exec steam
 bindsym $mod+o exec obsidian
 bindsym $mod+x exec flameshot gui
 bindsym $mod+Shift+x exec i3lock
-bindsym $mod+c exec code -n $PWD
-bindsym $mod+e exec emacs
 bindsym $mod+Shift+t exec i3
 bindsym $mod+Shift+p exec shutdown now
 
