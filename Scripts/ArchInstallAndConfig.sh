@@ -489,7 +489,7 @@ if [[ "$additional" != "none" && "$additional" != "" ]]; then
     
     # Loop through each package to check if it exists
     for i in "${!Apackages[@]}"; do
-        while ! pacman -Ss "^${Apackages[$i]}$" &>/dev/null || Apackages[$i] != "none"; do
+        while ! yay -Ss "^${Apackages[$i]}$" &>/dev/null || Apackages[$i] != "none"; do
             if [[ "${Apackages[$i]}" == "none" ]]; then
                 echo "Skipping package installation for index $((i + 1))"
                 break
