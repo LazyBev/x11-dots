@@ -104,8 +104,8 @@ echo "defaults.pcm.card 0" > /etc/asound.conf
 echo "defaults.ctl.card 0" >> /etc/asound.conf
 
 # Browser
-echo "Installing Firefox..."
-install_packages firefox
+echo "Installing qutebrowser..."
+install_packages qutebrowser
 
 # Text Editor
 install_packages neovim vim
