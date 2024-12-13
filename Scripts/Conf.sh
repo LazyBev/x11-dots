@@ -202,7 +202,7 @@ case "$editor_choice" in
     2)
         echo "Installing Neovim..."
         install_packages neovim vim
-        if [ -d "$dotfiles_dirnvim" ]; then
+        if [ -d "$dotfiles_dir/nvim" ]; then
             echo "Copying neovim configuration..."
             sudo cp -rpf "$dotfiles_dir/nvim" "$HOME/.config/"
         else
