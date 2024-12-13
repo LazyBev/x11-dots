@@ -30,7 +30,7 @@ hostname=$(prompt "Enter the hostname" "gentuwu")
 user=$(prompt "Enter the username" "user")
 password=""
 read -sp "Enter the password [1234]: " password
-password=${pasword:-1234}
+password=${password:-1234}
 keyboard=$(prompt "Enter key map for keyboard" "uk")
 locale=$(prompt "Enter the locale" "en_GB.UTF-8")
 timezone=$(prompt "Enter the timezone" "Europe/London")
