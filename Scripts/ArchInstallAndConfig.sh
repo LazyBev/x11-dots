@@ -237,10 +237,7 @@ else
 fi
 
 # Audio
-read -p "Do you want to install PipeWire or PulseAudio? [pipewire]: " audio_choice
-echo "Selected PipeWire installation."
-        
-# Install PipeWire and related packages
+
 echo "Installing PipeWire and related packages..."
 install_packages pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber alsa-utils pavucontrol
         
