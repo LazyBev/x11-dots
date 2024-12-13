@@ -27,7 +27,7 @@ if ! command -v yay &> /dev/null; then
             cd ~
             git clone https://aur.archlinux.org/yay-bin.git
             sudo chown "$user:$user" -R yay-bin && cd yay-bin
-            makepkg -si && cd .. && rm -rf yay
+            makepkg -si && cd .. && rm -rf yay-bin
             cd "$dotfiles_dir"
             ;;
         *)
