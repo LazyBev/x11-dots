@@ -116,6 +116,79 @@ else
     echo "No neovim configuration found in $dotfiles_dir. Skipping config copy."
 fi
 
+# Tmux
+install_packages tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+mkdir ~/.config/tmux/ && touch ~/.config/tmux/tmux.conf
+tmux_config='
+set-option -sa terminal-overrides ",xterm*:Tc"
+set -g mouse on
+
+unbind C-b
+set -g prefix C-Space
+bind C-Space send-prefix
+
+# Vim style pane selection
+bind j select-pane -L
+bind k select-pane -D 
+bind i select-pane -U
+bind l select-pane -R
+
+# Start windows and panes at 1, not 0
+set -g base-index 1
+set -g pane-base-index 1
+set-window-option -g pane-base-index 1
+set-option -g renumber-windows on
+
+# Use Alt-arrow keys without prefix key to switch panes
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+# Shift arrow to switch windows
+bind -n S-Left  previous-window
+bind -n S-Right next-window
+
+# Shift Alt vim keys to switch windows
+bind -n M-H previous-window
+bind -n M-L next-window
+
+set -g @catppuccin_flavour "mocha"
+
+set -g @plugin "tmux-plugins/tpm"
+set -g @plugin "tmux-plugins/tmux-sensible"
+set -g @plugin "christoomey/vim-tmux-navigator"
+set -g @plugin "dreamsofcode-io/catppuccin-tmux"
+set -g @plugin "tmux-plugins/tmux-yank"
+
+run "~/.tmux/plugins/tpm/tpm"
+
+# set vi-mode
+set-window-option -g mode-keys vi
+# keybindings
+bind-key -T copy-mode-vi v send-keys -X begin-selection
+bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+'
+echo "$tmux_config" >> ~/.config/tmux/tmux.conf
+if ! grep -q "tmux() {" ~/.bashrc; then
+    echo 'tmux() { 
+    if [ "$1" = "-k" ] && [ "$2" = "-t" ]; then
+        shift 2
+        tmux kill-session -t "$1"
+    elif [ "$1" = "-k" ]; then
+        tmux kill-session -t $(tmux ls | head -n 1 | cut -d: -f1)
+    else
+        command tmux "$@"
+    fi
+}' >> ~/.bashrc
+    echo "tmux -k function with recent session and specific session kill has been added to your .bashrc"
+else
+    echo "tmux function is already present in your .bashrc"
+fi
+source ~/.bashrc
+
 # Wine
 echo "Installing Wine..."
 install_packages wine winetricks
@@ -268,7 +341,7 @@ mkdir -p "$HOME/Videos/"
 
 # Utilities
 echo "Installing utilities..."
-packages=(git lazygit github-cli xdg-desktop-portal tmux hwinfo arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul rofi curl make cmake meson obsidian man-db man-pages mandoc xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
+packages=(git lazygit github-cli xdg-desktop-portal hwinfo arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul rofi curl make cmake meson obsidian man-db man-pages mandoc xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
 install_packages "${packages[@]}"
 
 # Fonts
