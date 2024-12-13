@@ -443,36 +443,6 @@ systemctl enable tlp
 read -p "Enter in any additional packages you wanna install (Type "none" for no package)" additional
 additional="${additional:-none}"
 
-# Check if the user entered additional packages
-if [[ "$additional" != "none" && "$additional" != "" ]]; then
-    echo "Checking if additional packages exist: $additional"
-    
-    # Split the entered package names into an array (in case multiple packages are entered)
-    IFS=' ' read -r -a Apackages <<< "$additional"
-    
-    # Loop through each package to check if it exists
-    for i in "${!Apackages[@]}"; do
-        while ! pacman -Ss "^${Apackages[$i]}$" &>/dev/null || Apackages[$i] != "none"; do
-            if [[ "${Apackages[$i]}" == "none" ]]; then
-                echo "Skipping package installation for index $((i + 1))"
-                break
-            fi
-            echo "Package '${Apackages[$i]}' not found in the official repositories. Please enter a valid package."
-            read -p "Enter package ${i+1} again (Type "none" for no package): " Apackages[$i]
-        done
-        if [[ ${Apackages[$i]} != "none" ]]; then
-            echo "Package '${Apackages[$i]}' found. Installing..."
-        else
-            echo "No packages to install..."
-        fi
-    done
-
-    # Install the valid packages
-    install_packages "${Apackages[@]}"
-else
-    echo "No additional packages will be installed."
-fi
-
 # Configure GRUB
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
