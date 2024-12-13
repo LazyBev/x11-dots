@@ -422,6 +422,7 @@ for font in fonts/MartianMono fonts/SF-Mono-Powerline fonts/fontconfig; do
 done
 
 mkdir -p "$HOME/.config/neofetch/" && cp --parents -rpf "$dotfiles_dir/neofetch/bk" "$HOME/.config/neofetch/"
+echo "alias neofetch="neofetch --source $HOME/.config/neofetch/bk"" >> $HOME/.bashrc
 mkdir -p "$HOME/Pictures/" && cp -rpf "$dotfiles_dir/Pictures/bgpic.jpg" "$HOME/Pictures/"
 mkdir -p "$HOME/Videos/"
 
