@@ -340,8 +340,7 @@ case "$choice" in
     1)
         echo "Installing NVIDIA drivers..."
         yay -Sy --noconfirm mesa nvidia-dkms nvidia-utils \ 
-            xf86-video-nouveau vulkan-mesa-layers lib32-vulkan-mesa-layers nvidia-prime \
-            
+            xf86-video-nouveau vulkan-mesa-layers lib32-vulkan-mesa-layers nvidia-prime
         ;;
     2)
         echo "Installing AMD drivers..."
@@ -355,10 +354,6 @@ case "$choice" in
         echo "Invalid option, please choose a number between 1 and 5."
         ;;
 esac
-
-# Install packages
-packages=(git github-cli xdg-desktop-portal xdg-desktop-portal-gtk base-devel arch-install-scripts networkmanager wireless_tools neofetch gvfs polkit-gnome lxappearance fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts rofi curl make cmake meson obsidian man-db xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
-yay -Syu "${packages[@]}"
 
 # Backup configurations
 backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
@@ -382,6 +377,10 @@ mv NotoColorEmoji.ttf ~/.local/share/fonts
 mkdir -p "$HOME/.config/neofetch/" && sudo cp --parents -rpf "$HOME/dotfiles/neofetch/bk" "$HOME/.config/neofetch/"
 mkdir -p "$HOME/Pictures/" && sudo cp -rpf "$HOME/dotfiles/Pictures/bgpic.jpg" "$HOME/Pictures/"
 mkdir -p "$HOME/Videos/"
+
+# Install packages that i sue on my system
+packages=(git github-cli xdg-desktop-portal xdg-desktop-portal-gtk base-devel arch-install-scripts networkmanager wireless_tools neofetch gvfs polkit-gnome lxappearance fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts rofi curl make cmake meson obsidian man-db xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
+yay -Syu "${packages[@]}"
 
 # Install the necessary packages
 prop=""
@@ -426,26 +425,4 @@ echo "Checking NVIDIA power management status..."
 cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_status
 cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_suspended_time
 
-# Install Starship
-curl -sS https://starship.rs/install.sh | sh
-echo 'eval "$(starship init bash)"' >> ~/.bashrc
-
-# Check if the alias already exists in .bashrc
-if ! grep -q "alias blueman=" ~/.bashrc; then
-    echo "Adding Blueman alias to .bashrc..."
-    echo "alias blueman='blueman-manager'" >> ~/.bashrc
-    source ~/.bashrc
-else
-    echo "Blueman alias already exists in .bashrc. Skipping addition."
-fi
-
-# Prompt the user to reboot
-read -p "Would you like to reboot now? [y/N]: " reboot_choice
-case $reboot_choice in
-    y | Y)
-        run_command reboot
-        ;;
-    *)
-        echo "Reboot skipped. Please reboot manually if necessary."
-        ;;
-esac
+reboot
