@@ -8,7 +8,7 @@ exec > >(tee -i install.log) 2>&1
 pacman -Syu hwinfo
 
 # Function to prompt for user input with a default value
-prompt() {
+export prompt() {
     local prompt_text="$1"
     local default_value="$2"
     read -p "$prompt_text [$default_value]: " input
