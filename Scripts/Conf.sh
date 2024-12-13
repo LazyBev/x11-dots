@@ -1,24 +1,70 @@
 #!/bin/bash
 
-set -eau
+set -euo pipefail
 
 # Error handling
 trap 'echo "An error occurred. Exiting..."; exit 1;' ERR
 
 # Variables
 user=$(whoami)
+yay_choice=""
+backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
+de_choice=""
+browser_choice=""
+editor_choice=""
+audio_choice=""
+driver_choice=""
+dotfiles_dir=$(pwd)
+
+# Check if yay is installed
+if ! command -v yay &> /dev/null; then
+    echo "Yay is not installed, this config uses yay to install packages"
+    read -p "Install yay [y/N]: " yay_choice
+    case $yay_choice in
+        y | Y)
+            # Install yay
+            echo "Installing yay package manager..."
+            cd ~
+            git clone https://aur.archlinux.org/yay-bin.git
+            sudo chown "$user:$user" -R yay-bin && cd yay-bin
+            makepkg -si && cd .. && rm -rf yay
+            cd "$dotfiles_dir"
+            ;;
+        *)
+            echo "Exiting. Please install yay to proceed."
+            exit 1
+            ;;
+    esac
+fi
+
+# Install necessary packages (if not installed)
+install_packages() {
+    local package=$1
+    if ! pacman -Qi "$package" &>/dev/null; then
+        yay -Sy --noconfirm "$package"
+    fi
+}
+
+# Refactor pacman.conf update
+declare -a pacman_conf=(
+    "s/#Color/Color/"
+    "s/#ParallelDownloads/ParallelDownloads/"
+    "s/#\\[multilib\\]/\\[multilib\\]/"
+    "s/#Include = \\/etc\\/pacman\\.d\\/mirrorlist/Include = \\/etc\\/pacman\\.d\\/mirrorlist/"
+    "/# Misc options/a ILoveCandy"
+)
 
 # Backup the pacman.conf before modifying
+echo "Backing up /etc/pacman.conf"
 sudo cp /etc/pacman.conf /etc/pacman.conf.bak || { echo "Failed to back up pacman.conf"; exit 1;}
 
-# Configuring pacman.conf
-sudo sed -i '/Color/s/^#//g' /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
-sudo sed -i '/ParallelDownloads/s/^#//g' /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
-sudo sed -i '/#\\[multilib\\]/s/^#//' /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
-sudo sed -i '/#Include = \\/etc\\/pacman\\.d\\/mirrorlist/s/^#//' /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
-sudo sed -i '/#DisableSandbox/a ILoveCandy' /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
+echo "Modifying /etc/pacman.conf"
+for change in "${pacman_conf[@]}"; do
+    sudo sed -i "$change" /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
+done
 
 # Custom bash theme
+echo "Adding custom bash theme"
 if grep -i "LS_COLORS" ~/.bashrc; then
     sudo sed -i '/LS_COLORS/c\export LS_COLORS="di=35;1:fi=33:ex=36;1"' ~/.bashrc
 else
@@ -42,28 +88,10 @@ else
 fi
 
 # Ls alias
-if grep -i "PS1" ~/.bashrc; then
+if grep -i "alias ls" ~/.bashrc; then
     sudo sed -i '/alias ls/c\alias ls="eza -al --color=auto"' ~/.bashrc
 else
     echo 'alias ls="eza -al --color=auto"' >> ~/.bashrc
-fi
-
-# Check if yay is installed
-if ! command -v yay &> /dev/null; then
-    read -p "Install yay [y/N]: " yay_choice
-    case $yay_choice in
-        y | Y)
-            # Install yay
-            echo "Installing yay package manager..."
-            git clone https://aur.archlinux.org/yay-bin.git
-            sudo chown "$user:$user" -R yay-bin && cd yay-bin
-            makepkg -si && cd .. && rm -rf yay
-            ;;
-        *)
-            echo "Exiting. Please install yay to proceed."
-            exit 1
-            ;;
-    esac
 fi
 
 # Desktop Enviroment
@@ -73,50 +101,47 @@ echo "2) KDE Plasma"
 echo "3) XFCE"
 echo "4) MATE"
 echo "5) i3 (Window Manager)"
-read -p "Enter your choice (1-5): " de_choice 
+read -p "Enter your choice (1-5): " de_choice
 echo ""
+
+# Default to i3 if no input is provided
+de_choice=${de_choice:-5}
 
 case "$de_choice" in
     1 | gnome | GNOME)
         echo "Installing GNOME..."
-        sudo pacman -Sy --noconfirm gnome gnome-shell gnome-session gdm
-        sudo systemctl enable gdm.service
+        install_packages gnome gnome-shell gnome-session gdm && sudo systemctl enable gdm.service
         ;;
     2 | plasma | KDE | kde | KDE_Plasma | kde_plasma)
         echo "Installing KDE Plasma..."
-        sudo pacman -Sy --noconfirm plasma kde-applications sddm
-        sudo systemctl enable sddm.service
+        install_packages plasma kde-applications sddm && sudo systemctl enable sddm.service
         ;;
     3 | xfce | XFCE)
         echo "Installing XFCE..."
-        sudo pacman -Sy --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter
-        sudo systemctl enable lightdm.service
+        install_packages xfce4 xfce4-goodies lightdm lightdm-gtk-greeter && sudo systemctl enable lightdm.service
         ;;
     4 | mate | MATE)
         echo "Installing MATE..."
-        sudo pacman -Sy --noconfirm mate mate-extra lightdm
-        sudo systemctl enable lightdm.service
+        install_packages mate mate-extra lightdm && sudo systemctl enable lightdm.service
         ;;
     5 | i3 | I3 | i3wm | I3WM)
         echo "Installing i3..."
-        sudo pacman -Sy --noconfirm i3 ly dmenu kitty ranger
-        sudo systemctl enable ly.service
-        if [ -d "$HOME/dotfiles/i3" ]; then
+        install_packages i3 ly dmenu kitty ranger && sudo systemctl enable ly.service
+        if [ -d "$dotfiles_dir/i3" ]; then
             echo "Copying i3 configuration..."
-            sudo cp -rpf "$HOME/dotfiles/i3" "$HOME/.config/"
+            sudo cp -rpf "$dotfiles_dir/i3" "$HOME/.config/"
         else
-            echo "No i3 configuration found in ~/dotfiles. Skipping config copy."
+            echo "No i3 configuration found in $dotfiles_dir. Skipping config copy."
         fi
         ;;
     *)
         echo "Invalid choice. Installing i3 by default..."
-        sudo pacman -Sy --noconfirm i3 ly dmenu kitty ranger
-        sudo systemctl enable ly.service
-        if [ -d "$HOME/dotfiles/i3" ]; then
+        install_packages i3 ly dmenu kitty ranger && sudo systemctl enable ly.service
+        if [ -d "$dotfiles_dir/i3" ]; then
             echo "Copying i3 configuration..."
-            sudo cp -rpf "$HOME/dotfiles/i3" "$HOME/.config/"
+            sudo cp -rpf "$dotfiles_dir/i3" "$HOME/.config/"
         else
-            echo "No i3 configuration found in ~/dotfiles. Skipping config copy."
+            echo "No i3 configuration found in $dotfiles_dir. Skipping config copy."
         fi
         ;;
 esac
@@ -127,30 +152,32 @@ echo "1) Firefox"
 echo "2) Brave"
 echo "3) Librewolf"
 echo "4) Chromium"
-read -p "Enter your choice (1-4): " choice
+read -p "Enter your choice (1-4): " browser_choice
 echo ""
 
-case "$choice" in
+# Default to firefox if no input is provided
+browser_choice=${browser_choice:-1}
+
+case "$browser_choice" in
     1)
         echo "Installing Firefox..."
-        yay -Sy --noconfirm firefox
+        install_packages firefox
         ;;
     2)
         echo "Installing Brave..."
-        yay -Sy --noconfirm brave-bin
+        install_packages brave-bin
         ;;
     3)
         echo "Installing LibreWolf..."
-        yay -Sy --noconfirm librewolf-bin
+        install_packages librewolf-bin
         ;;
     4)
         echo "Installing Chromium..."
-        yay -Sy --noconfirm chromium
+        install_packages chromium
         ;;
     *)
         echo "Invalid choice. Installing firefox by default..."
-        yay -Sy --noconfirm firefox
-        exit 1
+        install_packages firefox
         ;;
 esac
 
@@ -161,52 +188,56 @@ echo "2) Neovim"
 echo "3) Nano"
 echo "4) Emacs"
 echo "5) Sublime Text"
-read -p "Enter your choice (1-5): " choice
+read -p "Enter your choice (1-5): " editor_choice
 echo ""
 
-case "$choice" in
+# Default to neovim if no input is provided
+editor_choice=${editor_choice:-2}
+
+case "$editor_choice" in
     1)
         echo "Installing Vim..."
-        yay -Sy --noconfirm vim
+        install_packages vim
         ;;
     2)
         echo "Installing Neovim..."
-        yay -Sy --noconfirm neovim vim
-        if [ -d "$HOME/dotfiles/nvim" ]; then
+        install_packages neovim vim
+        if [ -d "$dotfiles_dirnvim" ]; then
             echo "Copying neovim configuration..."
-            sudo cp -rpf "$HOME/dotfiles/nvim" "$HOME/.config/"
+            sudo cp -rpf "$dotfiles_dir/nvim" "$HOME/.config/"
         else
-            echo "No neovim configuration found in ~/dotfiles. Skipping config copy."
+            echo "No neovim configuration found in $dotfiles_dir. Skipping config copy."
         fi
         ;;
     3)
         echo "Installing Nano..."
-        yay -Sy --noconfirm nano
+        install_packages nano
         ;;
     4)
         echo "Installing Emacs..."
-        yay -Sy --noconfirm emacs
+        install_packages emacs
         ;;
     5)
         echo "Installing Sublime Text..."
-        yay -Sy --noconfirm sublime-text
+        install_packages sublime-text
         ;;
     *)
         echo "Invalid choice. Installing neovim by default..."
-        yay -Sy --noconfirm neovim vim
-        if [ -d "$HOME/dotfiles/nvim" ]; then
+        install_packages neovim vim
+        if [ -d "$dotfiles_dir/nvim" ]; then
             echo "Copying neovim configuration..."
-            sudo cp -rpf "$HOME/dotfiles/nvim" "$HOME/.config/"
+            sudo cp -rpf "$dotfiles_dir/nvim" "$HOME/.config/"
         else
-            echo "No neovim configuration found in ~/dotfiles. Skipping config copy."
+            echo "No neovim configuration found in $dotfiles_dir. Skipping config copy."
         fi
         ;;
 esac
 
 
 # Audio
-read -p "Do you want to install PipeWire or PulseAudio? [pipewire]: " choice
-case $choice in
+read -p "Do you want to install PipeWire or PulseAudio? [pipewire]: " audio_choice
+
+case $audio_choice in
     pulse | Pulse | pulseaudio | Pulseaudio)
         echo "Selected PulseAudio installation."
         # Check if PipeWire is installed and remove it if present
@@ -217,7 +248,7 @@ case $choice in
         
         # Install PulseAudio and related packages
         echo "Installing PulseAudio and related packages..."
-        sudo pacman -Syu --noconfirm pulseaudio pulseaudio-alsa alsa-utils pavucontrol
+        install_packages pulseaudio pulseaudio-alsa alsa-utils pavucontrol
         
         # Disable PipeWire services if they were previously enabled
         echo "Disabling PipeWire services..."
@@ -243,7 +274,7 @@ case $choice in
         
         # Install PipeWire and related packages
         echo "Installing PipeWire and related packages..."
-        sudo pacman -Syu --noconfirm pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber alsa-utils pavucontrol
+        install_packages pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber alsa-utils pavucontrol
         
         # Disable PulseAudio service if it was previously enabled
         echo "Disabling PulseAudio services..."
@@ -265,7 +296,7 @@ read -p "Do you want to install Wine? [y/N]: " choice
 case $choice in
     y | Y)
         echo "Installing Wine..."
-        yay -Syu wine winetricks
+        install_packages wine winetricks
         ;;
     *)
         echo "Wine installation skipped."
@@ -277,7 +308,7 @@ read -p "Do you want to install Roblox? [y/N]: " choice
 case $choice in
     y | Y)
         echo "Installing Roblox..."
-        yay -Syu flatpak
+        install_packages flatpak
         flatpak install --user https://sober.vinegarhq.org/sober.flatpakref
         # Check if the alias already exists in .bashrc
         if ! grep -q "alias roblox=" ~/.bashrc; then
@@ -297,7 +328,7 @@ read -p "Do you want to install Steam [y/N]: " choice
 case $choice in
     y | Y)
         echo "Installing Steam..."
-        yay -Syu steam
+        install_packages steam
         ;;
     *)
         echo "Steam installation skipped."
@@ -309,7 +340,7 @@ read -p "Do you want to install Bluetooth [y/N]: " choice
 case $choice in
     y | Y)
         echo "Installing Bluetooth..."
-        yay -Syu blueman bluez bluez-utils
+        install_packages blueman bluez bluez-utils
         echo "Enabling Bluetooth..."
         sudo systemctl enable bluetooth.service
         sudo systemctl start bluetooth.service
@@ -333,74 +364,25 @@ echo "Select a graphics driver to install:"
 echo "1) NVIDIA"
 echo "2) AMD"
 echo "3) Intel"
-read -p "Enter your choice (1-3): " choice
+read -p "Enter your choice (1-3): " driver_choice
 echo ""
 
-case "$choice" in
+# Default to NVIDIA if no input is provided
+driver_choice=${driver_choice:-1}
+
+case "$driver_choice" in
     1)
         echo "Installing NVIDIA drivers..."
-        yay -Sy --noconfirm mesa nvidia-dkms nvidia-utils \ 
-            xf86-video-nouveau vulkan-mesa-layers lib32-vulkan-mesa-layers nvidia-prime
-        ;;
-    2)
-        echo "Installing AMD drivers..."
-        yay -Sy --noconfirm mesa xf86-video-amdgpu
-        ;;
-    3)
-        echo "Installing Intel drivers..."
-        yay -Sy --noconfirm mesa xf86-video-intel
-        ;;
-    *)
-        echo "Invalid option, please choose a number between 1 and 5."
-        ;;
-esac
+        install_packages mesa nvidia-dkms nvidia-utils nvidia-settings nvidia-prime \
+            lib32-nvidia-utils vulkan-mesa-layers lib32-vulkan-mesa-layers \
+            xf86-video-nouveau opencl-nvidia lib32-opencl-nvidia
 
-# Backup configurations
-backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
-echo "---- Making backup at $backup_dir -----"
-mkdir -p "$backup_dir"
-sudo cp -rpf "$HOME/.config" "$backup_dir"
-echo "----- Backup made at $backup_dir ------"
-
-# Copy configurations
-for config in dunst fcitx5 rofi omf; do
-    sudo cp -rpf "$HOME/dotfiles/$config" "$HOME/.config/" || echo "Failed to copy $config"
-done
-
-for fonts in fonts/MartianMono fonts/SF-Mono-Powerline fonts/fontconfig; do
-    sudo cp -rpf "$HOME/dotfiles/$fonts" "$HOME/.local/share/fonts/" || echo "Failed to copy $fonts"
-done
-
-wget https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf
-mv NotoColorEmoji.ttf ~/.local/share/fonts
-
-mkdir -p "$HOME/.config/neofetch/" && sudo cp --parents -rpf "$HOME/dotfiles/neofetch/bk" "$HOME/.config/neofetch/"
-mkdir -p "$HOME/Pictures/" && sudo cp -rpf "$HOME/dotfiles/Pictures/bgpic.jpg" "$HOME/Pictures/"
-mkdir -p "$HOME/Videos/"
-
-# Install packages that i sue on my system
-packages=(git github-cli xdg-desktop-portal xdg-desktop-portal-gtk base-devel arch-install-scripts networkmanager wireless_tools neofetch gvfs polkit-gnome lxappearance fcitx5-im fcitx5-mozc adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts rofi curl make cmake meson obsidian man-db xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
-yay -Syu "${packages[@]}"
-
-# Install the necessary packages
-prop=""
-NVIDIA_VENDOR="0x$(lspci -nn | grep -i nvidia | sed -n 's/.*\[\([0-9A-Fa-f]\+\):[0-9A-Fa-f]\+\].*/\1/p' | head -n 1)"
-
-# Check available graphics providers and OpenGL renderer
-xrandr --listproviders && glxinfo | grep "OpenGL renderer"
-
-# Set up the offloading sink for hybrid graphics (replace radeon if necessary)
-echo "Setting offloading sink..."
-read -p "Enter the provider number for offloading sink (e.g., 1): " provider_number
-xrandr --setprovideroffloadsink $provider_number
-
-# Check OpenGL renderer for PRIME offloading and GPU power state
-DRI_PRIME=1 glxinfo | grep "OpenGL renderer"
-cat /sys/class/drm/card*/device/power_state
-
-# Create udev rules for NVIDIA power management
-echo "Creating udev rules for NVIDIA power management..."
-sudo tee /etc/udev/rules.d/80-nvidia-pm.rules > /dev/null <<EOL
+        prop=""
+        NVIDIA_VENDOR="0x$(lspci -nn | grep -i nvidia | sed -n 's/.*\[\([0-9A-Fa-f]\+\):[0-9A-Fa-f]\+\].*/\1/p' | head -n 1)"
+        
+        # Create udev rules for NVIDIA power management
+        echo "Creating udev rules for NVIDIA power management..."
+        sudo tee /etc/udev/rules.d/80-nvidia-pm.rules > /dev/null <<EOL
 # Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind
 ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
 ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
@@ -414,15 +396,94 @@ ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0
 ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
 EOL
 
-# Configure NVIDIA Dynamic Power Management
-echo "Configuring NVIDIA Dynamic Power Management..."
+        # Configure NVIDIA Dynamic Power Management
+        echo "Configuring NVIDIA Dynamic Power Management..."
 sudo tee /etc/modprobe.d/nvidia-pm.conf > /dev/null <<EOL
 options nvidia NVreg_DynamicPowerManagement=0x02
 EOL
+    2)
+        echo "Installing AMD drivers..."
+        install_packages mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon \
+            lib32-mesa lib32-mesa-vdpau mesa-vdpau \
+            opencl-mesa lib32-opencl-mesa
+        ;;
+    3)
+        echo "Installing Intel drivers..."
+        install_packages mesa xf86-video-intel vulkan-intel lib32-vulkan-intel \
+            lib32-mesa intel-media-driver intel-compute-runtime \
+            opencl-clang lib32-opencl-clang
+        ;;
+    *)
+        echo "Invalid option. Defaulting to NVIDIA drivers..."
+        install_packages mesa nvidia-dkms nvidia-utils nvidia-settings nvidia-prime \
+            lib32-nvidia-utils vulkan-mesa-layers lib32-vulkan-mesa-layers \
+            xf86-video-nouveau opencl-nvidia lib32-opencl-nvidia
+        ;;
+esac
 
-# Check runtime power management status and suspended time for the NVIDIA device
-echo "Checking NVIDIA power management status..."
-cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_status
-cat /sys/bus/pci/devices/0000:01:00.0/power/runtime_suspended_time
+# Install packages that i sue on my system
+packages=(git lazygit github-cli xdg-desktop-portal arch-install-scripts networkmanager wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul ttf-dejavu unifont rofi curl make cmake meson obsidian man-db man-pages mandoc xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
+install_packages "${packages[@]}"
+
+# Backup configurations
+echo "---- Making backup at $backup_dir -----"
+mkdir -p "$backup_dir"
+sudo cp -rpf "$HOME/.config" "$backup_dir"
+echo "----- Backup made at $backup_dir ------"
+
+# Copy configurations from dotfiles (example for dunst, rofi, etc.)
+for config in dunst fcitx5 rofi omf; do
+    if [ -d "$dotfiles_dir/$config" ]; then
+        sudo cp -rpf "$dotfiles_dir/$config" "$HOME/.config/"
+    else
+        echo "No configuration found for $config. Skipping."
+    fi
+done
+
+# Install fonts
+for font in fonts/MartianMono fonts/SF-Mono-Powerline fonts/fontconfig; do
+    if [ -d "$dotfiles_dir/$font" ]; then
+        sudo cp -rpf "$dotfiles_dir/$font" "$HOME/.local/share/fonts/"
+    else
+        echo "No font found for $font. Skipping."
+    fi
+done
+
+mkdir -p "$HOME/.config/neofetch/" && sudo cp --parents -rpf "$dotfiles_dir/neofetch/bk" "$HOME/.config/neofetch/"
+mkdir -p "$HOME/Pictures/" && sudo cp -rpf "$dotfiles_dir/Pictures/bgpic.jpg" "$HOME/Pictures/"
+mkdir -p "$HOME/Videos/"
+
+read -p "Enter in any additional packages you wanna install (Type "none" for no package)" additional
+additional="${additional:-none}"
+
+# Check if the user entered additional packages
+if [[ "$additional" != "none" && "$additional" != "" ]]; then
+    echo "Checking if additional packages exist: $additional"
+    
+    # Split the entered package names into an array (in case multiple packages are entered)
+    IFS=' ' read -r -a Apackages <<< "$additional"
+    
+    # Loop through each package to check if it exists
+    for i in "${!Apackages[@]}"; do
+        while ! pacman -Ss "^${Apackages[$i]}$" &>/dev/null || Apackages[$i] != "none"; do
+            if [[ "${Apackages[$i]}" == "none" ]]; then
+                echo "Skipping package installation for index $((i + 1))"
+                break
+            fi
+            echo "Package '${Apackages[$i]}' not found in the official repositories. Please enter a valid package."
+            read -p "Enter package ${i+1} again (Type "none" for no package): " Apackages[$i]
+        done
+        if [[ ${Apackages[$i]} != "none" ]]; then
+            echo "Package '${Apackages[$i]}' found. Installing..."
+        else
+            echo "No packages to install..."
+        fi
+    done
+
+    # Install the valid packages
+    install_packages "${Apackages[@]}"
+else
+    echo "No additional packages will be installed."
+fi
 
 reboot
