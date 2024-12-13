@@ -328,7 +328,7 @@ read -p "Do you want to install Steam [y/N]: " choice
 case $choice in
     y | Y)
         echo "Installing Steam..."
-        install_packages steam
+        install_packages steam steam-native-runtime
         ;;
     *)
         echo "Steam installation skipped."
@@ -422,7 +422,7 @@ EOL
 esac
 
 # Install packages that i sue on my system
-packages=(git lazygit github-cli xdg-desktop-portal arch-install-scripts networkmanager wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul ttf-dejavu unifont rofi curl make cmake meson obsidian man-db man-pages mandoc xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
+packages=(git lazygit github-cli xdg-desktop-portal hwinfo arch-install-scripts networkmanager wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul ttf-dejavu ttf-liberation unifont rofi curl make cmake meson obsidian man-db man-pages mandoc xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
 install_packages "${packages[@]}"
 
 # Backup configurations
