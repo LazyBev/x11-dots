@@ -12,6 +12,8 @@ settings:
     global: '#000000'
   colors.completion.item.selected.bg:
     global: '#e8c000'
+  colors.completion.item.selected.match.fg:
+    global: '#74c365'
   colors.completion.match.fg:
     global: '#74c365'
   colors.completion.odd.bg:
@@ -26,3 +28,10 @@ settings:
     global: when-searching
   statusbar.show:
     global: in-mode
+  url.default_page:
+    global: https://www.startpage.com
+  url.searchengines:
+    global:
+      DEFAULT: https://startpage.com/sp/search?query={}
+  url.start_pages:
+    global: https://www.startpage.com/
