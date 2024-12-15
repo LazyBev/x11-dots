@@ -404,7 +404,7 @@ cp -rpf "$HOME/.config" "$backup_dir"
 echo "----- Backup made at $backup_dir ------"
 
 # Copy configurations from dotfiles (example for dunst, rofi, etc.)
-for config in dunst fcitx5 tmux rofi omf; do
+for config in dunst fcitx5 tmux qutebrowser rofi omf; do
     if [ -d "$dotfiles_dir/$config" ]; then
         cp -rpf "$dotfiles_dir/$config" "$HOME/.config/"
     else
@@ -421,6 +421,7 @@ for font in fonts/MartianMono fonts/SF-Mono-Powerline fonts/fontconfig; do
     fi
 done
 
+sudo sed -i "s/config.load_autoconfig(False)/config.load_autoconfig/(True)"
 mkdir -p "$HOME/.config/neofetch/" && cp --parents -rpf "$dotfiles_dir/neofetch/bk" "$HOME/.config/neofetch/"
 echo "alias neofetch="neofetch --source $HOME/.config/neofetch/bk"" >> $HOME/.bashrc
 mkdir -p "$HOME/Pictures/" && cp -rpf "$dotfiles_dir/Pictures/bgpic.jpg" "$HOME/Pictures/"
