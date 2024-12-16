@@ -421,6 +421,14 @@ for font in fonts/MartianMono fonts/SF-Mono-Powerline fonts/fontconfig; do
     fi
 done
 
+# XDG_DIRS
+echo "export XDG_CONFIG_HOME="$HOME/.config"" >> ~/.bashrc
+echo "export XDG_DATA_HOME="$HOME/.local/share"" >> ~/.bashrc
+echo "export XDG_STATE_HOME="$HOME/.local/state"" >> ~/.bashrc
+echo "export XDG_CACHE_HOME="$HOME/.cache"" >> ~/.bashrc
+mv "$dotfiles_dir"/Scripts/tmux-sessionizer .local/bin/
+echo "export PATH=".local/bin/:$PATH""
+
 sudo sed -i "s/config.load_autoconfig(False)/config.load_autoconfig/(True)" $HOME/.config/qutebrowser/config.py
 mkdir -p "$HOME/.config/neofetch/" && cp --parents -rpf "$dotfiles_dir/neofetch/bk" "$HOME/.config/neofetch/"
 echo "alias neofetch="neofetch --source $HOME/.config/neofetch/bk"" >> $HOME/.bashrc
