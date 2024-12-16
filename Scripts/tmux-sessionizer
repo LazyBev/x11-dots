@@ -1,14 +1,9 @@
 #!/bin/sh
 
 directories="
-$HOME/Projects/Personal
-$HOME/Projects/Work
+$HOME/coding
 $HOME/.config
 $HOME/dotfiles
-$HOME/dotfiles/config
-$HOME/Nextcloud/Notes
-$HOME/Documents
-$HOME
 "
 
 if [ $# -eq 1 ]; then
