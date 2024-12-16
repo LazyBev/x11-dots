@@ -260,7 +260,7 @@ systemctl enable NetworkManager
 
 # Browser
 echo "Installing Firefox..."
-install_packages firefox
+install_packages qutebrowser
 
 # Text Editor
 install_packages neovim vim
