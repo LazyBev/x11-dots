@@ -78,6 +78,7 @@ sudo chown "$user:$user" -R $HOME/yay-bin
 cd yay-bin && makepkg -si && cd .. && rm -rf yay-bin
 
 # Install Xorg
+echo "Installing xorg..."
 install_packages xorg-server xorg-xinit
 
 # Desktop Enviroment
@@ -91,6 +92,7 @@ else
 fi
 
 # Ghostty Term
+echo "Installing ghostty..."
 install_packages ghostty-git
 if [ -d "$dotfiles_dir/ghostty" ]; then
     echo "Copying ghostty configuration..."
@@ -250,6 +252,11 @@ esac
 # Tmux
 install_packages tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+if [ -e "$dotfiles_dir/tmux-sessionizer" ]; then
+        cp -rpf "$dotfiles_dir/tmux-sessionizer" "/bin"
+    else
+        echo "No tmux-sessionizer file found. SKipping installtion"
+fi
 
 # Backup configurations
 echo "---- Making backup at $backup_dir -----"
@@ -257,10 +264,15 @@ mkdir -p "$backup_dir"
 cp -rpf "$HOME/.config" "$backup_dir"
 echo "----- Backup made at $backup_dir ------"
 
+# Clearing configs
+for config in dunst fcitx5 tmux qutebrowser i3 nvim rofi ghostty; do
+    rm -rf "~/.config/$config"
+done
+
 # Copy configurations from dotfiles (example for dunst, rofi, etc.)
-for config in dunst fcitx5 tmux qutebrowser rofi omf; do
+for config in dunst fcitx5 tmux qutebrowser i3 nvim rofi ghostty; do
     if [ -d "$dotfiles_dir/$config" ]; then
-        cp -rf "$dotfiles_dir/$config" "$HOME/.config/"
+        cp -rpf "$dotfiles_dir/$config" "$HOME/.config/"
     else
         echo "No configuration found for $config. Skipping."
     fi
@@ -269,7 +281,7 @@ done
 # Install fonts
 for font in fonts/MartianMono fonts/SF-Mono-Powerline fonts/fontconfig; do
     if [ -d "$dotfiles_dir/$font" ]; then
-        cp -rf "$dotfiles_dir/$font" "$HOME/.local/share/fonts/"
+        cp -rpf "$dotfiles_dir/$font" "$HOME/.local/share/fonts/"
     else
         echo "No font found for $font. Skipping."
     fi
@@ -286,7 +298,7 @@ echo "export PATH=".local/bin/:$PATH"" >> ~/.bashrc
 sudo sed -i "s/config.load_autoconfig(False)/config.load_autoconfig/(True)" $HOME/.config/qutebrowser/config.py
 mkdir -p "$HOME/.config/neofetch/" && cp --parents -rf "$dotfiles_dir/neofetch/bk" "$HOME/.config/neofetch/"
 echo "alias neofetch="neofetch --source $HOME/.config/neofetch/bk"" >> $HOME/.bashrc
-mkdir -p "$HOME/Pictures/" && cp -rf "$dotfiles_dir/Pictures/bgpic.jpg" "$HOME/Pictures/"
+mkdir -p "$HOME/Pictures/" && cp -rpf "$dotfiles_dir/Pictures/bgpic.jpg" "$HOME/Pictures/"
 mkdir -p "$HOME/Videos/"
 
 # Utilities
@@ -335,6 +347,5 @@ if [[ "$additional" != "none" && "$additional" != "" ]]; then
 else
     echo "No additional packages will be installed."
 fi
-
 
 reboot
