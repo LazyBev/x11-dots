@@ -117,6 +117,7 @@ echo "Generating fstab..."
 genfstab -U /mnt >> /mnt/etc/fstab 
 
 # Chroot into the new system
+echo "Chrooting into system..."
 arch-chroot /mnt /bin/bash <<EOF
 set -euo pipefail
 
@@ -252,8 +253,8 @@ echo "Enabling essential services..."
 systemctl enable NetworkManager 
 
 # Browser
-echo "Installing qutebrowser and firefox..."
-install_packages qutebrowser firefox
+echo "Installing qutebrowser..."
+install_packages qutebrowser
 
 # Text Editor
 echo "Installing neovim..."
