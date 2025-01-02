@@ -238,6 +238,16 @@ fi
 
 # Audio
 
+# Ghostty term
+install_packages ghostty-git
+if [ -d "$dotfiles_dir/ghostty" ]; then
+    echo "Copying ghostty configuration..."
+    cp -rpf "$dotfiles_dir/ghostty" "$HOME/.config/"
+else
+    echo "No ghostty configuration found in $dotfiles_dir. Skipping config copy."
+fi
+
+# Installing PipeWire services
 echo "Installing PipeWire and related packages..."
 install_packages pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber alsa-utils pavucontrol
         
