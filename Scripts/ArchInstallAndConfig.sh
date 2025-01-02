@@ -228,24 +228,7 @@ install_packages xorg-server xorg-xinit
 
 # Desktop Enviroment
 echo "Installing i3..."
-install_packages i3 ly dmenu kitty ranger && systemctl enable ly.service
-if [ -d "$dotfiles_dir/i3" ]; then
-    echo "Copying i3 configuration..."
-    cp -rpf "$dotfiles_dir/i3" "$HOME/.config/"
-else
-    echo "No i3 configuration found in $dotfiles_dir. Skipping config copy."
-fi
-
-# Audio
-
-# Ghostty term
-install_packages ghostty-git
-if [ -d "$dotfiles_dir/ghostty" ]; then
-    echo "Copying ghostty configuration..."
-    cp -rpf "$dotfiles_dir/ghostty" "$HOME/.config/"
-else
-    echo "No ghostty configuration found in $dotfiles_dir. Skipping config copy."
-fi
+install_packages i3 ly dmenu ghostty-git ranger && systemctl enable ly.service
 
 # Installing PipeWire services
 echo "Installing PipeWire and related packages..."
@@ -269,17 +252,12 @@ echo "Enabling essential services..."
 systemctl enable NetworkManager 
 
 # Browser
-echo "Installing Firefox..."
-install_packages qutebrowser
+echo "Installing qutebrowser and firefox..."
+install_packages qutebrowser firefox
 
 # Text Editor
+echo "Installing neovim..."
 install_packages neovim vim
-if [ -d "$dotfiles_dir/nvim" ]; then
-    echo "Copying neovim configuration..."
-    cp -rpf "$dotfiles_dir/nvim" "$HOME/.config/"
-else
-    echo "No neovim configuration found in $dotfiles_dir. Skipping config copy."
-fi
 
 # Wine
 echo "Installing Wine..."
@@ -404,6 +382,7 @@ EOL
 esac
 
 # Tmux
+echo "Installing tmux and plugins..."
 install_packages tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
@@ -413,8 +392,14 @@ mkdir -p "$backup_dir"
 cp -rpf "$HOME/.config" "$backup_dir"
 echo "----- Backup made at $backup_dir ------"
 
+# Clearing configs
+echo "Clearing and Copying dotfile configs to .config..."
+for config in dunst fcitx5 tmux qutebrowser i3 nvim rofi ghostty; do
+    rm -rf "~/.config/$config"
+done
+
 # Copy configurations from dotfiles (example for dunst, rofi, etc.)
-for config in dunst fcitx5 tmux qutebrowser rofi omf; do
+for config in dunst fcitx5 tmux qutebrowser i3 nvim rofi ghostty; do
     if [ -d "$dotfiles_dir/$config" ]; then
         cp -rpf "$dotfiles_dir/$config" "$HOME/.config/"
     else
@@ -468,6 +453,7 @@ read -p "Enter in any additional packages you wanna install (Type "none" for no 
 additional="${additional:-none}"
 
 # Configure GRUB
+echo "Configuring configs..."
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
