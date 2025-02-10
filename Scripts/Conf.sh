@@ -43,7 +43,7 @@ done
 # Custom bash theme
 echo "Adding custom bash theme"
 if grep -i "LS_COLORS" $HOME/.bashrc; then
-    sudo sed -i '/LS_COLORS/c\export LS_COLORS="di=35;1:fi=33:ex=36;1"' $HOME/.bashrc
+    echo 
 else
     echo 'export LS_COLORS="di=35;1:fi=33:ex=36;1"' >> $HOME/.bashrc
 fi
@@ -58,15 +58,15 @@ if ! grep -q "parse_git_branch" $HOME/.bashrc; then
 fi
 
 # PS1
-if grep -i "PS1" $HOME/.bashrc; then
-    sudo sed -i '/PS1/c\export PS1='\[\033[01;34m\][\[\033[01;35m\]\u\[\033[00m\]:\[\033[01;36m\]\h\[\033[00m\] <> \[\033[01;34m\]\w\[\033[01;34m\]] \[\033[01;33m\]$(parse_git_branch)\[\033[00m\]'' $HOME/.bashrc
+if grep -i "PS1" $HOME/.bashrc; then 
+    echo
 else
     echo 'export PS1='\[\033[01;34m\][\[\033[01;35m\]\u\[\033[00m\]:\[\033[01;36m\]\h\[\033[00m\] <> \[\033[01;34m\]\w\[\033[01;34m\]] \[\033[01;33m\]$(parse_git_branch)\[\033[00m\]'' >> $HOME/.bashrc
 fi
 
 # Ls alias
-if grep -i "alias ls" $HOME/.bashrc; then
-    sudo sed -i '/alias ls/c\alias ls="eza -al --color=auto"' $HOME/.bashrc
+if grep -i "alias ls" $HOME/.bashrc; then 
+    echo 
 else
     echo 'alias ls="eza -al --color=auto"' >> $HOME/.bashrc
 fi
