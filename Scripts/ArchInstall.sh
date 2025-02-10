@@ -62,10 +62,6 @@ lsblk
 
 auto=$(prompt "Manual or auto disk partitioning" "auto")
 
-# Wipe the disk and partition
-echo "Wiping $disk and creating partitions..."
-wipefs -af "$disk"
-
 if [[ $auto == "auto" ]]; then
     # Automatically calculate partition sizes based on disk size
     disk_size=$(lsblk -b -n -d -o SIZE "$disk" | awk '{print int($1 / 1024 / 1024)}')
