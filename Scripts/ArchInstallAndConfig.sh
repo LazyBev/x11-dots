@@ -5,10 +5,10 @@ set -eauo pipefail
 trap 'echo "An error occurred. Cleaning up..."; umount -R /mnt || true; swapoff ${disk}${disk_prefix}2 || true; exit 1' ERR
 exec > >(tee -i install.log) 2>&1
 
-pacman -Syu hwinfo
+pacman -Sy hwinfo
 
 # Function to prompt for user input with a default value
-export prompt() {
+prompt() {
     local prompt_text="$1"
     local default_value="$2"
     read -p "$prompt_text [$default_value]: " input
