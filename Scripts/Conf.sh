@@ -113,8 +113,10 @@ sudo systemctl --global enable pipewire.service wireplumber.service
         
 # Configure ALSA to use PipeWire
 echo "Configuring ALSA to use PipeWire..."
-echo "defaults.pcm.card 0" > /etc/asound.conf
-echo "defaults.ctl.card 0" >> /etc/asound.conf
+echo tee /etc/asound.conf <<ASOUND
+defaults.pcm.card 0
+defaults.ctl.card 0
+ASOUND
 
 # Browser
 echo "Installing qutebrowser..."
