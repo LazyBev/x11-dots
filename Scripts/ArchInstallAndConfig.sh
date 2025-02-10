@@ -83,7 +83,7 @@ else
 fi
 
 # Determine disk prefix for NVMe or standard drives
-if [[ "$disk" == /dev/nvme* ]]; then
+if [[ "$disk" == /dev/nvme0n1 ]]; then
     disk_prefix="p"
 else
     disk_prefix=""
