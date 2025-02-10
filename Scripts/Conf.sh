@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -eo pipefail
 
 # Error handling
 trap 'echo "An error occurred. Exiting..."; exit 1;' ERR
