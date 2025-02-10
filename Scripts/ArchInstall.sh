@@ -26,7 +26,6 @@ if [[ ! -b "$disk" ]]; then
     exit 1
 fi 
 
-disk_prefix=""
 hostname=$(prompt "Enter the hostname" "gentuwu")
 user=$(prompt "Enter the username" "user")
 password=""
@@ -83,30 +82,23 @@ else
     cfdisk "$disk"
 fi
 
-# Determine disk prefix for NVMe or standard drives
-if [[ "$disk" == "/dev/nvme0n1" ]]; then
-    disk_prefix="p"
-else
-    disk_prefix=""
-fi
-
 # Validate partition existence
-if [[ ! -e "${disk}${disk_prefix}1" || ! -e "${disk}${disk_prefix}2" || ! -e "${disk}${disk_prefix}3" ]]; then
+if [[ ! -e "${disk}p1" || ! -e "${disk}p2" || ! -e "${disk}p3" ]]; then
     echo "Error: Partitions not found. Please partition the disk properly and try again."
     exit 1
 fi
 
 # Format the partitions
 echo "Formatting partitions..."
-mkfs.vfat -F 32 "${disk}${disk_prefix}1"
-mkfs.ext4 "${disk}${disk_prefix}3"
-mkswap "${disk}${disk_prefix}2"
+mkfs.vfat -F 32 "${disk}p1"
+mkfs.ext4 "${disk}p3"
+mkswap "${disk}p2"
 
 # Mount the filesystems
-mount "${disk}${disk_prefix}3" /mnt
+mount "${disk}p3" /mnt
 mkdir -p /mnt/boot
-mount "${disk}${disk_prefix}1" /mnt/boot
-swapon "${disk}${disk_prefix}2"
+mount "${disk}p1" /mnt/boot
+swapon "${disk}p2"
 
 lsblk
 
