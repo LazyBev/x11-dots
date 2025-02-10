@@ -26,6 +26,7 @@ if [[ ! -b "$disk" ]]; then
     exit 1
 fi 
 
+disk_prefix=""
 hostname=$(prompt "Enter the hostname" "gentuwu")
 user=$(prompt "Enter the username" "user")
 password=""
@@ -83,7 +84,7 @@ else
 fi
 
 # Determine disk prefix for NVMe or standard drives
-if [[ "$disk" == /dev/nvme0n1 ]]; then
+if [[ "$disk" == "/dev/nvme0n1" ]]; then
     disk_prefix="p"
 else
     disk_prefix=""
