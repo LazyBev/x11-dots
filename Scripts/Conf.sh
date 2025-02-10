@@ -71,11 +71,13 @@ else
     echo 'alias ls="eza -al --color=auto"' >> $HOME/.bashrc
 fi
 
-# Install yay
+# Install yay 
+cd ~
 echo "Installing yay package manager..."
 git clone https://aur.archlinux.org/yay-bin.git
 sudo chown "$user:$user" -R $HOME/yay-bin
 cd yay-bin && makepkg -si && cd .. && rm -rf yay-bin
+cd "$dotfiles_dir"
 
 # Install Xorg
 echo "Installing xorg..."
