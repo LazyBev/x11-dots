@@ -232,7 +232,8 @@ EOL
         echo "Configuring NVIDIA Dynamic Power Management..."
         sudo tee /etc/modprobe.d/nvidia-pm.conf > /dev/null <<EOL
 options nvidia NVreg_DynamicPowerManagement=0x02
-EOL
+EOL 
+        ;;
     2)
         echo "Installing AMD drivers..."
         install_packages mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon \
