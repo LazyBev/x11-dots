@@ -48,7 +48,7 @@ else
 fi
 
 echo "Installing base system..."
-pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr iwd grep git sed "$cpu"-ucode
+pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr iwd grep git sed "$cpu"-ucode networkmanager network-manager-applet nm-connection-editor
 
 echo "Generating fstab..."
 genfstab -U /mnt >> /mnt/etc/fstab 
@@ -139,6 +139,7 @@ fi
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 systemctl enable iwd.service
+systemctl enable NetworkManager.service
 EOF
 
 set +a
