@@ -28,6 +28,6 @@ read -p "Enter your CPU brand [amd]: " cpu
 : ${cpu:=amd}
 
 bash -c "
-chmod +x ./ArchHalfInstall.sh
-./ArchHalfInstall.sh
+chmod +x ./Auto.sh
+./Auto.sh
 "
