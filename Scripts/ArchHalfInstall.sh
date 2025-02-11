@@ -2,6 +2,26 @@
 
 set -eao pipefail
 
+cfdisk ${disk}
+
+if "$disk" == "/dev/nvme0n1" then
+    mkfs.ext4 "${disk}p3"
+    mkswap "${disk}p2"
+    mkfs.fat -F 32 "${disk}p1"
+
+    mount "${disk}p3" /mnt
+    mount --mkdir "${disk}p1" /mnt/boot
+    swapon "${disk}p2"
+else
+    mkfs.ext4 "${disk}3"
+    mkswap "${disk}2"
+    mkfs.fat -F 32 "${disk}1"
+
+    mount "${disk}3" /mnt
+    mount --mkdir "${disk}1" /mnt/boot
+    swapon "${disk}2"
+fi
+
 echo "Installing base system..."
 pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr iwd grep git sed "$cpu"-ucode
 
