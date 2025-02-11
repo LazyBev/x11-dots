@@ -2,6 +2,15 @@
 
 set -ae
 
+disk=""
+hostname=""
+user=""
+password=""
+keyboard=""
+locale=""
+timezone=""
+cpu=""
+
 read -p "Enter the disk you want to write on [dev/nvme0n1]" disk
 : ${disk:=/dev/nvme0n1}
 
