@@ -61,6 +61,7 @@ echo 'alias ls="eza -al --color=auto"' >> $HOME/.bashrc
 
 # Dotfiles
 cd $HOME
+rm -rf dotfiles
 git clone https://github.com/LazyBev/dotfiles.git
 
 # Set timezone
