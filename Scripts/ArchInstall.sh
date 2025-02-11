@@ -7,39 +7,39 @@ exec > >(tee -i install.log) 2>&1
 
 pacman -Sy hwinfo
 
-# Function to prompt for user input with a default value
-prompt() {
-    local prompt_text="$1"
-    local default_value="$2"
-    read -p "$prompt_text [$default_value]: " input
-    echo "${input:-$default_value}"
-}
-
 lsblk
 
-# Ask for user input
-disk=$(prompt "Enter the disk to install Arch Linux (e.g., /dev/nvme0n1)" "/dev/nvme0n1")
+read -p "Enter the disk to install Arch Linux (e.g., /dev/nvme0n1) [/dev/nvme0n1]: " disk
+: ${disk:=/dev/nvme0n1}
 
-# Validate disk input
 if [[ ! -b "$disk" ]]; then
     echo "Error: $disk is not a valid block device."
     exit 1
 fi 
 
-hostname=$(prompt "Enter the hostname" "gentuwu")
-user=$(prompt "Enter the username" "user")
-password=""
+read -p "Enter the hostname [gentuwu]: " hostname
+: ${hostname:=gentuwu}
+
+read -p "Enter the username [user]: " user
+: ${user:=user}
+
 read -sp "Enter the password [1234]: " password
 echo ""
-password=${password:-1234}
-keyboard=$(prompt "Enter key map for keyboard" "uk")
-locale=$(prompt "Enter the locale" "en_GB.UTF-8")
-timezone=$(prompt "Enter the timezone" "Europe/London")
+: ${password:=1234}
+
+read -p "Enter key map for keyboard [uk]: " keyboard
+: ${keyboard:=uk}
+
+read -p "Enter the locale [en_GB.UTF-8]: " locale
+: ${locale:=en_GB.UTF-8}
+
+read -p "Enter the timezone [Europe/London]: " timezone
+: ${timezone:=Europe/London}
+
 intel_cpu=$(hwinfo --cpu | head -n6 | grep "Intel")
 amd_cpu=$(hwinfo --cpu | head -n6 | grep "AMD")
 cpu=""
 
-# Determine which CPU is present
 if [[ -n "$intel_cpu" ]]; then
     echo "Intel CPU detected."
     cpu="intel"
@@ -50,20 +50,18 @@ else
     echo "No Intel or AMD CPU detected, or hwinfo could not detect the CPU."
 fi
 
-
 timedatectl set-ntp true
 loadkeys "$keyboard"
 
-# Confirm disk operations
 read -p "WARNING: This will erase all data on $disk. Continue? (y/n): " confirm
 [[ "$confirm" != "y" ]] && exit 1
 
 lsblk 
 
-auto=$(prompt "Manual or auto disk partitioning" "auto")
+read -p "Manual or auto disk partitioning [auto]: " auto
+: ${auto:=auto}
 
 if [[ $auto == "auto" ]]; then
-    # Automatically calculate partition sizes based on disk size
     disk_size=$(lsblk -b -n -d -o SIZE "$disk" | awk '{print int($1 / 1024 / 1024)}')
     boot_size=1024
     root_size=$((disk_size - boot_size))
@@ -78,19 +76,16 @@ else
     cfdisk "$disk"
 fi
 
-# Validate partition existence
 if [[ ! -e "${disk}p1" || ! -e "${disk}p2" || ! -e "${disk}p3" ]]; then
     echo "Error: Partitions not found. Please partition the disk properly and try again."
     exit 1
 fi
 
-# Format the partitions
 echo "Formatting partitions..."
 mkfs.vfat -F 32 "${disk}p1"
 mkfs.ext4 "${disk}p3"
 mkswap "${disk}p2"
 
-# Mount the filesystems
 mount "${disk}p3" /mnt
 mkdir -p /mnt/boot
 mount "${disk}p1" /mnt/boot
@@ -98,11 +93,9 @@ swapon "${disk}p2"
 
 lsblk
 
-# Install the base system
 echo "Installing base system..."
-pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr "$cpu"-ucode
+pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr network-manager "$cpu"-ucode
 
-# Generate fstab
 echo "Generating fstab..."
 genfstab -U /mnt >> /mnt/etc/fstab 
 
@@ -118,10 +111,6 @@ trap 'echo "An error occurred. Exiting..."; exit 1;' ERR
 HOME="/home/$user"
 yay_choice=""
 backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
-de_choice=""
-browser_choice=""
-editor_choice=""
-audio_choice=""
 driver_choice=""
 dotfiles_dir="$HOME/dotfiles"
 
@@ -216,7 +205,7 @@ usermod -aG audio,video,lp,input "$user"
 
 # Network
 echo "Installing network and internet packages..."
-install_packages networkmanager 
+install_packages networkmanager network-manager-applet
 
 # Enable Network
 echo "Enabling essential services..."
