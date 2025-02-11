@@ -53,23 +53,23 @@ fi
 timedatectl set-ntp true
 loadkeys "$keyboard"
 
-read -p "WARNING: This will erase all data on $disk. Continue? (y/n): " confirm
-[[ "$confirm" != "y" ]] && exit 1
+#read -p "WARNING: This will erase all data on $disk. Continue? (y/n): " confirm
+#[[ "$confirm" != "y" ]] && exit 1
 
-lsblk 
+#lsblk 
 
-echo "Launching cfdisk for manual partitioning"
-cfdisk "$disk"
+#echo "Launching cfdisk for manual partitioning"
+#cfdisk "$disk"
 
-echo "Formatting partitions..."
-mkfs.vfat -F 32 "${disk}p1"
-mkfs.ext4 "${disk}p3"
+#echo "Formatting partitions..."
+#mkfs.vfat -F 32 "${disk}p1"
+#mkfs.ext4 "${disk}p3"
 
-mount "${disk}p3" /mnt
-mkdir -p /mnt/boot
-mount "${disk}p1" /mnt/boot
+#mount "${disk}p3" /mnt
+#mkdir -p /mnt/boot
+#mount "${disk}p1" /mnt/boot
 
-lsblk
+#lsblk
 
 echo "Installing base system..."
 pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr network-manager "$cpu"-ucode
