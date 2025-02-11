@@ -2,9 +2,6 @@
 
 set -eao pipefail
 
-trap 'echo "An error occurred. Cleaning up..."; umount -R /mnt || true; swapoff ${disk}${disk_prefix}2 || true; exit 1' ERR
-exec > >(tee -i install.log) 2>&1
-
 echo "Installing base system..."
 pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr network-manager "$cpu"-ucode
 
