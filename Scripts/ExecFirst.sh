@@ -2,6 +2,9 @@
 
 set -ae
 
+read -p "Enter the disk you want to write on [dev/nvme0n1]" disk
+: ${disk:=nvme0n1}
+
 read -p "Enter the hostname [gentuwu]: " hostname
 : ${hostname:=gentuwu}
 
