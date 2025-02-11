@@ -21,19 +21,8 @@ read -p "Enter the locale [en_GB.UTF-8]: " locale
 read -p "Enter the timezone [Europe/London]: " timezone
 : ${timezone:=Europe/London}
 
-intel_cpu=$(hwinfo --cpu | head -n6 | grep "Intel")
-amd_cpu=$(hwinfo --cpu | head -n6 | grep "AMD")
-cpu=""
-
-if [[ -n "$intel_cpu" ]]; then
-    echo "Intel CPU detected."
-    cpu="intel"
-elif [[ -n "$amd_cpu" ]]; then
-    echo "AMD CPU detected."
-    cpu="amd"
-else
-    echo "No Intel or AMD CPU detected, or hwinfo could not detect the CPU."
-fi
+read -p "Enter your CPU brand [amd]: " cpu
+: ${cpu:=amd}
 
 bash -c "
 chmod +x ./ArchHalfInstall.sh
