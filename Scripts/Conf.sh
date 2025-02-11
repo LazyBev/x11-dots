@@ -318,12 +318,7 @@ sudo systemctl enable tlp
 
 # Network
 echo "Installing network and internet packages..."
-install_packages networkmanager network-manager-applet nm-connection-editor
-
-# Enable Network
-echo "Enabling essential services..."
-systemctl enable NetworkManager.service
-EOF
+install_packages iwd
 
 read -p "Enter in any additional packages you wanna install (Type "none" for no package)" additional
 additional="${additional:-none}"
