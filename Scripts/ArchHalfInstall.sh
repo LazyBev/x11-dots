@@ -81,12 +81,14 @@ echo "$hostname" > /etc/hostname
 # Set root password
 echo "root:$password" | chpasswd
 
-# Create a new user
-useradd -m -G wheel "$user"
-echo "$user:$password" | chpasswd
-echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
-usermod -aG audio,video,lp,input "$user"
-
+# Creating user
+if who | grep -q "^$user\b"; then
+    useradd -m -G wheel "$user"
+    echo "$user:$password" | chpasswd
+    echo "%wheel ALL=(ALL) ALL" | tee -a /etc/sudoers > /dev/null
+    usermod -aG audio,video,lp,input "$user"
+    echo "User $user created and configured."
+fi
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 EOF
