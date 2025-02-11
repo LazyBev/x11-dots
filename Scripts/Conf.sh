@@ -48,20 +48,11 @@ else
     echo 'export LS_COLORS="di=35;1:fi=33:ex=36;1"' >> $HOME/.bashrc
 fi
 
-# Adding parse_git_branch function
-if ! grep -q "parse_git_branch" $HOME/.bashrc; then
-    echo '' >> $HOME/.bashrc
-    echo '# Function to parse the current Git branch' >> $HOME/.bashrc
-    echo 'parse_git_branch() {' >> $HOME/.bashrc
-    echo '    git branch 2>/dev/null | grep -E "^\*" | sed -E "s/^\* (.+)/(\1)/"' >> $HOME/.bashrc
-    echo '}' >> $HOME/.bashrc
-fi
-
 # PS1
 if grep -i "PS1" $HOME/.bashrc; then 
     echo
 else
-    echo 'export PS1='\[\033[01;34m\][\[\033[01;35m\]\u\[\033[00m\]:\[\033[01;36m\]\h\[\033[00m\] <> \[\033[01;34m\]\w\[\033[01;34m\]] \[\033[01;33m\]$(parse_git_branch)\[\033[00m\]'' >> $HOME/.bashrc
+    echo 'export PS1='\[\033[01;34m\][\[\033[01;35m\]\u\[\033[00m\]:\[\033[01;36m\]\h\[\033[00m\] <> \[\033[01;34m\]\w\[\033[01;34m\]] \[\033[01;33m\]'' >> $HOME/.bashrc
 fi
 
 # Ls alias
