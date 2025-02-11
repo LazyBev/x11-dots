@@ -58,8 +58,8 @@ read -p "WARNING: This will erase all data on $disk. Continue? (y/n): " confirm
 
 lsblk 
 
-read -p "Manual or auto disk partitioning [auto]: " auto
-: ${auto:=auto}
+read -p "Manual or auto disk partitioning [auto]: " part
+: ${part:=auto}
 
 if [[ $auto == "auto" ]]; then
     disk_size=$(lsblk -b -n -d -o SIZE "$disk" | awk '{print int($1 / 1024 / 1024)}')
@@ -84,12 +84,10 @@ fi
 echo "Formatting partitions..."
 mkfs.vfat -F 32 "${disk}p1"
 mkfs.ext4 "${disk}p3"
-mkswap "${disk}p2"
 
 mount "${disk}p3" /mnt
 mkdir -p /mnt/boot
 mount "${disk}p1" /mnt/boot
-swapon "${disk}p2"
 
 lsblk
 
