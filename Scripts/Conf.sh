@@ -1,4 +1,4 @@
-#!/bin/bash
+`#!/bin/bash
 set -eo pipefail
 
 # Error handling
@@ -324,6 +324,15 @@ install_packages ttf-dejavu ttf-liberation unifont ttf-joypixels
 echo "Enabling power management..."
 install_packages tlp
 sudo systemctl enable tlp
+
+# Network
+echo "Installing network and internet packages..."
+install_packages networkmanager network-manager-applet
+
+# Enable Network
+echo "Enabling essential services..."
+systemctl enable NetworkManager.service
+EOF
 
 read -p "Enter in any additional packages you wanna install (Type "none" for no package)" additional
 additional="${additional:-none}"
