@@ -58,23 +58,8 @@ read -p "WARNING: This will erase all data on $disk. Continue? (y/n): " confirm
 
 lsblk 
 
-read -p "Manual or auto disk partitioning [auto]: " part
-: ${part:=auto}
-
-if [[ $auto == "auto" ]]; then
-    disk_size=$(lsblk -b -n -d -o SIZE "$disk" | awk '{print int($1 / 1024 / 1024)}')
-    boot_size=1024
-    root_size=$((disk_size - boot_size))
-
-    echo "Auto-partitioning: /boot=${boot_size}MiB, /root=${root_size}MiB"
-    parted "$disk" mklabel gpt
-    parted "$disk" mkpart primary fat32 1MiB "${boot_size}MiB"
-    parted "$disk" set 1 boot on
-    parted "$disk" mkpart primary ext4 "$((boot_size))MiB" "$((disk_size - boot_size))MiB"
-else
-    echo "Launching cfdisk for manual partitioning"
-    cfdisk "$disk"
-fi
+echo "Launching cfdisk for manual partitioning"
+cfdisk "$disk"
 
 if [[ ! -e "${disk}p1" || ! -e "${disk}p2" || ! -e "${disk}p3" ]]; then
     echo "Error: Partitions not found. Please partition the disk properly and try again."
