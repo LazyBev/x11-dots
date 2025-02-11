@@ -3,7 +3,7 @@
 set -eao pipefail
 
 echo "Installing base system..."
-pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr iwd amd-ucode grep
+pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr iwd amd-ucode grep git sed
 
 echo "Generating fstab..."
 genfstab -U /mnt >> /mnt/etc/fstab 
