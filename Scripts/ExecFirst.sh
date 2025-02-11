@@ -127,7 +127,9 @@ echo "$hostname" > /etc/hostname
 echo "root:$password" | chpasswd
 
 # Creating user
-if who | grep -q "^$user\b"; then
+if id "$user" &>/dev/null; then
+    echo "User already exists."
+else
     useradd -m -G wheel "$user"
     echo "$user:$password" | chpasswd
     echo "%wheel ALL=(ALL) ALL" | tee -a /etc/sudoers > /dev/null
