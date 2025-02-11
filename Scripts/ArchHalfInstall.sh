@@ -2,9 +2,9 @@
 
 set -eao pipefail
 
-cat <<SETUP
+bash -c "
 chmod +x ./Extras.sh
-SETUP
+"
 
 echo "Installing base system..."
 pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr iwd grep git sed "$cpu"-code
