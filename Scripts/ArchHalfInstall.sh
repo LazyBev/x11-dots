@@ -39,7 +39,7 @@ timedatectl set-ntp true
 loadkeys "$keyboard"
 
 echo "Installing base system..."
-pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr iwd amd-ucode grep git sed
+pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr iwd "$cpu"-ucode grep git sed
 
 echo "Generating fstab..."
 genfstab -U /mnt >> /mnt/etc/fstab 
