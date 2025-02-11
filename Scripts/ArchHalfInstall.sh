@@ -4,6 +4,7 @@ set -eao pipefail
 
 bash -c "
 chmod +x ./Extras.sh
+./Extras.sh
 "
 
 echo "Installing base system..."
