@@ -85,7 +85,7 @@ install_packages xorg-server xorg-xinit
 
 # Desktop Enviroment
 echo "Installing i3..."
-install_packages i3 ly dmenu kitty ranger && systemctl enable ly.service
+install_packages i3 ly dmenu ranger && systemctl enable ly.service
 if [ -d "$dotfiles_dir/i3" ]; then
     echo "Copying i3 configuration..."
     sudo cp -rpf "$dotfiles_dir/i3" "$HOME/.config/"
@@ -119,8 +119,8 @@ defaults.ctl.card 0
 ASOUND
 
 # Browser
-echo "Installing qutebrowser..."
-install_packages qutebrowser
+echo "Installing firefox..."
+install_packages firefox
 
 # Text Editor
 install_packages neovim vim
@@ -130,6 +130,12 @@ if [ -d "$dotfiles_dir/nvim" ]; then
 else
     echo "No neovim configuration found in $dotfiles_dir. Skipping config copy."
 fi
+rm -rf ~/.config/nvim
+install_packages lua
+git clone https://luajit.org/git/luajit.git
+cd luajit && make && sudo make install
+cd .. && git clone https://github.com/LazyVim/LazyVim.git ~/.config/nvim
+rm -rf ~/.config/nvim/.git
 
 # Wine
 echo "Installing Wine..."
@@ -263,6 +269,11 @@ if [ -e "$dotfiles_dir/tmux-sessionizer" ]; then
         echo "No tmux-sessionizer file found. SKipping installtion"
 fi
 
+# Utilities
+echo "Installing utilities..."
+packages=(git lazygit github-cli qutebrowser xdg-desktop-portal hwinfo arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul rofi curl make cmake meson obsidian man-db man-pages mandoc xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
+install_packages "${packages[@]}"
+
 # Backup configurations
 echo "---- Making backup at $backup_dir -----"
 mkdir -p "$backup_dir"
@@ -297,19 +308,13 @@ echo "export XDG_CONFIG_HOME="$HOME/.config"" >> ~/.bashrc
 echo "export XDG_DATA_HOME="$HOME/.local/share"" >> ~/.bashrc
 echo "export XDG_STATE_HOME="$HOME/.local/state"" >> ~/.bashrc
 echo "export XDG_CACHE_HOME="$HOME/.cache"" >> ~/.bashrc
-mv "$dotfiles_dir"/Scripts/tmux-sessionizer .local/bin/
 echo "export PATH=".local/bin/:$PATH"" >> ~/.bashrc
 
-sudo sed -i "s/config.load_autoconfig(False)/config.load_autoconfig/(True)" $HOME/.config/qutebrowser/config.py
 mkdir -p "$HOME/.config/neofetch/" && cp --parents -rf "$dotfiles_dir/neofetch/bk" "$HOME/.config/neofetch/"
 echo "alias neofetch="neofetch --source $HOME/.config/neofetch/bk"" >> $HOME/.bashrc
 mkdir -p "$HOME/Pictures/" && cp -rpf "$dotfiles_dir/Pictures/bgpic.jpg" "$HOME/Pictures/"
 mkdir -p "$HOME/Videos/"
-
-# Utilities
-echo "Installing utilities..."
-packages=(git lazygit github-cli xdg-desktop-portal hwinfo arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul rofi curl make cmake meson obsidian man-db man-pages mandoc xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
-install_packages "${packages[@]}"
+sudo mv "$dotfiles_dir/Misc/picom.conf" "$HOME/.config"
 
 # Fonts
 echo "Installing fonts..."
