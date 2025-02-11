@@ -13,7 +13,6 @@ read -p "Enter the username [user]: " user
 
 read -p "Enter the password [1234]: " password
 : ${password:=1234}
-echo ""
 
 read -p "Enter key map for keyboard [uk]: " keyboard
 : ${keyboard:=uk}
