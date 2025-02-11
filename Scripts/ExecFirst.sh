@@ -34,3 +34,8 @@ elif [[ -n "$amd_cpu" ]]; then
 else
     echo "No Intel or AMD CPU detected, or hwinfo could not detect the CPU."
 fi
+
+bash -c "
+chmod +x ./ArchHalfInstall.sh
+./ArchHalfInstall.sh
+"
