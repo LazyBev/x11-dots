@@ -318,7 +318,7 @@ sudo systemctl enable tlp
 
 # Network
 echo "Installing network and internet packages..."
-install_packages networkmanager network-manager-applet
+install_packages networkmanager network-manager-applet nm-connection-editor
 
 # Enable Network
 echo "Enabling essential services..."
