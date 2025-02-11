@@ -5,72 +5,6 @@ set -eao pipefail
 trap 'echo "An error occurred. Cleaning up..."; umount -R /mnt || true; swapoff ${disk}${disk_prefix}2 || true; exit 1' ERR
 exec > >(tee -i install.log) 2>&1
 
-pacman -Sy hwinfo
-
-lsblk
-
-read -p "Enter the disk to install Arch Linux (e.g., /dev/nvme0n1) [/dev/nvme0n1]: " disk
-: ${disk:=/dev/nvme0n1}
-
-if [[ ! -b "$disk" ]]; then
-    echo "Error: $disk is not a valid block device."
-    exit 1
-fi 
-
-read -p "Enter the hostname [gentuwu]: " hostname
-: ${hostname:=gentuwu}
-
-read -p "Enter the username [user]: " user
-: ${user:=user}
-
-read -sp "Enter the password [1234]: " password
-echo ""
-: ${password:=1234}
-
-read -p "Enter key map for keyboard [uk]: " keyboard
-: ${keyboard:=uk}
-
-read -p "Enter the locale [en_GB.UTF-8]: " locale
-: ${locale:=en_GB.UTF-8}
-
-read -p "Enter the timezone [Europe/London]: " timezone
-: ${timezone:=Europe/London}
-
-intel_cpu=$(hwinfo --cpu | head -n6 | grep "Intel")
-amd_cpu=$(hwinfo --cpu | head -n6 | grep "AMD")
-cpu=""
-
-if [[ -n "$intel_cpu" ]]; then
-    echo "Intel CPU detected."
-    cpu="intel"
-elif [[ -n "$amd_cpu" ]]; then
-    echo "AMD CPU detected."
-    cpu="amd"
-else
-    echo "No Intel or AMD CPU detected, or hwinfo could not detect the CPU."
-fi
-
-timedatectl set-ntp true
-loadkeys "$keyboard"
-
-#read -p "WARNING: This will erase all data on $disk. Continue? (y/n): " confirm
-#[[ "$confirm" != "y" ]] && exit 1
-
-#lsblk 
-
-#echo "Launching cfdisk for manual partitioning"
-#cfdisk "$disk"
-
-#echo "Formatting partitions..."
-#mkfs.vfat -F 32 "${disk}p1"
-#mkfs.ext4 "${disk}p3"
-
-#mount "${disk}p3" /mnt
-#mkdir -p /mnt/boot
-#mount "${disk}p1" /mnt/boot
-
-#lsblk
-
 echo "Installing base system..."
 pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr network-manager "$cpu"-ucode
 
@@ -111,7 +45,7 @@ declare -a pacman_conf=(
 
 # Backup the pacman.conf before modifying
 echo "Backing up /etc/pacman.conf"
-cp /etc/pacman.conf /etc/pacman.conf.bak || { echo "Failed to back up pacman.conf"; exit 1;}
+sudo cp /etc/pacman.conf /etc/pacman.conf.bak || { echo "Failed to back up pacman.conf"; exit 1;}
 
 echo "Modifying /etc/pacman.conf"
 for change in "${pacman_conf[@]}"; do
@@ -121,7 +55,7 @@ done
 # Custom bash theme
 echo "Adding custom bash theme"
 if grep -i "LS_COLORS" $HOME/.bashrc; then
-    sed -i '/LS_COLORS/c\export LS_COLORS="di=35;1:fi=33:ex=36;1"' $HOME/.bashrc
+    echo
 else
     echo 'export LS_COLORS="di=35;1:fi=33:ex=36;1"' >> $HOME/.bashrc
 fi
@@ -137,14 +71,14 @@ fi
 
 # PS1
 if grep -i "PS1" $HOME/.bashrc; then
-    sed -i '/PS1/c\export PS1='\[\033[01;34m\][\[\033[01;35m\]\u\[\033[00m\]:\[\033[01;36m\]\h\[\033[00m\] <> \[\033[01;34m\]\w\[\033[01;34m\]] \[\033[01;33m\]$(parse_git_branch)\[\033[00m\]'' $HOME/.bashrc
+    echo    
 else
     echo 'export PS1='\[\033[01;34m\][\[\033[01;35m\]\u\[\033[00m\]:\[\033[01;36m\]\h\[\033[00m\] <> \[\033[01;34m\]\w\[\033[01;34m\]] \[\033[01;33m\]$(parse_git_branch)\[\033[00m\]'' >> $HOME/.bashrc
 fi
 
 # Ls alias
 if grep -i "alias ls" $HOME/.bashrc; then
-    sed -i '/alias ls/c\alias ls="eza -al --color=auto"' $HOME/.bashrc
+    echo
 else
     echo 'alias ls="eza -al --color=auto"' >> $HOME/.bashrc
 fi
@@ -187,7 +121,10 @@ install_packages networkmanager network-manager-applet
 
 # Enable Network
 echo "Enabling essential services..."
-systemctl enable NetworkManager 
+systemctl enable NetworkManager
+
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+grub-mkconfig -o /boot/grub/grub.cfg
 EOF
 
 set +a
