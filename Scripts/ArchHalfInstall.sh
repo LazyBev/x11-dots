@@ -10,7 +10,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 # Chroot into the new system
 echo "Chrooting into system..."
-arch-chroot /mnt /bin/bash <<EOF
+arch-chroot /mnt <<EOF
 set -euo pipefail
 
 # Error handling
