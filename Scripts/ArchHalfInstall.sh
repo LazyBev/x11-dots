@@ -2,6 +2,20 @@
 
 set -eao pipefail
 
+echo "Installing base system..."
+pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr iwd grep git sed
+
+echo "Generating fstab..."
+genfstab -U /mnt >> /mnt/etc/fstab 
+
+# Chroot into the new system
+echo "Chrooting into system..."
+arch-chroot /mnt /bin/bash <<EOF
+set -euo pipefail
+
+# Error handling
+trap 'echo "An error occurred. Exiting..."; exit 1;' ERR
+
 read -p "Enter the hostname [gentuwu]: " hostname
 : ${hostname:=gentuwu}
 
@@ -35,22 +49,10 @@ else
     echo "No Intel or AMD CPU detected, or hwinfo could not detect the CPU."
 fi
 
+pacman -Sy "$cpu"-ucode
+
 timedatectl set-ntp true
 loadkeys "$keyboard"
-
-echo "Installing base system..."
-pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr iwd "$cpu"-ucode grep git sed
-
-echo "Generating fstab..."
-genfstab -U /mnt >> /mnt/etc/fstab 
-
-# Chroot into the new system
-echo "Chrooting into system..."
-arch-chroot /mnt /bin/bash <<EOF
-set -euo pipefail
-
-# Error handling
-trap 'echo "An error occurred. Exiting..."; exit 1;' ERR
 
 # Variables
 HOME="/home/$user"
