@@ -61,11 +61,6 @@ lsblk
 echo "Launching cfdisk for manual partitioning"
 cfdisk "$disk"
 
-if [[ ! -e "${disk}p1" || ! -e "${disk}p2" || ! -e "${disk}p3" ]]; then
-    echo "Error: Partitions not found. Please partition the disk properly and try again."
-    exit 1
-fi
-
 echo "Formatting partitions..."
 mkfs.vfat -F 32 "${disk}p1"
 mkfs.ext4 "${disk}p3"
