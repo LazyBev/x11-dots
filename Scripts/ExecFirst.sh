@@ -11,29 +11,21 @@ locale=""
 timezone=""
 cpu=""
 
-read -p "Enter the disk you want to write on [dev/nvme0n1]" disk
-: ${disk:=/dev/nvme0n1}
+read -p "Enter the disk you want to write on: " disk
 
-read -p "Enter the hostname [gentuwu]: " hostname
-: ${hostname:=gentuwu}
+read -p "Enter the hostname: " hostname
 
-read -p "Enter the username [user]: " user
-: ${user:=user}
+read -p "Enter the username: " user
 
-read -p "Enter the password [1234]: " password
-: ${password:=1234}
+read -p "Enter the password: " password
 
-read -p "Enter key map for keyboard [uk]: " keyboard
-: ${keyboard:=uk}
+read -p "Enter key map for keyboard: " keyboard
 
-read -p "Enter the locale [en_GB.UTF-8]: " locale
-: ${locale:=en_GB.UTF-8}
+read -p "Enter the locale: " locale
 
-read -p "Enter the timezone [Europe/London]: " timezone
-: ${timezone:=Europe/London}
+read -p "Enter the timezone: " timezone
 
-read -p "Enter your CPU brand [amd]: " cpu
-: ${cpu:=amd}
+read -p "Enter your CPU brand: " cpu
 
 cfdisk ${disk}
 
