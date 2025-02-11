@@ -4,7 +4,7 @@ set -eao pipefail
 
 cfdisk ${disk}
 
-if "$disk" == "/dev/nvme0n1"; then
+if ${disk} == "/dev/nvme0n1"; then
     mkfs.ext4 "${disk}p3"
     mkswap "${disk}p2"
     mkfs.fat -F 32 "${disk}p1"
