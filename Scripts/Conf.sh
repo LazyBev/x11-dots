@@ -41,26 +41,11 @@ for change in "${pacman_conf[@]}"; do
 done
 
 # Custom bash theme
-echo "Adding custom bash theme"
-if grep -i "LS_COLORS" $HOME/.bashrc; then
-    echo 
-else
-    echo 'export LS_COLORS="di=35;1:fi=33:ex=36;1"' >> $HOME/.bashrc
-fi
-
-# PS1
-if grep -i "PS1" $HOME/.bashrc; then 
-    echo
-else
-    echo 'export PS1='\[\033[01;34m\][\[\033[01;35m\]\u\[\033[00m\]:\[\033[01;36m\]\h\[\033[00m\] <> \[\033[01;34m\]\w\[\033[01;34m\]] \[\033[01;33m\]'' >> $HOME/.bashrc
-fi
+#echo 'export LS_COLORS="di=35;1:fi=33:ex=36;1"' >> $HOME/.bashrc
+#echo 'export PS1='\[\033[01;34m\][\[\033[01;35m\]\u\[\033[00m\]:\[\033[01;36m\]\h\[\033[00m\] <> \[\033[01;34m\]\w\[\033[01;34m\]] \[\033[01;33m\]'' >> $HOME/.bashrc
 
 # Ls alias
-if grep -i "alias ls" $HOME/.bashrc; then 
-    echo 
-else
-    echo 'alias ls="eza -al --color=auto"' >> $HOME/.bashrc
-fi
+echo 'alias ls="eza -al --color=auto"' >> $HOME/.bashrc
 
 # Install yay 
 cd ~
