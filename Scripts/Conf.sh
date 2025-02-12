@@ -192,25 +192,11 @@ case "$driver_choice" in
         
         # Create udev rules for NVIDIA power management
         echo "Creating udev rules for NVIDIA power management..."
-        sudo tee /etc/udev/rules.d/80-nvidia-pm.rules > /dev/null <<EOL
-# Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind
-ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
-ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
-
-# Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind
-ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"
-ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"
-
-# Enable runtime PM for NVIDIA VGA/3D controller devices on adding device
-ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
-ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
-EOL
+        sudo mv "$dotfiles_dir/Misc/80-nvidia-pm.rules" /etc/udev/rules.d/
 
         # Configure NVIDIA Dynamic Power Management
         echo "Configuring NVIDIA Dynamic Power Management..."
-        sudo tee /etc/modprobe.d/nvidia-pm.conf > /dev/null <<PM
-options nvidia NVreg_DynamicPowerManagement=0x02
-PM
+        sudo mv "$dotfiles_dir/Misc/nvidia-pm.conf /etc/modprobe.d/
         ;;
     2)
         echo "Installing AMD drivers..."
