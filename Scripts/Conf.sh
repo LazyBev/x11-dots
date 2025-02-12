@@ -14,14 +14,6 @@ audio_choice=""
 driver_choice=""
 dotfiles_dir="$HOME/dotfiles"
 
-# Install necessary packages (if not installed)
-install_packages() {
-    local package=$1
-    if ! pacman -Qi "$package" &>/dev/null; then
-        yay -Sy --noconfirm "$package"
-    fi
-}
-
 # Refactor pacman.conf update
 declare -a pacman_conf=(
     "s/#Color/Color/"
@@ -57,11 +49,11 @@ cd "$dotfiles_dir"
 
 # Install Xorg
 echo "Installing xorg..."
-install_packages xorg xorg-server xorg-xinit
+yay -Sy  xorg xorg-server xorg-xinit
 
 # Desktop Enviroment
 echo "Installing i3..."
-install_packages i3 ly dmenu ranger
+yay -Sy  i3 ly dmenu ranger
 if [ -d "$dotfiles_dir/i3" ]; then
     echo "Copying i3 configuration..."
     sudo cp -rpf "$dotfiles_dir/i3" "$HOME/.config/"
@@ -71,7 +63,7 @@ fi
 
 # Ghostty Term
 echo "Installing ghostty..."
-install_packages ghostty
+yay -Sy  ghostty
 if [ -d "$dotfiles_dir/ghostty" ]; then
     echo "Copying ghostty configuration..."
     cp -rpf "$dotfiles_dir/ghostty" "$HOME/.config/"
@@ -81,7 +73,7 @@ fi
 
 # Installing PipeWire services
 echo "Installing PipeWire and related packages..."
-install_packages pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber alsa-utils pavucontrol
+yay -Sy  pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber alsa-utils pavucontrol
         
 # Configure ALSA to use PipeWire
 echo "Configuring ALSA to use PipeWire..."
@@ -92,10 +84,10 @@ ASOUND
 
 # Browser
 echo "Installing firefox..."
-install_packages firefox
+yay -Sy  firefox
 
 # Text Editor
-install_packages neovim vim
+yay -Sy  neovim vim
 if [ -d "$dotfiles_dir/nvim" ]; then
     echo "Copying neovim configuration..."
     sudo cp -rpf "$dotfiles_dir/nvim" "$HOME/.config/"
@@ -103,7 +95,7 @@ else
     echo "No neovim configuration found in $dotfiles_dir. Skipping config copy."
 fi
 rm -rf ~/.config/nvim
-install_packages lua
+yay -Sy  lua
 git clone https://luajit.org/git/luajit.git
 cd luajit && make && sudo make install
 cd .. && git clone https://github.com/LazyVim/LazyVim.git ~/.config/nvim
@@ -111,14 +103,14 @@ rm -rf ~/.config/nvim/.git
 
 # Wine
 echo "Installing Wine..."
-install_packages wine winetricks
+yay -Sy  wine winetricks
 
 # Roblox
 read -p "Do you want to install Roblox? [y/N]: " choice
 case $choice in
     y | Y)
         echo "Installing Roblox..."
-        install_packages flatpak
+        yay -Sy  flatpak
         flatpak install --user https://sober.vinegarhq.org/sober.flatpakref
         # Check if the alias already exists in .bashrc
         if ! grep -q "alias roblox=" $HOME/.bashrc; then
@@ -138,7 +130,7 @@ read -p "Do you want to install Steam [y/N]: " choice
 case $choice in
     y | Y)
         echo "Installing Steam..."
-        install_packages steam steam-native-runtime
+        yay -Sy  steam steam-native-runtime
         ;;
     *)
         echo "Steam installation skipped."
@@ -150,7 +142,7 @@ read -p "Do you want to install Bluetooth [y/N]: " choice
 case $choice in
     y | Y)
         echo "Installing Bluetooth..."
-        install_packages blueman bluez bluez-utils
+        yay -Sy  blueman bluez bluez-utils
         echo "Enabling Bluetooth..."
         sudo systemctl enable bluetooth.service
         sudo systemctl start bluetooth.service
@@ -183,7 +175,7 @@ driver_choice=${driver_choice:-1}
 case "$driver_choice" in
     1)
         echo "Installing NVIDIA drivers..."
-        install_packages mesa nvidia-dkms nvidia-utils nvidia-settings nvidia-prime \
+        yay -Sy  mesa nvidia-dkms nvidia-utils nvidia-settings nvidia-prime \
             lib32-nvidia-utils vulkan-mesa-layers lib32-vulkan-mesa-layers \
             xf86-video-nouveau opencl-nvidia lib32-opencl-nvidia
 
@@ -200,26 +192,26 @@ case "$driver_choice" in
         ;;
     2)
         echo "Installing AMD drivers..."
-        install_packages mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon \
+        yay -Sy  mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon \
             lib32-mesa lib32-mesa-vdpau mesa-vdpau \
             opencl-mesa lib32-opencl-mesa
         ;;
     3)
         echo "Installing Intel drivers..."
-        install_packages mesa xf86-video-intel vulkan-intel lib32-vulkan-intel \
+        yay -Sy  mesa xf86-video-intel vulkan-intel lib32-vulkan-intel \
             lib32-mesa intel-media-driver intel-compute-runtime \
             opencl-clang lib32-opencl-clang
         ;;
     *)
         echo "Invalid option. Defaulting to NVIDIA drivers..."
-        install_packages mesa nvidia-dkms nvidia-utils nvidia-settings nvidia-prime \
+        yay -Sy  mesa nvidia-dkms nvidia-utils nvidia-settings nvidia-prime \
             lib32-nvidia-utils vulkan-mesa-layers lib32-vulkan-mesa-layers \
             xf86-video-nouveau opencl-nvidia lib32-opencl-nvidia
         ;;
 esac
 
 # Tmux
-install_packages tmux
+yay -Sy  tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 if [ -e "$dotfiles_dir/tmux-sessionizer" ]; then
         cp -rpf "$dotfiles_dir/Scripts/tmux-sessionizer" "/bin"
@@ -230,7 +222,7 @@ fi
 # Utilities
 echo "Installing utilities..."
 packages=(git lazygit github-cli qutebrowser xdg-desktop-portal hwinfo arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul rofi curl make cmake meson obsidian man-db man-pages mandoc xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf)
-install_packages "${packages[@]}"
+yay -Sy  "${packages[@]}"
 
 # Backup configurations
 echo "---- Making backup at $backup_dir -----"
@@ -276,16 +268,16 @@ sudo mv "$dotfiles_dir/Misc/picom.conf" "$HOME/.config"
 
 # Fonts
 echo "Installing fonts..."
-install_packages ttf-dejavu ttf-liberation unifont ttf-joypixels
+yay -Sy  ttf-dejavu ttf-liberation unifont ttf-joypixels
 
 # Enable power management
 echo "Enabling power management..."
-install_packages tlp
+yay -Sy  tlp
 sudo systemctl enable tlp
 
 # Network
 echo "Installing network and internet packages..."
-install_packages iwd
+yay -Sy  iwd
 
 read -p "Enter in any additional packages you wanna install (Type "none" for no package)" additional
 additional="${additional:-none}"
@@ -315,7 +307,7 @@ if [[ "$additional" != "none" && "$additional" != "" ]]; then
     done
 
     # Install the valid packages
-    install_packages "${Apackages[@]}"
+    yay -Sy  "${Apackages[@]}"
 else
     echo "No additional packages will be installed."
 fi
