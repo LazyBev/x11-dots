@@ -143,6 +143,11 @@ fi
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 systemctl enable iwd.service
+sudo systemctl enable systemd-networkd
+sudo systemctl start systemd-networkd 
+sudo systemctl enable systemd-resolved 
+sudo systemctl start systemd-resolved 
+
 EOF
 
 set +a
