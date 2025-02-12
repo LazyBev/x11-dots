@@ -57,7 +57,7 @@ cd "$dotfiles_dir"
 
 # Install Xorg
 echo "Installing xorg..."
-install_packages xorg-server xorg-xinit
+install_packages xorg xorg-server xorg-xinit
 
 # Desktop Enviroment
 echo "Installing i3..."
