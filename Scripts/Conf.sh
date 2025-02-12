@@ -185,11 +185,11 @@ case "$driver_choice" in
         
         # Create udev rules for NVIDIA power management
         echo "Creating udev rules for NVIDIA power management..."
-        sudo mv "$dotfiles_dir/Misc/80-nvidia-pm.rules" /etc/udev/rules.d/
+        sudo mv "$dotfiles_dir"/Misc/80-nvidia-pm.rules /etc/udev/rules.d/
 
         # Configure NVIDIA Dynamic Power Management
         echo "Configuring NVIDIA Dynamic Power Management..."
-        sudo mv "$dotfiles_dir/Misc/nvidia-pm.conf" /etc/modprobe.d/
+        sudo mv "$dotfiles_dir"/Misc/nvidia-pm.conf /etc/modprobe.d/
         ;;
     2)
         echo "Installing AMD drivers..."
