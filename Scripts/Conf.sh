@@ -12,7 +12,7 @@ browser_choice=""
 editor_choice=""
 audio_choice=""
 driver_choice=""
-dotfiles_dir="~/dotfiles/"
+dotfiles_dir="~/dotfiles"
 
 # Install necessary packages (if not installed)
 install_packages() {
