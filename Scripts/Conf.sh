@@ -183,14 +183,14 @@ case "$driver_choice" in
         
         # Create udev rules for NVIDIA power management
         echo '# Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
+        echo 'ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
+        echo 'ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
         echo '# Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
+        echo 'ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
+        echo 'ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
         echo '# Enable runtime PM for NVIDIA VGA/3D controller devices on adding device' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
+        echo 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
+        echo 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
         echo 'export __GL_THREADED_OPTIMIZATIONS=1' | sudo tee $HOME/.bashrc
         echo 'export __GL_SYNC_TO_VBLANK=0' | sudo tee $HOME/.bashrc
         echo 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' | sudo tee $HOME/.bashrc
@@ -227,14 +227,14 @@ case "$driver_choice" in
         
         # Create udev rules for NVIDIA power management
         echo '# Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
+        echo 'ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
+        echo 'ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
         echo '# Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
+        echo 'ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
+        echo 'ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
         echo '# Enable runtime PM for NVIDIA VGA/3D controller devices on adding device' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
+        echo 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
+        echo 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
         echo 'export __GL_THREADED_OPTIMIZATIONS=1' | sudo tee $HOME/.bashrc
         echo 'export __GL_SYNC_TO_VBLANK=0' | sudo tee $HOME/.bashrc
         echo 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' | sudo tee $HOME/.bashrc
