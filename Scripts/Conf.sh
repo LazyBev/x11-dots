@@ -268,8 +268,8 @@ echo "export XDG_STATE_HOME="$HOME/.local/state"" >> ~/.bashrc
 echo "export XDG_CACHE_HOME="$HOME/.cache"" >> ~/.bashrc
 echo "export PATH=".local/bin/:$PATH"" >> ~/.bashrc
 
-mkdir -p "$HOME/.config/neofetch/" && cp --parents -rf "$dotfiles_dir/neofetch/bk" "$HOME/.config/neofetch/"
-echo "alias neofetch="neofetch --source $HOME/.config/neofetch/bk"" >> $HOME/.bashrc
+mkdir -p "$HOME/.config/neofetch/" && cp -rf "$dotfiles_dir/neofetch/bk" "$HOME/.config/neofetch/"
+echo "alias neofetch='neofetch --source $HOME/.config/neofetch/bk'" >> $HOME/.bashrc
 mkdir -p "$HOME/Pictures/" && cp -rpf "$dotfiles_dir/Pictures/bgpic.jpg" "$HOME/Pictures/"
 mkdir -p "$HOME/Videos/"
 sudo mv "$dotfiles_dir/Misc/picom.conf" "$HOME/.config"
