@@ -212,11 +212,17 @@ esac
 
 # Tmux
 yay -Sy  tmux
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+if [ -e "$HOME/.tmux/plugins/tpm" ]; then
+    echo ""
+else
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
 if [ -e "$dotfiles_dir/tmux-sessionizer" ]; then
-        cp -rpf "$dotfiles_dir/Scripts/tmux-sessionizer" "/bin"
-    else
-        echo "No tmux-sessionizer file found. SKipping installtion"
+    cp -rpf "$dotfiles_dir/Scripts/tmux-sessionizer" "/bin"
+else
+    echo "No tmux-sessionizer file found. SKipping installtion"
 fi
 
 # Utilities
