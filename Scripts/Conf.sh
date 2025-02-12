@@ -208,9 +208,9 @@ EOL
 
         # Configure NVIDIA Dynamic Power Management
         echo "Configuring NVIDIA Dynamic Power Management..."
-        sudo tee /etc/modprobe.d/nvidia-pm.conf > /dev/null <<EOL
+        sudo tee /etc/modprobe.d/nvidia-pm.conf > /dev/null <<PM
 options nvidia NVreg_DynamicPowerManagement=0x02
-EOL 
+PM
         ;;
     2)
         echo "Installing AMD drivers..."
