@@ -227,7 +227,7 @@ fi
 
 # Utilities
 echo "Installing utilities..."
-yay -Sy git lazygit github-cli qutebrowser xdg-desktop-portal hwinfo arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul rofi curl make cmake meson obsidian man-db man-pages mandoc xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf
+yay -Sy git lazygit github-cli qutebrowser xdg-desktop-portal hwinfo arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul rofi curl make cmake meson obsidian man-db man-pages xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf
 
 # Backup configurations
 echo "---- Making backup at $backup_dir -----"
