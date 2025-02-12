@@ -368,11 +368,11 @@ for font in fonts/MartianMono fonts/SF-Mono-Powerline fonts/fontconfig; do
 done
 
 # XDG_DIRS
-echo "export XDG_CONFIG_HOME="$HOME/.config"" >> ~/.bashrc
-echo "export XDG_DATA_HOME="$HOME/.local/share"" >> ~/.bashrc
-echo "export XDG_STATE_HOME="$HOME/.local/state"" >> ~/.bashrc
-echo "export XDG_CACHE_HOME="$HOME/.cache"" >> ~/.bashrc
-echo "export PATH=".local/bin/:$PATH"" >> ~/.bashrc
+grep -qxF 'export XDG_CONFIG_HOME="$HOME/.config"' $HOME/.bashrc || echo 'export XDG_CONFIG_HOME="$HOME/.config"' >> $HOME/.bashrc
+grep -qxF 'export XDG_DATA_HOME="$HOME/.local/share"' $HOME/.bashrc || echo 'export XDG_DATA_HOME="$HOME/.local/share"' >> $HOME/.bashrc
+grep -qxF 'export XDG_STATE_HOME="$HOME/.local/state"' $HOME/.bashrc || echo 'export XDG_STATE_HOME="$HOME/.local/state"' >> $HOME/.bashrc
+grep -qxF 'export XDG_CACHE_HOME="$HOME/.cache"' $HOME/.bashrc || echo 'export XDG_CACHE_HOME="$HOME/.cache"' >> $HOME/.bashrc
+grep -qxF 'export PATH=".local/bin/:$PATH"' $HOME/.bashrc || echo 'export PATH=".local/bin/:$PATH"' >> $HOME/.bashrc
 
 mkdir -p "$HOME/.config/neofetch/" && cp -rf "$dotfiles_dir/neofetch/bk" "$HOME/.config/neofetch/"
 echo "alias neofetch='neofetch --source $HOME/.config/neofetch/bk'" >> $HOME/.bashrc
