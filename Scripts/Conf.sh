@@ -83,10 +83,6 @@ fi
 echo "Installing PipeWire and related packages..."
 install_packages pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber alsa-utils pavucontrol
         
-# Enable PipeWire services
-echo "Enabling PipeWire services..."
-sudo systemctl --global enable pipewire.service wireplumber.service
-        
 # Configure ALSA to use PipeWire
 echo "Configuring ALSA to use PipeWire..."
 echo tee /etc/asound.conf <<ASOUND
