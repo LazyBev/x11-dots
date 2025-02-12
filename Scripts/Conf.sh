@@ -71,7 +71,7 @@ fi
 
 # Ghostty Term
 echo "Installing ghostty..."
-install_packages ghostty-git
+install_packages ghostty
 if [ -d "$dotfiles_dir/ghostty" ]; then
     echo "Copying ghostty configuration..."
     cp -rpf "$dotfiles_dir/ghostty" "$HOME/.config/"
