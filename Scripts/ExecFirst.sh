@@ -2,6 +2,7 @@
 
 set -ae
 
+network=""
 disk=""
 hostname=""
 user=""
@@ -25,7 +26,10 @@ read -p "Enter the locale: " locale
 
 read -p "Enter the timezone: " timezone
 
-read -p "Enter your CPU brand: " cpu
+read -p "Enter your CPU brand: " cpu 
+
+ip addr
+read -p "Enter what network device you wanna use" network
 
 cfdisk ${disk}
 
