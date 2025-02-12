@@ -176,38 +176,70 @@ driver_choice=${driver_choice:-1}
 case "$driver_choice" in
     1)
         echo "Installing NVIDIA drivers..."
-        yay -Sy  mesa nvidia nvidia-utils nvidia-settings nvidia-prime lib32-nvidia-utils vulkan-mesa-layers lib32-vulkan-mesa-layers xf86-video-nouveau opencl-nvidia lib32-opencl-nvidia cuda
-
-        prop=""
+        yay -Sy --needed mesa nvidia-dkms nvidia-utils nvidia-settings nvidia-prime \
+            lib32-nvidia-utils vulkan-mesa-layers lib32-vulkan-mesa-layers \
+            xf86-video-nouveau opencl-nvidia lib32-opencl-nvidia
+        
+        # Get NVIDIA vendor ID
         NVIDIA_VENDOR="0x$(lspci -nn | grep -i nvidia | sed -n 's/.*\[\([0-9A-Fa-f]\+\):[0-9A-Fa-f]\+\].*/\1/p' | head -n 1)"
         
         # Create udev rules for NVIDIA power management
-        echo '# Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo '# Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo '# Enable runtime PM for NVIDIA VGA/3D controller devices on adding device' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'export __GL_THREADED_OPTIMIZATIONS=1' | sudo tee $HOME/.bashrc
-        echo 'export __GL_SYNC_TO_VBLANK=0' | sudo tee $HOME/.bashrc
-        echo 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' | sudo tee $HOME/.bashrc
-        echo 'export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d' | sudo tee $HOME/.bashrc
+        sudo tee /etc/udev/rules.d/80-nvidia-pm.rules > /dev/null <<RULES
+# Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind
+ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
+ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
+        
+# Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind
+ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"
+ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"
+        
+# Enable runtime PM for NVIDIA VGA/3D controller devices on adding device
+ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
+ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
+RULES
+        
+        # Append NVIDIA environment variables to .bashrc if they aren't already set
+        grep -qxF 'export __GL_THREADED_OPTIMIZATIONS=1' $HOME/.bashrc || echo 'export __GL_THREADED_OPTIMIZATIONS=1' >> $HOME/.bashrc
+        grep -qxF 'export __GL_SYNC_TO_VBLANK=0' $HOME/.bashrc || echo 'export __GL_SYNC_TO_VBLANK=0' >> $HOME/.bashrc
+        grep -qxF 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' $HOME/.bashrc || echo 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' >> $HOME/.bashrc
+        grep -qxF 'export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d' $HOME/.bashrc || echo 'export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d' >> $HOME/.bashrc
+        
+        # Configure NVIDIA power settings
         sudo nvidia-smi -pm 1
-        echo 'options nvidia NVreg_UsePageAttributeTable=1' | sudo tee /etc/modprobe.d/nvidia.conf
-        echo 'options nvidia_drm modeset=1' | sudo tee /etc/modprobe.d/nvidia.conf
-        echo 'options nvidia NVreg_RegistryDwords="PerfLevelSrc=0x2222"' | sudo tee /etc/modprobe.d/nvidia.conf
-        echo 'options nvidia NVreg_EnablePCIeGen3=1 NVreg_EnableMSI=1' | sudo tee /etc/modprobe.d/nvidia.conf
+        
+        # Set NVIDIA kernel module options
+        sudo tee /etc/modprobe.d/nvidia.conf > /dev/null <<CONF
+options nvidia NVreg_UsePageAttributeTable=1
+options nvidia_drm modeset=1
+options nvidia NVreg_RegistryDwords="PerfLevelSrc=0x2222"
+options nvidia NVreg_EnablePCIeGen3=1 NVreg_EnableMSI=1
+CONF
+        
+        # Apply NVIDIA settings
         sudo nvidia-xconfig --cool-bits=28
         sudo nvidia-smi -i 0 -pm 1
-        sudo nvidia-smi -i 0 -pl <WATTS>
+        
+        # Prompt user for power limit
+        read -p "Enter desired power limit (in watts): " WATTS
+        if [[ $WATTS =~ ^[0-9]+$ ]]; then
+            sudo nvidia-smi -i 0 -pl $WATTS
+        else
+            echo "Invalid input. Skipping power limit configuration."
+        fi
+        
+        # Disable auto-boost and set clock speeds
         sudo nvidia-smi --auto-boost-default=0
         sudo nvidia-smi -i 0 -ac 5001,2000
+        
+        # Enable and start NVIDIA persistence daemon
         sudo systemctl enable nvidia-persistenced.service
         sudo systemctl start nvidia-persistenced.service
+        
+        # Regenerate initramfs
         sudo mkinitcpio -P
+        
+        # Apply udev rules immediately
+        sudo udevadm control --reload-rules && sudo udevadm trigger
         ;;
     2)
         echo "Installing AMD drivers..."
@@ -220,38 +252,70 @@ case "$driver_choice" in
     *)
         echo "Invalid option. Defaulting to NVIDIA drivers..."
         echo "Installing NVIDIA drivers..."
-        yay -Sy  mesa nvidia nvidia-utils nvidia-settings nvidia-prime lib32-nvidia-utils vulkan-mesa-layers lib32-vulkan-mesa-layers xf86-video-nouveau opencl-nvidia lib32-opencl-nvidia cuda
-
-        prop=""
+yay -Sy --needed mesa nvidia-dkms nvidia-utils nvidia-settings nvidia-prime \
+            lib32-nvidia-utils vulkan-mesa-layers lib32-vulkan-mesa-layers \
+            xf86-video-nouveau opencl-nvidia lib32-opencl-nvidia
+        
+        # Get NVIDIA vendor ID
         NVIDIA_VENDOR="0x$(lspci -nn | grep -i nvidia | sed -n 's/.*\[\([0-9A-Fa-f]\+\):[0-9A-Fa-f]\+\].*/\1/p' | head -n 1)"
         
         # Create udev rules for NVIDIA power management
-        echo '# Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo '# Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo '# Enable runtime PM for NVIDIA VGA/3D controller devices on adding device' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}==$NVIDIA_VENDOR, ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"' | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules
-        echo 'export __GL_THREADED_OPTIMIZATIONS=1' | sudo tee $HOME/.bashrc
-        echo 'export __GL_SYNC_TO_VBLANK=0' | sudo tee $HOME/.bashrc
-        echo 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' | sudo tee $HOME/.bashrc
-        echo 'export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d' | sudo tee $HOME/.bashrc
+        sudo tee /etc/udev/rules.d/80-nvidia-pm.rules > /dev/null <<RULES
+# Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind
+ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
+ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
+        
+# Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind
+ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"
+ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"
+        
+# Enable runtime PM for NVIDIA VGA/3D controller devices on adding device
+ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
+ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
+RULES
+        
+        # Append NVIDIA environment variables to .bashrc if they aren't already set
+        grep -qxF 'export __GL_THREADED_OPTIMIZATIONS=1' $HOME/.bashrc || echo 'export __GL_THREADED_OPTIMIZATIONS=1' >> $HOME/.bashrc
+        grep -qxF 'export __GL_SYNC_TO_VBLANK=0' $HOME/.bashrc || echo 'export __GL_SYNC_TO_VBLANK=0' >> $HOME/.bashrc
+        grep -qxF 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' $HOME/.bashrc || echo 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' >> $HOME/.bashrc
+        grep -qxF 'export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d' $HOME/.bashrc || echo 'export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d' >> $HOME/.bashrc
+        
+        # Configure NVIDIA power settings
         sudo nvidia-smi -pm 1
-        echo 'options nvidia NVreg_UsePageAttributeTable=1' | sudo tee /etc/modprobe.d/nvidia.conf
-        echo 'options nvidia_drm modeset=1' | sudo tee /etc/modprobe.d/nvidia.conf
-        echo 'options nvidia NVreg_RegistryDwords="PerfLevelSrc=0x2222"' | sudo tee /etc/modprobe.d/nvidia.conf
-        echo 'options nvidia NVreg_EnablePCIeGen3=1 NVreg_EnableMSI=1' | sudo tee /etc/modprobe.d/nvidia.conf
+        
+        # Set NVIDIA kernel module options
+        sudo tee /etc/modprobe.d/nvidia.conf > /dev/null <<CONF
+options nvidia NVreg_UsePageAttributeTable=1
+options nvidia_drm modeset=1
+options nvidia NVreg_RegistryDwords="PerfLevelSrc=0x2222"
+options nvidia NVreg_EnablePCIeGen3=1 NVreg_EnableMSI=1
+CONF
+        
+        # Apply NVIDIA settings
         sudo nvidia-xconfig --cool-bits=28
         sudo nvidia-smi -i 0 -pm 1
-        sudo nvidia-smi -i 0 -pl <WATTS>
+        
+        # Prompt user for power limit
+        read -p "Enter desired power limit (in watts): " WATTS
+        if [[ $WATTS =~ ^[0-9]+$ ]]; then
+            sudo nvidia-smi -i 0 -pl $WATTS
+        else
+            echo "Invalid input. Skipping power limit configuration."
+        fi
+        
+        # Disable auto-boost and set clock speeds
         sudo nvidia-smi --auto-boost-default=0
         sudo nvidia-smi -i 0 -ac 5001,2000
+        
+        # Enable and start NVIDIA persistence daemon
         sudo systemctl enable nvidia-persistenced.service
         sudo systemctl start nvidia-persistenced.service
+        
+        # Regenerate initramfs
         sudo mkinitcpio -P
+        
+        # Apply udev rules immediately
+        sudo udevadm control --reload-rules && sudo udevadm trigger
         ;;
 esac
 
