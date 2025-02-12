@@ -49,11 +49,11 @@ cd "$dotfiles_dir"
 
 # Install Xorg
 echo "Installing xorg..."
-yay -Sy  xorg xorg-server xorg-xinit
+yay -Sy xorg xorg-server xorg-xinit
 
 # Desktop Enviroment
 echo "Installing i3..."
-yay -Sy  i3 ly dmenu ranger
+yay -Sy i3 ly dmenu ranger
 if [ -d "$dotfiles_dir/i3" ]; then
     echo "Copying i3 configuration..."
     sudo cp -rpf "$dotfiles_dir/i3" "$HOME/.config/"
@@ -63,7 +63,7 @@ fi
 
 # Ghostty Term
 echo "Installing ghostty..."
-yay -Sy  ghostty
+yay -Sy ghostty
 if [ -d "$dotfiles_dir/ghostty" ]; then
     echo "Copying ghostty configuration..."
     cp -rpf "$dotfiles_dir/ghostty" "$HOME/.config/"
@@ -73,7 +73,7 @@ fi
 
 # Installing PipeWire services
 echo "Installing PipeWire and related packages..."
-yay -Sy  pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber alsa-utils pavucontrol
+yay -Sy pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber alsa-utils pavucontrol
         
 # Configure ALSA to use PipeWire
 echo "Configuring ALSA to use PipeWire..."
@@ -87,7 +87,7 @@ echo "Installing firefox..."
 yay -Sy firefox
 
 # Text Editor
-yay -Sy  neovim vim
+yay -Sy neovim vim
 if [ -d "$dotfiles_dir/nvim" ]; then
     echo "Copying neovim configuration..."
     sudo cp -rpf "$dotfiles_dir/nvim" "$HOME/.config/"
@@ -104,14 +104,14 @@ rm -rf ~/.config/nvim/.git
 
 # Wine
 echo "Installing Wine..."
-yay -Sy  wine winetricks
+yay -Sy wine winetricks
 
 # Roblox
 read -p "Do you want to install Roblox? [y/N]: " choice
 case $choice in
     y | Y)
         echo "Installing Roblox..."
-        yay -Sy  flatpak
+        yay -Sy flatpak
         flatpak install --user https://sober.vinegarhq.org/sober.flatpakref
         # Check if the alias already exists in .bashrc
         if ! grep -q "alias roblox=" $HOME/.bashrc; then
@@ -131,7 +131,7 @@ read -p "Do you want to install Steam [y/N]: " choice
 case $choice in
     y | Y)
         echo "Installing Steam..."
-        yay -Sy  steam steam-native-runtime
+        yay -Sy steam steam-native-runtime
         ;;
     *)
         echo "Steam installation skipped."
@@ -143,7 +143,7 @@ read -p "Do you want to install Bluetooth [y/N]: " choice
 case $choice in
     y | Y)
         echo "Installing Bluetooth..."
-        yay -Sy  blueman bluez bluez-utils
+        yay -Sy blueman bluez bluez-utils
         echo "Enabling Bluetooth..."
         sudo systemctl enable bluetooth.service
         sudo systemctl start bluetooth.service
@@ -243,11 +243,11 @@ CONF
         ;;
     2)
         echo "Installing AMD drivers..."
-        yay -Sy  mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon lib32-mesa lib32-mesa-vdpau mesa-vdpau opencl-mesa lib32-opencl-mesa
+        yay -Sy mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon lib32-mesa lib32-mesa-vdpau mesa-vdpau opencl-mesa lib32-opencl-mesa
         ;;
     3)
         echo "Installing Intel drivers..."
-        yay -Sy  mesa xf86-video-intel vulkan-intel lib32-vulkan-intel lib32-mesa intel-media-driver intel-compute-runtime opencl-clang lib32-opencl-clang
+        yay -Sy mesa xf86-video-intel vulkan-intel lib32-vulkan-intel lib32-mesa intel-media-driver intel-compute-runtime opencl-clang lib32-opencl-clang
         ;;
     *)
         echo "Invalid option. Defaulting to NVIDIA drivers..."
@@ -320,7 +320,7 @@ CONF
 esac
 
 # Tmux
-yay -Sy  tmux
+yay -Sy tmux
 
 if [ -e "$HOME/.tmux/plugins/tpm" ]; then
     echo ""
@@ -382,16 +382,16 @@ sudo mv "$dotfiles_dir/Misc/picom.conf" "$HOME/.config"
 
 # Fonts
 echo "Installing fonts..."
-yay -Sy  ttf-dejavu ttf-liberation unifont ttf-joypixels
+yay -Sy ttf-dejavu ttf-liberation unifont ttf-joypixels
 
 # Enable power management
 echo "Enabling power management..."
-yay -Sy  tlp
+yay -Sy tlp
 sudo systemctl enable tlp
 
 # Network
 echo "Installing network and internet packages..."
-yay -Sy  iwd
+yay -Sy iwd
 
 read -p "Enter in any additional packages you wanna install (Type "none" for no package)" additional
 additional="${additional:-none}"
@@ -421,7 +421,7 @@ if [[ "$additional" != "none" && "$additional" != "" ]]; then
     done
 
     # Install the valid packages
-    yay -Sy  "${Apackages[@]}"
+    yay -Sy "${Apackages[@]}"
 else
     echo "No additional packages will be installed."
 fi
