@@ -61,7 +61,7 @@ install_packages xorg-server xorg-xinit
 
 # Desktop Enviroment
 echo "Installing i3..."
-install_packages i3 ly dmenu ranger && systemctl enable ly.service
+install_packages i3 ly dmenu ranger && sudo systemctl enable ly.service
 if [ -d "$dotfiles_dir/i3" ]; then
     echo "Copying i3 configuration..."
     sudo cp -rpf "$dotfiles_dir/i3" "$HOME/.config/"
