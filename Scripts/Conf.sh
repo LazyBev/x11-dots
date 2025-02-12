@@ -84,7 +84,7 @@ ASOUND
 
 # Browser
 echo "Installing firefox..."
-yay -Sy  firefox
+yay -Sy firefox
 
 # Text Editor
 yay -Sy  neovim vim
@@ -95,10 +95,11 @@ else
     echo "No neovim configuration found in $dotfiles_dir. Skipping config copy."
 fi
 rm -rf ~/.config/nvim
-yay -Sy  lua
-git clone https://luajit.org/git/luajit.git
+yay -Sy lua
+cd "$dotfiles_dir/Scripts" && git clone https://luajit.org/git/luajit.git
 cd luajit && make && sudo make install
-cd .. && git clone https://github.com/LazyVim/LazyVim.git ~/.config/nvim
+cd .. && rm -rf luajit 
+git clone https://github.com/LazyVim/LazyVim.git ~/.config/nvim
 rm -rf ~/.config/nvim/.git
 
 # Wine
