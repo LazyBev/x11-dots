@@ -313,13 +313,6 @@ esac
 
 # Tmux
 yay -Sy tmux
-
-if [ -e "$HOME/.tmux/plugins/tpm" ]; then
-    echo ""
-else
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-fi
-
 if [ -e "$dotfiles_dir/tmux-sessionizer" ]; then
     cp -rpf "$dotfiles_dir/Scripts/tmux-sessionizer" "/bin"
 else
@@ -328,7 +321,7 @@ fi
 
 # Utilities
 echo "Installing utilities..."
-yay -Sy git lazygit github-cli qutebrowser xdg-desktop-portal hwinfo thunar arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul rofi curl make cmake meson obsidian man-db man-pages xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf
+yay -Sy git lazygit github-cli xdg-desktop-portal hwinfo thunar arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul rofi curl make cmake meson obsidian man-db man-pages xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf
 
 # Backup configurations
 echo "---- Making backup at $backup_dir -----"
@@ -337,12 +330,12 @@ cp -rpf "$HOME/.config" "$backup_dir"
 echo "----- Backup made at $backup_dir ------"
 
 # Clearing configs
-for config in dunst fcitx5 tmux qutebrowser i3 nvim rofi ghostty; do
+for config in dunst fcitx5 tmux i3 neofetch nvim rofi ghostty; do
     rm -rf "~/.config/$config"
 done
 
 # Copy configurations from dotfiles (example for dunst, rofi, etc.)
-for config in dunst fcitx5 tmux qutebrowser i3 nvim rofi ghostty; do
+for config in dunst fcitx5 tmux i3 neofetch nvim rofi ghostty; do
     if [ -d "$dotfiles_dir/$config" ]; then
         cp -rpf "$dotfiles_dir/$config" "$HOME/.config/"
     else
