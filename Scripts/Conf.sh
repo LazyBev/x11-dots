@@ -426,4 +426,41 @@ else
     echo "No additional packages will be installed."
 fi
 
+BASH_PROFILE="$HOME/.bash_profile"
+if ! grep -q "startx" "$BASH_PROFILE"; then
+    echo "Setting up startx auto-launch..."
+    echo 'if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then exec startx; fi' >> "$BASH_PROFILE"
+fi
+
+# Configure i3 as default X session
+XINITRC="$HOME/.xinitrc"
+if [ ! -f "$XINITRC" ]; then
+    echo "Setting i3 as the default X session..."
+    echo 'exec i3' > "$XINITRC"
+    chmod +x "$XINITRC"
+elif ! grep -q "exec i3" "$XINITRC"; then
+    echo "Adding exec i3 to existing .xinitrc..."
+    echo 'exec i3' >> "$XINITRC"
+fi
+
+# Automatically determine CPU brand (AMD or Intel)
+CPU_VENDOR=$(lscpu | grep "Model name" | awk '{print $3}')
+
+echo "Detected CPU vendor: $CPU_VENDOR"
+
+# Add relevant kernel parameters to GRUB based on the CPU vendor
+GRUB_FILE="/etc/default/grub"
+if [[ "$CPU_VENDOR" == "AMD" ]]; then
+    echo "Configuring GRUB for AMD (amd_pstate=active and mitigations=off)..."
+    sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="\([^"]*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1 amd_pstate=active mitigations=off"/' "$GRUB_FILE"
+elif [[ "$CPU_VENDOR" == "Intel" ]]; then
+    echo "Configuring GRUB for Intel (intel_pstate=active and mitigations=off)..."
+    sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="\([^"]*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1 intel_pstate=active mitigations=off"/' "$GRUB_FILE"
+else
+    echo "Unknown CPU vendor. No specific configurations applied."
+fi
+
+# Rebuild GRUB config
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
 reboot
