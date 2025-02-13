@@ -2,7 +2,7 @@
 layer = top
 origin = bottom-right
 padding = 8
-offset = 12x12
+offset = (12, 12)
 font = "SF Pro Text 10"
 frame_width = 2
 separator_color = frame
