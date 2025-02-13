@@ -7,12 +7,27 @@ mkdir -p "$backup_dir"
 sudo cp -rpf "$HOME/.config" "$backup_dir"
 echo "----- Backup made at $backup_dir ------"
 
-for config in tmux dunst fcitx5 i3 nvim rofi; do
-    sudo cp -rpf "$HOME/dotfiles/$config" "$HOME/.config/" || echo "Failed to copy $config"
+# Clearing configs
+for config in dunst fcitx5 tmux i3 neofetch nvim rofi ghostty; do
+    rm -rf "~/.config/$config"
 done
 
-for fonts in fonts/MartianMono fonts/SF-Mono-Powerline fonts/fontconfig; do
-    sudo cp -rpf "$HOME/dotfiles/$fonts" "$HOME/.local/share/fonts/" || echo "Failed to copy $fonts"
+# Copy configurations from dotfiles (example for dunst, rofi, etc.)
+for config in dunst fcitx5 tmux i3 neofetch nvim rofi ghostty; do
+    if [ -d "$dotfiles_dir/$config" ]; then
+        cp -rpf "$dotfiles_dir/$config" "$HOME/.config/"
+    else
+        echo "No configuration found for $config. Skipping."
+    fi
+done
+
+# Install fonts
+for font in fonts/MartianMono fonts/SF-Mono-Powerline fonts/fontconfig; do
+    if [ -d "$dotfiles_dir/$font" ]; then
+        cp -rpf "$dotfiles_dir/$font" "$HOME/.local/share/fonts/"
+    else
+        echo "No font found for $font. Skipping."
+    fi
 done
 
 echo "Press Mod + Shift + c to refresh i3 config"
