@@ -184,19 +184,17 @@ case "$driver_choice" in
         NVIDIA_VENDOR="0x$(lspci -nn | grep -i nvidia | sed -n 's/.*\[\([0-9A-Fa-f]\+\):[0-9A-Fa-f]\+\].*/\1/p' | head -n 1)"
         
         # Create udev rules for NVIDIA power management
-        sudo tee /etc/udev/rules.d/80-nvidia-pm.rules > /dev/null <<RULES
-# Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind
-ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
-ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
-        
-# Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind
-ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"
-ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"
-        
-# Enable runtime PM for NVIDIA VGA/3D controller devices on adding device
-ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
-ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
-RULES
+        echo "# Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind
+        ACTION==\"bind\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030000\", TEST==\"power/control\", ATTR{power/control}=\"auto\"
+        ACTION==\"bind\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030200\", TEST==\"power/control\", ATTR{power/control}=\"auto\"
+
+        # Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind
+        ACTION==\"unbind\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030000\", TEST==\"power/control\", ATTR{power/control}=\"on\"
+        ACTION==\"unbind\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030200\", TEST==\"power/control\", ATTR{power/control}=\"on\"
+
+        # Enable runtime PM for NVIDIA VGA/3D controller devices on adding device
+        ACTION==\"add\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030000\", TEST==\"power/control\", ATTR{power/control}=\"auto\"
+        ACTION==\"add\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030200\", TEST==\"power/control\", ATTR{power/control}=\"auto\"" | envsubst | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules > /dev/null
         
         # Append NVIDIA environment variables to .bashrc if they aren't already set
         grep -qxF 'export __GL_THREADED_OPTIMIZATIONS=1' $HOME/.bashrc || echo 'export __GL_THREADED_OPTIMIZATIONS=1' >> $HOME/.bashrc
@@ -208,12 +206,10 @@ RULES
         sudo nvidia-smi -pm 1
         
         # Set NVIDIA kernel module options
-        sudo tee /etc/modprobe.d/nvidia.conf > /dev/null <<CONF
-options nvidia NVreg_UsePageAttributeTable=1
-options nvidia_drm modeset=1
-options nvidia NVreg_RegistryDwords="PerfLevelSrc=0x2222"
-options nvidia NVreg_EnablePCIeGen3=1 NVreg_EnableMSI=1
-CONF
+        echo "options nvidia NVreg_UsePageAttributeTable=1
+        options nvidia_drm modeset=1
+        options nvidia NVreg_RegistryDwords="PerfLevelSrc=0x2222"
+        options nvidia NVreg_EnablePCIeGen3=1 NVreg_EnableMSI=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
         
         # Apply NVIDIA settings
         sudo nvidia-xconfig --cool-bits=28
@@ -252,7 +248,7 @@ CONF
     *)
         echo "Invalid option. Defaulting to NVIDIA drivers..."
         echo "Installing NVIDIA drivers..."
-yay -Sy --needed mesa nvidia-dkms nvidia-utils nvidia-settings nvidia-prime \
+        yay -Sy --needed mesa nvidia-dkms nvidia-utils nvidia-settings nvidia-prime \
             lib32-nvidia-utils vulkan-mesa-layers lib32-vulkan-mesa-layers \
             xf86-video-nouveau opencl-nvidia lib32-opencl-nvidia
         
@@ -260,19 +256,17 @@ yay -Sy --needed mesa nvidia-dkms nvidia-utils nvidia-settings nvidia-prime \
         NVIDIA_VENDOR="0x$(lspci -nn | grep -i nvidia | sed -n 's/.*\[\([0-9A-Fa-f]\+\):[0-9A-Fa-f]\+\].*/\1/p' | head -n 1)"
         
         # Create udev rules for NVIDIA power management
-        sudo tee /etc/udev/rules.d/80-nvidia-pm.rules > /dev/null <<RULES
-# Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind
-ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
-ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
-        
-# Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind
-ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"
-ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"
-        
-# Enable runtime PM for NVIDIA VGA/3D controller devices on adding device
-ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
-ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="$NVIDIA_VENDOR", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
-RULES
+        echo "# Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind
+        ACTION==\"bind\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030000\", TEST==\"power/control\", ATTR{power/control}=\"auto\"
+        ACTION==\"bind\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030200\", TEST==\"power/control\", ATTR{power/control}=\"auto\"
+
+        # Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind
+        ACTION==\"unbind\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030000\", TEST==\"power/control\", ATTR{power/control}=\"on\"
+        ACTION==\"unbind\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030200\", TEST==\"power/control\", ATTR{power/control}=\"on\"
+
+        # Enable runtime PM for NVIDIA VGA/3D controller devices on adding device
+        ACTION==\"add\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030000\", TEST==\"power/control\", ATTR{power/control}=\"auto\"
+        ACTION==\"add\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030200\", TEST==\"power/control\", ATTR{power/control}=\"auto\"" | envsubst | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules > /dev/null
         
         # Append NVIDIA environment variables to .bashrc if they aren't already set
         grep -qxF 'export __GL_THREADED_OPTIMIZATIONS=1' $HOME/.bashrc || echo 'export __GL_THREADED_OPTIMIZATIONS=1' >> $HOME/.bashrc
@@ -284,12 +278,10 @@ RULES
         sudo nvidia-smi -pm 1
         
         # Set NVIDIA kernel module options
-        sudo tee /etc/modprobe.d/nvidia.conf > /dev/null <<CONF
-options nvidia NVreg_UsePageAttributeTable=1
-options nvidia_drm modeset=1
-options nvidia NVreg_RegistryDwords="PerfLevelSrc=0x2222"
-options nvidia NVreg_EnablePCIeGen3=1 NVreg_EnableMSI=1
-CONF
+        echo "options nvidia NVreg_UsePageAttributeTable=1
+        options nvidia_drm modeset=1
+        options nvidia NVreg_RegistryDwords="PerfLevelSrc=0x2222"
+        options nvidia NVreg_EnablePCIeGen3=1 NVreg_EnableMSI=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
         
         # Apply NVIDIA settings
         sudo nvidia-xconfig --cool-bits=28
@@ -336,7 +328,7 @@ fi
 
 # Utilities
 echo "Installing utilities..."
-yay -Sy git lazygit github-cli qutebrowser xdg-desktop-portal hwinfo arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul rofi curl make cmake meson obsidian man-db man-pages xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf
+yay -Sy git lazygit github-cli qutebrowser xdg-desktop-portal hwinfo thunar arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul rofi curl make cmake meson obsidian man-db man-pages xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf
 
 # Backup configurations
 echo "---- Making backup at $backup_dir -----"
