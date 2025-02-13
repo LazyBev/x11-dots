@@ -460,6 +460,11 @@ else
     echo "Unknown CPU vendor. No specific configurations applied."
 fi
 
+cd $HOME
+git clone --recurse-submodules https://github.com/Tk-Glitch/PKGBUILDS.git
+cd PKGBUILD/linux-tkg
+makepkg -si
+
 # Rebuild GRUB config
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
