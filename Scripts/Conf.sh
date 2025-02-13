@@ -324,9 +324,10 @@ echo "Installing utilities..."
 yay -Sy git lazygit github-cli xdg-desktop-portal hwinfo thunar arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul rofi curl make cmake meson obsidian man-db man-pages xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf
 
 # Backup configurations
+backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
 echo "---- Making backup at $backup_dir -----"
 mkdir -p "$backup_dir"
-cp -rpf "$HOME/.config" "$backup_dir"
+sudo cp -rpf "$HOME/.config" "$backup_dir"
 echo "----- Backup made at $backup_dir ------"
 
 # Clearing configs
