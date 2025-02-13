@@ -7,6 +7,8 @@ mkdir -p "$backup_dir"
 sudo cp -rpf "$HOME/.config" "$backup_dir"
 echo "----- Backup made at $backup_dir ------"
 
+dotfiles_dir=$HOME/dotfiles
+
 # Clearing configs
 for config in dunst fcitx5 tmux i3 neofetch nvim rofi ghostty; do
     rm -rf "~/.config/$config"
