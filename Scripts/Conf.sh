@@ -422,11 +422,17 @@ fi
 XINITRC="$HOME/.xinitrc"
 if [ ! -f "$XINITRC" ]; then
     echo "Setting i3 as the default X session..."
-    echo 'exec i3' > "$XINITRC"
-    chmod +x "$XINITRC"
+    sudo echo 'exec i3' > "$XINITRC"
+    sudo echo 'exec picom -b &' >> "$XINITRC"
+    sudo echo 'exec fcitx5 -d &' >> "$XINITRC"
+    sudo echo 'exec flameshot &' >> "$XINITRC"
+    sudo chmod +x "$XINITRC"
 elif ! grep -q "exec i3" "$XINITRC"; then
-    echo "Adding exec i3 to existing .xinitrc..."
-    echo 'exec i3' >> "$XINITRC"
+    sudo echo "Adding exec i3 to existing .xinitrc..."
+    sudo echo 'exec i3' >> "$XINITRC"
+    sudo echo 'exec picom -b &' >> "$XINITRC"
+    sudo echo 'exec fcitx5 -d &' >> "$XINITRC"
+    sudo echo 'exec flameshot &' >> "$XINITRC"
 fi
 
 # Automatically determine CPU brand (AMD or Intel)
