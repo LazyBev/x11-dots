@@ -213,7 +213,4 @@ bar {
 }
 
 #Start-Up
-
-exec_always fcitx5 -d &
-exec_always picom -b &
 exec_always --no-startup-id nitrogen --restore
