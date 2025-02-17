@@ -78,6 +78,7 @@ yay -Sy firefox
 
 # Text Editor
 yay -Sy neovim vim
+git clone https://github.com/NvChad/starter ~/.config/nvim && nvim
 
 rm -rf ~/.config/nvim
 yay -Sy lua
@@ -306,7 +307,7 @@ echo "----- Backup made at $backup_dir ------"
 
 cd "$dotfiles_dir"
 # Copy configurations from dotfiles (example for dunst, rofi, etc.)
-for config in dunst fcitx5 tmux i3 neofetch nvim rofi ghostty; do
+for config in dunst fcitx5 tmux i3 neofetch rofi ghostty; do
     stow $config
 done
 
