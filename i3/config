@@ -89,7 +89,8 @@ bindsym $mod+o exec obsidian
 bindsym $mod+x exec flameshot gui
 bindsym $mod+Shift+x exec i3lock
 bindsym $mod+Shift+t exec i3
-bindsym $mod+Shift+p exec shutdown now
+bindsym $mod+p exec shutdown now
+bindsym $mod+Shift+p exec sudo reboot
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
