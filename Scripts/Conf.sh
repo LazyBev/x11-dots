@@ -406,9 +406,10 @@ fi
 
 I3CONF="$HOME/.config/i3/config"
 echo "Setting auto start things..."
-sudo echo 'exec picom -b &' >> "$I3CONF"
-sudo echo 'exec fcitx5 -d &' >> "$I3CONF"
-sudo echo 'exec flameshot &' >> "$I3CONF"
+sudo echo 'exec_always --no-startup-id nitrogen --restore' >> "$I3CONF"
+sudo echo 'exec_always picom -b &' >> "$I3CONF"
+sudo echo 'exec_always fcitx5 -d &' >> "$I3CONF"
+sudo echo 'exec_always flameshot &' >> "$I3CONF"
 
 # Automatically determine CPU brand (AMD or Intel)
 CPU_VENDOR=$(lscpu | grep "Model name" | awk '{print $3}')
