@@ -80,7 +80,8 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 bindsym $mod+v exec discord
-bindsym $mod+b exec floorp
+bindsym $mod+b exec firefox 
+bindsym $mod+Shift+b exec firefox
 bindsym $mod+s exec steam
 bindsym $mod+o exec obsidian
 bindsym $mod+x exec flameshot gui
