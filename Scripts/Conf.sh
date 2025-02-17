@@ -117,6 +117,20 @@ else
     echo "Roblox alias already exists in .bashrc. Skipping addition."
 fi
 
+# Discord
+echo "Installing Roblox..."
+flatpak install --user com.discordapp.Discord
+if ! grep -q "alias discord=" $HOME/.bashrc; then
+    echo "Adding Discord alias to .bashrc..."
+    echo "alias discord='flatpak run com.discordapp.Discord'" >> $HOME/.bashrc
+else
+    echo "Discord alias already exists in .bashrc. Skipping addition."
+fi
+touch discord
+DC="$HOME/discord"
+sudo echo 'flatpak run com.discordapp.Discord' >> $DC
+sudo mv $DC /bin
+
 # Steam
 echo "Installing Steam..."
 yay -Sy steam steam-native-runtime
@@ -405,7 +419,31 @@ elif ! grep -q "exec i3" "$XINITRC"; then
 fi
 
 I3CONF="$HOME/.config/i3/config"
-echo "Setting auto start things..."
+echo "Setting i3 up..."
+sudo sed -i '/$mod+Return/c\bindsym $mod+Return ghostty' $I3CONF
+sudo sed -i '/$mod+40/c\bindsym $mod+d "rofi -show run"' $I3CONF
+sudo sed -i '/$mod+l focus up/c\bindsym $mod+i focus up' $I3CONF
+sudo sed -i '/$mod+semicolon/c\bindsym $mod+Shift+l focus right' $I3CONF
+sudo sed -i '/$mod+Shift+l move up/c\bindsym $mod+Shift+i move up' $I3CONF
+sudo sed -i '/$mod+Shift+semicolon/c\bindsym $mod+Shift+l move right' $I3CONF
+sudo sed -i '/$mod+s layout/d' $I3CONF
+sudo sed -i '/$mod+e layout/c\bindsym $mod+Shift+w layout toggle split' $I3CONF
+sudo sed -i '/$mod+d focus/c\bindsym $mod+Shift+a focus child' $I3CONF
+sudo echo 'bindsym $mod+v exec discord' >> "$I3CONF"
+sudo echo 'bindsym $mod+b exec floorp' >> "$I3CONF"
+sudo echo 'bindsym $mod+s exec steam' >> "$I3CONF"
+sudo echo 'bindsym $mod+o exec obsidian' >> "$I3CONF"
+sudo echo 'bindsym $mod+x exec flameshot gui' >> "$I3CONF"
+sudo echo 'bindsym $mod+Shift+x exec i3lock' >> "$I3CONF"
+sudo echo 'bindsym $mod+Shift+t exec i3' >> "$I3CONF"
+sudo echo 'bindsym $mod+p exec shutdown now' >> "$I3CONF"
+sudo echo 'bindsym $mod+Shift+p exec sudo reboot' >> "$I3CONF"
+sudo sed -i '/# Start i3bar to display a workspace bar (plus the system information i3status/d' $I3CONF
+sudo sed -i '/# finds out, if available)/d' $I3CONF
+sudo sed -i '/bar {/d' $I3CONF
+sudo sed -i '/status_command i3status/d' $I3CONF
+sudo sed -i '/}/d' $I3CONF
+sudo echo '#Startup' >> "$I3CONF"
 sudo echo 'exec_always --no-startup-id nitrogen --restore' >> "$I3CONF"
 sudo echo 'exec_always picom -b &' >> "$I3CONF"
 sudo echo 'exec_always fcitx5 -d &' >> "$I3CONF"
@@ -428,10 +466,10 @@ else
     echo "Unknown CPU vendor. No specific configurations applied."
 fi
 
-cd $HOME
-git clone --recurse-submodules https://github.com/Tk-Glitch/PKGBUILDS.git
-cd PKGBUILD/linux-tkg
-makepkg -si
+#cd $HOME
+#git clone --recurse-submodules https://github.com/Tk-Glitch/PKGBUILDS.git
+#cd PKGBUILD/linux-tkg
+#makepkg -si
 
 # Rebuild GRUB config
 sudo grub-mkconfig -o /boot/grub/grub.cfg
