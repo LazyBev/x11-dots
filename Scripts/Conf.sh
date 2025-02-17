@@ -306,6 +306,7 @@ sudo cp -rpf "$HOME/.config" "$backup_dir"
 echo "----- Backup made at $backup_dir ------"
 
 cd "$dotfiles_dir"
+yay -Sy stow
 # Copy configurations from dotfiles (example for dunst, rofi, etc.)
 for config in dunst fcitx5 tmux i3 neofetch rofi ghostty; do
     stow $config
