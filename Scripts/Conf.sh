@@ -107,61 +107,36 @@ echo "Installing Wine..."
 yay -Sy wine winetricks
 
 # Roblox
-read -p "Do you want to install Roblox? [y/N]: " choice
-case $choice in
-    y | Y)
-        echo "Installing Roblox..."
-        yay -Sy flatpak
-        flatpak install --user https://sober.vinegarhq.org/sober.flatpakref
-        # Check if the alias already exists in .bashrc
-        if ! grep -q "alias roblox=" $HOME/.bashrc; then
-            echo "Adding Roblox alias to .bashrc..."
-            echo "alias roblox='flatpak run org.vinegarhq.Sober'" >> $HOME/.bashrc
-        else
-            echo "Roblox alias already exists in .bashrc. Skipping addition."
-        fi
-        ;;
-    *)
-        echo "Roblox installation skipped."
-        ;;
-esac
+echo "Installing Roblox..."
+yay -Sy flatpak
+flatpak install --user https://sober.vinegarhq.org/sober.flatpakref
+if ! grep -q "alias roblox=" $HOME/.bashrc; then
+    echo "Adding Roblox alias to .bashrc..."
+    echo "alias roblox='flatpak run org.vinegarhq.Sober'" >> $HOME/.bashrc
+else
+    echo "Roblox alias already exists in .bashrc. Skipping addition."
+fi
 
 # Steam
-read -p "Do you want to install Steam [y/N]: " choice
-case $choice in
-    y | Y)
-        echo "Installing Steam..."
-        yay -Sy steam steam-native-runtime
-        ;;
-    *)
-        echo "Steam installation skipped."
-        ;;
-esac
+echo "Installing Steam..."
+yay -Sy steam steam-native-runtime
 
 # Bluetooth
-read -p "Do you want to install Bluetooth [y/N]: " choice
-case $choice in
-    y | Y)
-        echo "Installing Bluetooth..."
-        yay -Sy blueman bluez bluez-utils
-        echo "Enabling Bluetooth..."
-        sudo systemctl enable bluetooth.service
-        sudo systemctl start bluetooth.service
-        sudo systemctl daemon-reload
+echo "Installing Bluetooth..."
+yay -Sy blueman bluez bluez-utils
+echo "Enabling Bluetooth..."
+sudo systemctl enable bluetooth.service
+sudo systemctl start bluetooth.service
+sudo systemctl daemon-reload
         
-        # Check if the alias already exists in .bashrc
-        if ! grep -q "alias blueman=" $HOME/.bashrc; then
-            echo "Adding Blueman alias to .bashrc..."
-            echo "alias blueman='blueman-manager'" >> $HOME/.bashrc
-            source $HOME/.bashrc
-        else
-            echo "Blueman alias already exists in .bashrc. Skipping addition."
-        fi
-        ;;
-    *)
-        echo "Bluetooth installation skipped."
-        ;;
-esac
+# Check if the alias already exists in .bashrc
+if ! grep -q "alias blueman=" $HOME/.bashrc; then
+    echo "Adding Blueman alias to .bashrc..."
+    echo "alias blueman='blueman-manager'" >> $HOME/.bashrc
+    source $HOME/.bashrc
+else
+    echo "Blueman alias already exists in .bashrc. Skipping addition."
+fi
 
 echo "Select a graphics driver to install:"
 echo "1) NVIDIA"
@@ -423,17 +398,17 @@ XINITRC="$HOME/.xinitrc"
 if [ ! -f "$XINITRC" ]; then
     echo "Setting i3 as the default X session..."
     sudo echo 'exec i3' > "$XINITRC"
-    sudo echo 'exec picom -b &' >> "$XINITRC"
-    sudo echo 'exec fcitx5 -d &' >> "$XINITRC"
-    sudo echo 'exec flameshot &' >> "$XINITRC"
     sudo chmod +x "$XINITRC"
 elif ! grep -q "exec i3" "$XINITRC"; then
     sudo echo "Adding exec i3 to existing .xinitrc..."
     sudo echo 'exec i3' >> "$XINITRC"
-    sudo echo 'exec picom -b &' >> "$XINITRC"
-    sudo echo 'exec fcitx5 -d &' >> "$XINITRC"
-    sudo echo 'exec flameshot &' >> "$XINITRC"
 fi
+
+I3CONF="$HOME/.config/i3/config"
+echo "Setting auto start things..."
+sudo echo 'exec picom -b &' >> "$I3CONF"
+sudo echo 'exec fcitx5 -d &' >> "$I3CONF"
+sudo echo 'exec flameshot &' >> "$I3CONF"
 
 # Automatically determine CPU brand (AMD or Intel)
 CPU_VENDOR=$(lscpu | grep "Model name" | awk '{print $3}')
