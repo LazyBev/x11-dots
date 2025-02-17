@@ -291,13 +291,12 @@ yay -Sy tmux
 
 # Utilities
 echo "Installing utilities..."
-yay -Sy acpi git lazygit github-cli polybar xdg-desktop-portal hwinfo thunar arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul adobe-source-han-mono-jp-fonts adobe-source-han-mono-hk-fonts adobe-source-han-mono-kr-fonts adobe-source-han-mono-tw-fonts adobe-source-han-mono-otc-fonts adobe-source-han-mono-cn-fonts rofi curl make cmake meson obsidian man-db man-pages xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf
+yay -Sy acpi git lazygit github-cli polybar xdg-desktop-portal hwinfo thunar arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy rofi curl make cmake meson obsidian man-db man-pages xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf
 
 # Fonts
 echo "Installing fonts..."
-yay -Sy ttf-dejavu ttf-liberation unifont ttf-joypixels ttf-meslo-nerd
+yay -Sy ttf-dejavu ttf-liberation unifont ttf-joypixels ttf-meslo-nerd fcitx5-hangul adobe-source-han-mono-jp-fonts adobe-source-han-mono-hk-fonts adobe-source-han-mono-kr-fonts adobe-source-han-mono-tw-fonts adobe-source-han-mono-otc-fonts adobe-source-han-mono-cn-fonts
 
-yay -Sy stow
 # Backup configurations
 backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
 echo "---- Making backup at $backup_dir -----"
