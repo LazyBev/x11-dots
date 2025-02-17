@@ -5,14 +5,16 @@ set -eo pipefail
 trap 'echo "An error occurred. Exiting..."; exit 1;' ERR
 
 # Variables
-yay_choice=""
 backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
-de_choice=""
-browser_choice=""
-editor_choice=""
-audio_choice=""
-driver_choice=""
 dotfiles_dir="$HOME/dotfiles"
+
+if [ -d "$dotfiles_dir" ]; then
+    echo ""
+else
+    sudo pacman -Sy git && cd ..
+    rm -rf dotfiles && cd $HOME
+    git clone https://github.com/LazyBev/dotfiles && cd dotfiles/Scripts
+fi
 
 # Refactor pacman.conf update
 declare -a pacman_conf=(
@@ -54,22 +56,10 @@ yay -Sy xorg xorg-server xorg-xinit
 # Desktop Enviroment
 echo "Installing i3..."
 yay -Sy i3 ly dmenu ranger
-if [ -d "$dotfiles_dir/i3" ]; then
-    echo "Copying i3 configuration..."
-    sudo cp -rpf "$dotfiles_dir/i3" "$HOME/.config/"
-else
-    echo "No i3 configuration found in $dotfiles_dir. Skipping config copy."
-fi
 
 # Ghostty Term
 echo "Installing ghostty..."
 yay -Sy ghostty
-if [ -d "$dotfiles_dir/ghostty" ]; then
-    echo "Copying ghostty configuration..."
-    cp -rpf "$dotfiles_dir/ghostty" "$HOME/.config/"
-else
-    echo "No ghostty configuration found in $dotfiles_dir. Skipping config copy."
-fi
 
 # Installing PipeWire services
 echo "Installing PipeWire and related packages..."
@@ -88,12 +78,7 @@ yay -Sy firefox
 
 # Text Editor
 yay -Sy neovim vim
-if [ -d "$dotfiles_dir/nvim" ]; then
-    echo "Copying neovim configuration..."
-    sudo cp -rpf "$dotfiles_dir/nvim" "$HOME/.config/"
-else
-    echo "No neovim configuration found in $dotfiles_dir. Skipping config copy."
-fi
+
 rm -rf ~/.config/nvim
 yay -Sy lua
 cd "$dotfiles_dir/Scripts" && git clone https://luajit.org/git/luajit.git
@@ -302,16 +287,16 @@ esac
 
 # Tmux
 yay -Sy tmux
-if [ -e "$dotfiles_dir/tmux-sessionizer" ]; then
-    cp -rpf "$dotfiles_dir/Scripts/tmux-sessionizer" "/bin"
-else
-    echo "No tmux-sessionizer file found. SKipping installtion"
-fi
 
 # Utilities
 echo "Installing utilities..."
-yay -Sy git lazygit github-cli xdg-desktop-portal hwinfo thunar arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul adobe-source-han-mono-jp-fonts adobe-source-han-mono-hk-fonts adobe-source-han-mono-kr-fonts adobe-source-han-mono-tw-fonts adobe-source-han-mono-otc-fonts adobe-source-han-mono-cn-fonts rofi curl make cmake meson obsidian man-db man-pages xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf
+yay -Sy acpi git lazygit github-cli polybar xdg-desktop-portal hwinfo thunar arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul adobe-source-han-mono-jp-fonts adobe-source-han-mono-hk-fonts adobe-source-han-mono-kr-fonts adobe-source-han-mono-tw-fonts adobe-source-han-mono-otc-fonts adobe-source-han-mono-cn-fonts rofi curl make cmake meson obsidian man-db man-pages xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf
 
+# Fonts
+echo "Installing fonts..."
+yay -Sy ttf-dejavu ttf-liberation unifont ttf-joypixels ttf-meslo-nerd
+
+yay -Sy stow
 # Backup configurations
 backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
 echo "---- Making backup at $backup_dir -----"
@@ -319,27 +304,10 @@ mkdir -p "$backup_dir"
 sudo cp -rpf "$HOME/.config" "$backup_dir"
 echo "----- Backup made at $backup_dir ------"
 
-# Clearing configs
-for config in dunst fcitx5 tmux i3 neofetch nvim rofi ghostty; do
-    rm -rf "~/.config/$config"
-done
-
+cd "$dotfiles_dir"
 # Copy configurations from dotfiles (example for dunst, rofi, etc.)
 for config in dunst fcitx5 tmux i3 neofetch nvim rofi ghostty; do
-    if [ -d "$dotfiles_dir/$config" ]; then
-        cp -rpf "$dotfiles_dir/$config" "$HOME/.config/"
-    else
-        echo "No configuration found for $config. Skipping."
-    fi
-done
-
-# Install fonts
-for font in fonts/MartianMono fonts/SF-Mono-Powerline fonts/fontconfig; do
-    if [ -d "$dotfiles_dir/$font" ]; then
-        cp -rpf "$dotfiles_dir/$font" "$HOME/.local/share/fonts/"
-    else
-        echo "No font found for $font. Skipping."
-    fi
+    stow $config
 done
 
 # XDG_DIRS
@@ -351,13 +319,8 @@ grep -qxF 'export PATH=".local/bin/:$PATH"' $HOME/.bashrc || echo 'export PATH="
 
 mkdir -p "$HOME/.config/neofetch/" && cp -rf "$dotfiles_dir/neofetch/bk" "$HOME/.config/neofetch/"
 echo "alias neofetch='neofetch --source $HOME/.config/neofetch/bk'" >> $HOME/.bashrc
-mkdir -p "$HOME/Pictures/" && cp -rpf "$dotfiles_dir/Pictures/bgpic.jpg" "$HOME/Pictures/"
+wget https://brainwreckedtech.wordpress.com/wp-content/uploads/2014/03/ika-musume-arch-linux-169.png --directory-prefix=Pictures
 mkdir -p "$HOME/Videos/"
-sudo mv "$dotfiles_dir/Misc/picom.conf" "$HOME/.config"
-
-# Fonts
-echo "Installing fonts..."
-yay -Sy ttf-dejavu ttf-liberation unifont ttf-joypixels
 
 # Enable power management
 echo "Enabling power management..."
@@ -418,40 +381,8 @@ elif ! grep -q "exec i3" "$XINITRC"; then
     sudo echo 'exec i3' >> "$XINITRC"
 fi
 
-I3CONF="$HOME/.config/i3/config"
-echo "Setting i3 up..."
-sudo sed -i '/$mod+Return/c\bindsym $mod+Return ghostty' $I3CONF
-sudo sed -i '/$mod+40/c\bindsym $mod+d "rofi -show run"' $I3CONF
-sudo sed -i '/$mod+l focus up/c\bindsym $mod+i focus up' $I3CONF
-sudo sed -i '/$mod+semicolon/c\bindsym $mod+Shift+l focus right' $I3CONF
-sudo sed -i '/$mod+Shift+l move up/c\bindsym $mod+Shift+i move up' $I3CONF
-sudo sed -i '/$mod+Shift+semicolon/c\bindsym $mod+Shift+l move right' $I3CONF
-sudo sed -i '/$mod+s layout/d' $I3CONF
-sudo sed -i '/$mod+e layout/c\bindsym $mod+Shift+w layout toggle split' $I3CONF
-sudo sed -i '/$mod+d focus/c\bindsym $mod+Shift+a focus child' $I3CONF
-sudo echo 'bindsym $mod+v exec discord' >> "$I3CONF"
-sudo echo 'bindsym $mod+b exec floorp' >> "$I3CONF"
-sudo echo 'bindsym $mod+s exec steam' >> "$I3CONF"
-sudo echo 'bindsym $mod+o exec obsidian' >> "$I3CONF"
-sudo echo 'bindsym $mod+x exec flameshot gui' >> "$I3CONF"
-sudo echo 'bindsym $mod+Shift+x exec i3lock' >> "$I3CONF"
-sudo echo 'bindsym $mod+Shift+t exec i3' >> "$I3CONF"
-sudo echo 'bindsym $mod+p exec shutdown now' >> "$I3CONF"
-sudo echo 'bindsym $mod+Shift+p exec sudo reboot' >> "$I3CONF"
-sudo sed -i '/# Start i3bar to display a workspace bar (plus the system information i3status/d' $I3CONF
-sudo sed -i '/# finds out, if available)/d' $I3CONF
-sudo sed -i '/bar {/d' $I3CONF
-sudo sed -i '/status_command i3status/d' $I3CONF
-sudo sed -i '/}/d' $I3CONF
-sudo echo '#Startup' >> "$I3CONF"
-sudo echo 'exec_always --no-startup-id nitrogen --restore' >> "$I3CONF"
-sudo echo 'exec_always picom -b &' >> "$I3CONF"
-sudo echo 'exec_always fcitx5 -d &' >> "$I3CONF"
-sudo echo 'exec_always flameshot &' >> "$I3CONF"
-
 # Automatically determine CPU brand (AMD or Intel)
 CPU_VENDOR=$(lscpu | grep "Model name" | awk '{print $3}')
-
 echo "Detected CPU vendor: $CPU_VENDOR"
 
 # Add relevant kernel parameters to GRUB based on the CPU vendor
