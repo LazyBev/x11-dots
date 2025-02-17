@@ -49,22 +49,11 @@ sudo chown "$user:$user" -R $HOME/yay-bin
 cd yay-bin && makepkg -si && cd .. && rm -rf yay-bin
 cd "$dotfiles_dir"
 
-# Install Xorg
-echo "Installing xorg..."
-yay -Sy xorg xorg-server xorg-xinit
+# Installing needed
+yay -Syu iwd tlp stow fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul ttf-dejavu ttf-liberation unifont ttf-joypixels ttf-meslo-nerd noto-fonts adobe-source-han-mono-jp-fonts adobe-source-han-mono-hk-fonts adobe-source-han-mono-kr-fonts adobe-source-han-mono-tw-fonts adobe-source-han-mono-otc-fonts adobe-source-han-mono-cn-fonts tmux blueman bluez bluez-utils steam steam-native-runtime flatpak wine winetricks neovim lua ripgrep vim firefox pipewire pipewire-alsa alsa-utils pavucontrol ghostty i3 ranger xorg xorg-server xorg-xinit acpi git lazygit github-cli polybar xdg-desktop-portal hwinfo arch-install-scripts wireless_tools neofetch fuse2 polkit rofi curl make cmake meson obsidian man-db man-pages xdotool feh thunar qutebrowser flameshot zip unzip mpv btop picom dunst xarchiver eza fzf
+flatpak install --user com.discordapp.Discord
+flatpak install --user https://sober.vinegarhq.org/sober.flatpakref
 
-# Desktop Enviroment
-echo "Installing i3..."
-yay -Sy i3 ly dmenu ranger
-
-# Ghostty Term
-echo "Installing ghostty..."
-yay -Sy ghostty
-
-# Installing PipeWire services
-echo "Installing PipeWire and related packages..."
-yay -Sy pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber alsa-utils pavucontrol
-        
 # Configure ALSA to use PipeWire
 echo "Configuring ALSA to use PipeWire..."
 echo tee /etc/asound.conf <<ASOUND
@@ -72,30 +61,9 @@ defaults.pcm.card 0
 defaults.ctl.card 0
 ASOUND
 
-# Browser
-echo "Installing firefox..."
-yay -Sy firefox
-
-# Text Editor
-yay -Sy neovim vim
 git clone https://github.com/NvChad/starter ~/.config/nvim && nvim
 
-rm -rf ~/.config/nvim
-yay -Sy lua
-cd "$dotfiles_dir/Scripts" && git clone https://luajit.org/git/luajit.git
-cd luajit && make && sudo make install
-cd .. && rm -rf luajit 
-git clone https://github.com/LazyVim/LazyVim.git ~/.config/nvim
-rm -rf ~/.config/nvim/.git
-
-# Wine
-echo "Installing Wine..."
-yay -Sy wine winetricks
-
 # Roblox
-echo "Installing Roblox..."
-yay -Sy flatpak
-flatpak install --user https://sober.vinegarhq.org/sober.flatpakref
 if ! grep -q "alias roblox=" $HOME/.bashrc; then
     echo "Adding Roblox alias to .bashrc..."
     echo "alias roblox='flatpak run org.vinegarhq.Sober'" >> $HOME/.bashrc
@@ -104,8 +72,6 @@ else
 fi
 
 # Discord
-echo "Installing Roblox..."
-flatpak install --user com.discordapp.Discord
 if ! grep -q "alias discord=" $HOME/.bashrc; then
     echo "Adding Discord alias to .bashrc..."
     echo "alias discord='flatpak run com.discordapp.Discord'" >> $HOME/.bashrc
@@ -117,19 +83,11 @@ DC="$HOME/discord"
 sudo echo 'flatpak run com.discordapp.Discord' >> $DC
 sudo mv $DC /bin
 
-# Steam
-echo "Installing Steam..."
-yay -Sy steam steam-native-runtime
-
 # Bluetooth
-echo "Installing Bluetooth..."
-yay -Sy blueman bluez bluez-utils
 echo "Enabling Bluetooth..."
 sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
 sudo systemctl daemon-reload
-        
-# Check if the alias already exists in .bashrc
 if ! grep -q "alias blueman=" $HOME/.bashrc; then
     echo "Adding Blueman alias to .bashrc..."
     echo "alias blueman='blueman-manager'" >> $HOME/.bashrc
@@ -286,17 +244,6 @@ case "$driver_choice" in
         ;;
 esac
 
-# Tmux
-yay -Sy tmux
-
-# Utilities
-echo "Installing utilities..."
-yay -Sy acpi git lazygit github-cli polybar xdg-desktop-portal hwinfo thunar arch-install-scripts wireless_tools neofetch fuse2 polkit fcitx5-im fcitx5-chinese-addons fcitx5-anthy rofi curl make cmake meson obsidian man-db man-pages xdotool nitrogen flameshot zip unzip mpv btop noto-fonts picom dunst xarchiver eza fzf
-
-# Fonts
-echo "Installing fonts..."
-yay -Sy ttf-dejavu ttf-liberation unifont ttf-joypixels ttf-meslo-nerd fcitx5-hangul adobe-source-han-mono-jp-fonts adobe-source-han-mono-hk-fonts adobe-source-han-mono-kr-fonts adobe-source-han-mono-tw-fonts adobe-source-han-mono-otc-fonts adobe-source-han-mono-cn-fonts
-
 # Backup configurations
 backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
 echo "---- Making backup at $backup_dir -----"
@@ -305,7 +252,6 @@ sudo cp -rpf "$HOME/.config" "$backup_dir"
 echo "----- Backup made at $backup_dir ------"
 
 cd "$dotfiles_dir"
-yay -Sy stow
 # Copy configurations from dotfiles (example for dunst, rofi, etc.)
 for config in dunst fcitx5 tmux i3 neofetch rofi ghostty; do
     stow $config
@@ -320,17 +266,14 @@ grep -qxF 'export PATH=".local/bin/:$PATH"' $HOME/.bashrc || echo 'export PATH="
 
 mkdir -p "$HOME/.config/neofetch/" && cp -rf "$dotfiles_dir/neofetch/bk" "$HOME/.config/neofetch/"
 echo "alias neofetch='neofetch --source $HOME/.config/neofetch/bk'" >> $HOME/.bashrc
-wget https://brainwreckedtech.wordpress.com/wp-content/uploads/2014/03/ika-musume-arch-linux-169.png --directory-prefix=Pictures
-mkdir -p "$HOME/Videos/"
+wget https://brainwreckedtech.wordpress.com/wp-content/uploads/2014/03/ika-musume-arch-linux-169.png --directory-prefix="$HOME/Pictures/"
+mkdir -p "$HOME/Videos"
 
 # Enable power management
-echo "Enabling power management..."
-yay -Sy tlp
 sudo systemctl enable tlp
 
 # Network
 echo "Installing network and internet packages..."
-yay -Sy iwd
 
 read -p "Enter in any additional packages you wanna install (Type "none" for no package)" additional
 additional="${additional:-none}"
