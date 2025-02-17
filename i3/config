@@ -214,4 +214,3 @@ bar {
 }
 
 #Start-Up
-exec_always --no-startup-id nitrogen --restore
