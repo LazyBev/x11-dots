@@ -229,11 +229,11 @@ esac
 
 cd "$dotfiles_dir"
 
-for config in background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvim rofi tmux; do
+for config in background picom dunst fcitx5 ghostty mov-cli i3 polybar neofetch nvim rofi tmux; do
     rm -rf $HOME/.config/$config 
 done
 
-for config in home background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvim rofi tmux; do
+for config in home background picom dunst fcitx5 ghostty mov-cli i3 polybar neofetch nvim rofi tmux; do
     stow $config --adopt 
 done
 
