@@ -12,7 +12,7 @@
 set $mod Mod4
 
 #Startup
-exec_always --no-startup-id pulseaudio -k
+exec --no-startup-id pulseaudio -k
 exec_always --no-startup-id killall polybar
 exec_always --no-startup-id ~/.config/polybar/launch_polybar.sh
 exec_always --no-startup-id feh --bg-scale ~/Pictures/archchan.png
