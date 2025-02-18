@@ -256,18 +256,9 @@ case "$driver_choice" in
 esac
 
 cd "$dotfiles_dir"
-for config in background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvim rofi tmux; do
-    if [ -d $HOME/.config/$config ]; then
-        sudo rm -rf $HOME/.config/$config
-    fi
-done
-
-for home in .bash_profile .bashrc .xinitrc; do
-    sudo rm -rf $HOME/$home
-done
     
 for config in home background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvim rofi tmux; do
-    stow $config
+    stow $config --adopt
 done
 
 mkdir -p "$HOME/Videos"
