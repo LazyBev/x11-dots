@@ -8,11 +8,13 @@ trap 'echo "An error occurred. Exiting..."; exit 1;' ERR
 backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
 dotfiles_dir="$HOME/dotfiles"
 
-# Backup configurations
-echo "---- Making backup at $backup_dir -----"
-mkdir -p "$backup_dir"
-sudo cp -rpf "$HOME/.config" "$backup_dir"
-echo "----- Backup made at $backup_dir ------"
+# Backup configurations 
+if [ -d "$HOME/.config" ]; then 
+    echo "---- Making backup at $backup_dir -----"
+    mkdir -p "$backup_dir"
+    sudo cp -rpf "$HOME/.config" "$backup_dir"
+    echo "----- Backup made at $backup_dir ------"
+fi 
 
 if [ -d "$dotfiles_dir" ]; then
     echo ""
