@@ -1,0 +1,24 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+alias grep='grep --color=auto'
+PS1='[\u@\h \W]\$ '
+alias ls="eza -al --color=auto"
+alias roblox='flatpak run org.vinegarhq.Sober'
+alias blueman='blueman-manager'
+alias discord='flatpak run com.discordapp.Discord'
+export XDG_CONFIG_HOME=/home/lazybev/.config
+export XDG_DATA_HOME=/home/lazybev/.local/share
+export XDG_STATE_HOME=/home/lazybev/.local/state
+export XDG_CACHE_HOME=/home/lazybev/.cache
+export PATH=.local/bin/:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+alias neofetch='neofetch --source /home/lazybev/.config/neofetch/bk'
+export __GL_THREADED_OPTIMIZATIONS=1
+export __GL_SYNC_TO_VBLANK=0
+export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
+export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d
+
