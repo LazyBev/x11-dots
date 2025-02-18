@@ -66,7 +66,6 @@ cd chafa && ./autogen.sh
 make && sudo make install
 cd $HOME && python -m venv yt
 bash -c "source yt/bin/activate; pip install lxml; pip install mov-cli -U; pip install mov-cli-youtube;"
-mov-cli -e; 
 
 # Configure ALSA to use PipeWire
 echo "Configuring ALSA to use PipeWire..."
