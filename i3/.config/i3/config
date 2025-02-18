@@ -89,7 +89,8 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 bindsym $mod+v exec discord
-bindsym $mod+b exec qutebrowser 
+bindsym $mod+v exec discord
+bindsym $mod+b exec qutebrowser
 bindsym $mod+Shift+b exec firefox
 bindsym $mod+t exec ghostty -e ranger
 bindsym $mod+Shift+t exec thunar
