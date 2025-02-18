@@ -31,6 +31,8 @@ Welcome to my **dotfiles** repository! This is where I keep my personalized syst
 
 If your new to linux or a long time user and want to use my config, you have to use arch and i so happen to provide a arch install script you can use :3
 
+(Sidenote: there comes to a point in every linux users lifetime where they just use arch (btw), and my time was roughly a week after my first time with linux (i used linux mint) 😭)
+
 To use my arch install script run these commands
 ```sh
 git clone https://github.com/LazyBev/dotfiles.git ~/dotfiles # Dont run this command if you already have my repo cloned
