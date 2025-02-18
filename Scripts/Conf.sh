@@ -256,26 +256,16 @@ case "$driver_choice" in
 esac
 
 cd "$dotfiles_dir"
-for config in background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvim rofi tmux; do
+for config in "\$HOME" background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvim rofi tmux; do
     if [ -d $HOME/.config/$config ]; then
         sudo rm -rf $HOME/.config/$config
     fi
 done
     
-for config in background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvim rofi tmux; do
+for config in $HOME background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvim rofi tmux; do
     stow $config
 done
 
-# XDG_DIRS
-grep -qxF 'export XDG_CONFIG_HOME="$HOME/.config"' $HOME/.bashrc || echo 'export XDG_CONFIG_HOME="$HOME/.config"' >> $HOME/.bashrc
-grep -qxF 'export XDG_DATA_HOME="$HOME/.local/share"' $HOME/.bashrc || echo 'export XDG_DATA_HOME="$HOME/.local/share"' >> $HOME/.bashrc
-grep -qxF 'export XDG_STATE_HOME="$HOME/.local/state"' $HOME/.bashrc || echo 'export XDG_STATE_HOME="$HOME/.local/state"' >> $HOME/.bashrc
-grep -qxF 'export XDG_CACHE_HOME="$HOME/.cache"' $HOME/.bashrc || echo 'export XDG_CACHE_HOME="$HOME/.cache"' >> $HOME/.bashrc
-grep -qxF 'export PATH=".local/bin/:$PATH"' $HOME/.bashrc || echo 'export PATH=".local/bin/:$PATH"' >> $HOME/.bashrc
-
-mkdir -p "$HOME/.config/neofetch/" && cp -rf "$dotfiles_dir/neofetch/bk" "$HOME/.config/neofetch/"
-echo "alias neofetch='neofetch --source $HOME/.config/neofetch/bk'" >> $HOME/.bashrc
-wget https://brainwreckedtech.wordpress.com/wp-content/uploads/2014/03/ika-musume-arch-linux-169.png --directory-prefix="$HOME/Pictures/"
 mkdir -p "$HOME/Videos"
 
 # Enable power management
@@ -315,23 +305,6 @@ if [[ "$additional" != "none" && "$additional" != "" ]]; then
     yay -Sy "${Apackages[@]}"
 else
     echo "No additional packages will be installed."
-fi
-
-BASH_PROFILE="$HOME/.bash_profile"
-if ! grep -q "startx" "$BASH_PROFILE"; then
-    echo "Setting up startx auto-launch..."
-    echo 'if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then exec startx; fi' >> "$BASH_PROFILE"
-fi
-
-# Configure i3 as default X session
-XINITRC="$HOME/.xinitrc"
-if [ ! -f "$XINITRC" ]; then
-    echo "Setting i3 as the default X session..."
-    sudo echo 'exec i3' > "$XINITRC"
-    sudo chmod +x "$XINITRC"
-elif ! grep -q "exec i3" "$XINITRC"; then
-    sudo echo "Adding exec i3 to existing .xinitrc..."
-    sudo echo 'exec i3' >> "$XINITRC"
 fi
 
 # Automatically determine CPU brand (AMD or Intel)
