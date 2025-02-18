@@ -258,7 +258,7 @@ esac
 
 cd "$dotfiles_dir"
 # Copy configurations from dotfiles (example for dunst, rofi, etc.)
-for config in background dunst fcitx5 ghostty i3 neofetch nvim rofi tmux; do
+for config in background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvim rofi tmux; do
     stow $config
 done
 
