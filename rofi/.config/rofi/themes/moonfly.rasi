@@ -1,7 +1,7 @@
 * {
     background:             #9f171717;
-    foreground:             #bdbdbd;
-    disabled:               #000000;
+    foreground:             #9fbdbdbd;
+    disabled:               #9f000000;
     accent:                 #cba6f7;
 
     width:                  600;
