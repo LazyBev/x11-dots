@@ -40,7 +40,7 @@ cd ~/.dotfiles; chmod +x Scripts/Conf.sh
 Alternatively, you can manually link specific files:
 
 ```sh
-# Install stow via package manager
+# Install stow via package manager and make sure you have the packages my configs use
 stow <dir>
 ```
 
