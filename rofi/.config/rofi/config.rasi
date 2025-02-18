@@ -11,4 +11,4 @@ configuration{
     display-window: "󰍹 Windows: ";
 }
 
-@theme "moonfly"
+@theme "catppuccin-mocha"
