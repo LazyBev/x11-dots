@@ -238,6 +238,7 @@ for config in home background picom dunst fcitx5 ghostty mov-cli i3 polybar neof
 done
 
 chmod +x $HOME/.config/polybar/launch_polybar.sh
+chmod +x $HOME/.config/polybar-fcitx5-script.sh
 mkdir -p $HOME/Videos
 
 # Enable power management
