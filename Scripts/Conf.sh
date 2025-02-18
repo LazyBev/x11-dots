@@ -237,6 +237,7 @@ for config in home background picom dunst fcitx5 ghostty mov-cli i3 polybar neof
     stow $config --adopt 
 done
 
+source .bashrc
 chmod +x $HOME/.config/polybar/launch_polybar.sh
 chmod +x $HOME/.config/polybar/polybar-fcitx5-script.sh
 mkdir -p $HOME/Videos
