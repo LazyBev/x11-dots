@@ -32,11 +32,12 @@ Welcome to my **dotfiles** repository! This is where I keep my personalized syst
 If your new to linux or a long time user and want to use my config, you have to use arch and i so happen to provide a arch install script you can use :3
 
 To use my arch install run these commands
-```
+```sh
 git clone https://github.com/LazyBev/dotfiles.git ~/dotfiles # Dont run this command if you already have my repo cloned
 cd ~/.dotfiles; chmod +x Scripts/ArchInstall.sh.sh
 ./Scripts/ArchInstall.sh
 ```
+
 To install these dotfiles, you can clone the repository and set up symlinks:
 
 ```sh
