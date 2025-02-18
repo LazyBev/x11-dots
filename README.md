@@ -44,7 +44,7 @@ Alternatively, you can manually link specific files:
 stow <dir>
 ```
 
-## 🛠 Recommended Tools
+## 🛠 Overview of what i use
 
 - **Shell**: Bash 🐚
 - **Editor**: Neovim ✍️
