@@ -32,15 +32,15 @@ Welcome to my **dotfiles** repository! This is where I keep my personalized syst
 To install these dotfiles, you can clone the repository and set up symlinks:
 
 ```sh
-git clone https://github.com/yourusername/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-./install.sh  # Run the installation script
+git clone https://github.com/LazyBev/dotfiles.git ~/dotfiles
+cd ~/.dotfiles; chmod +x Scripts/Conf.sh
+./Scripts/Conf.sh.sh  # Run the installation script
 ```
 
 Alternatively, you can manually link specific files:
 
 ```sh
-# Install stow && be inside the dotfiles dir
+# Install stow via package manager
 stow <dir>
 ```
 
@@ -59,5 +59,4 @@ stow <dir>
 - **Browser**: Firefox 🌍
 
 ## 🎨 Screenshot
-
-*(Add a screenshot of your setup here!)*
+COMING SOON
