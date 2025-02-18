@@ -1,8 +1,9 @@
 return {
   {
-    'nvim-telescope/telescope.nvim', tag = '0.1.8',
-     dependencies = { 'nvim-lua/plenary.nvim' }
-  }
+    'nvim-telescope/telescope.nvim',
+     config = function()
+      require "configs.telescope",
+  },
 
   {
     "stevearc/conform.nvim",
@@ -10,7 +11,6 @@ return {
     opts = require "configs.conform",
   },
 
-  -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -18,13 +18,13 @@ return {
     end,
   },
 
-  -- {
-  -- 	"nvim-treesitter/nvim-treesitter",
-  -- 	opts = {
-  -- 		ensure_installed = {
-  -- 			"vim", "lua", "vimdoc",
-  --      "html", "css"
-  -- 		},
-  -- 	},
-  -- },
+  {
+    "nvim-treesitter/nvim-treesitter",
+   	opts = {
+      ensure_installed = {
+  	    "vim", "lua", "vimdoc",
+        "html", "css"
+      },
+    },
+  },
 }
