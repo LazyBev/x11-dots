@@ -1,1 +1,1 @@
-exec dbus_launch i3
+exec i3
