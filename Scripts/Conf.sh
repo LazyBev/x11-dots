@@ -8,6 +8,12 @@ trap 'echo "An error occurred. Exiting..."; exit 1;' ERR
 backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
 dotfiles_dir="$HOME/dotfiles"
 
+# Backup configurations
+echo "---- Making backup at $backup_dir -----"
+mkdir -p "$backup_dir"
+sudo cp -rpf "$HOME/.config" "$backup_dir"
+echo "----- Backup made at $backup_dir ------"
+
 if [ -d "$dotfiles_dir" ]; then
     echo ""
 else
@@ -249,13 +255,6 @@ case "$driver_choice" in
         sudo udevadm control --reload-rules && sudo udevadm trigger
         ;;
 esac
-
-# Backup configurations
-backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
-echo "---- Making backup at $backup_dir -----"
-mkdir -p "$backup_dir"
-sudo cp -rpf "$HOME/.config" "$backup_dir"
-echo "----- Backup made at $backup_dir ------"
 
 cd "$dotfiles_dir"
 # Copy configurations from dotfiles (example for dunst, rofi, etc.)
