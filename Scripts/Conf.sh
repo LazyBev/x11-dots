@@ -59,8 +59,8 @@ cd "$dotfiles_dir"
 
 # Installing needed
 yay -Syu iwd tlp stow fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul ttf-dejavu ttf-liberation unifont ttf-joypixels ttf-meslo-nerd noto-fonts adobe-source-han-mono-jp-fonts adobe-source-han-mono-hk-fonts adobe-source-han-mono-kr-fonts adobe-source-han-mono-tw-fonts adobe-source-han-mono-otc-fonts adobe-source-han-mono-cn-fonts tmux blueman bluez bluez-utils steam steam-native-runtime flatpak wine winetricks neovim lua ripgrep vim firefox pipewire pipewire-alsa alsa-utils pavucontrol ghostty i3 ranger xorg xorg-server xorg-xinit acpi git lazygit github-cli polybar xdg-desktop-portal hwinfo arch-install-scripts wireless_tools neofetch fuse2 polkit rofi curl make cmake meson obsidian man-db man-pages xdotool feh thunar qutebrowser flameshot zip unzip mpv btop picom dunst xarchiver eza fzf
-flatpak install --user com.discordapp.Discord
-flatpak install --user https://sober.vinegarhq.org/sober.flatpakref
+flatpak install flathub com.discordapp.Discord
+flatpak install https://sober.vinegarhq.org/sober.flatpakref
 
 # mov-cli
 cd $HOME; git clone https://github.com/hpjansson/chafa.git
