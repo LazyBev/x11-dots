@@ -33,7 +33,7 @@ If your new to linux or a long time user and want to use my config, you have to 
 
 To use my arch install script run these commands
 ```sh
-git clone https://github.com/LazyBev/dotfiles.git / # Dont run this command if you already have my repo cloned
+git clone https://github.com/LazyBev/dotfiles.git ~/dotfiles # Dont run this command if you already have my repo cloned
 cd ~/.dotfiles; chmod +x Scripts/ArchInstall.sh.sh
 ./Scripts/ArchInstall.sh
 ```
