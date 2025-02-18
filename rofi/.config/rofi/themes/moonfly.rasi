@@ -2,7 +2,7 @@
     background:             #171717;
     foreground:             #bdbdbd;
     disabled:               #000000;
-    accent:                 #cba6f7;
+    accent:                 #7fcba6f7;
 
     width:                  600;
     font:                   "MartianMono Nerd Font Medium 10";
