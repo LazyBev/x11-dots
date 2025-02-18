@@ -11,7 +11,7 @@ alias ls="eza -al --color=auto"
 alias roblox='flatpak run org.vinegarhq.Sober'
 alias blueman='blueman-manager'
 alias discord='flatpak run com.discordapp.Discord'
-alias neofetch='neofetch --source /home/lazybev/.config/neofetch/bk'
+alias neofetch='neofetch --source $HOME/.config/neofetch/bk'
 alias yt='source $HOME/yt/bin/activate; mov-cli -s youtube '
 export XDG_CONFIG_HOME=/home/lazybev/.config
 export XDG_DATA_HOME=/home/lazybev/.local/share
