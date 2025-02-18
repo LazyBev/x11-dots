@@ -98,6 +98,7 @@ bindsym $mod+s exec steam
 bindsym $mod+o exec obsidian
 bindsym $mod+x exec flameshot gui
 bindsym $mod+p exec shutdown now
+bindsym $mod+m exec stremio
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
