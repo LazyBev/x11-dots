@@ -148,9 +148,6 @@ case "$driver_choice" in
         grep -qxF 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' $HOME/.bashrc || echo 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' >> $HOME/.bashrc
         grep -qxF 'export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d' $HOME/.bashrc || echo 'export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d' >> $HOME/.bashrc
         
-        # Configure NVIDIA power settings
-        sudo nvidia-smi -pm 1
-        
         # Set NVIDIA kernel module options
         echo "options nvidia NVreg_UsePageAttributeTable=1
         options nvidia_drm modeset=1
@@ -158,16 +155,7 @@ case "$driver_choice" in
         options nvidia NVreg_EnablePCIeGen3=1 NVreg_EnableMSI=1" | sudo tee /etc/modprobe.d/nvidia.conf > /dev/null
         
         # Apply NVIDIA settings
-        sudo nvidia-xconfig --cool-bits=28
-        sudo nvidia-smi -i 0 -pm 1
-        
-        # Prompt user for power limit
-        read -p "Enter desired power limit (in watts): " WATTS
-        if [[ $WATTS =~ ^[0-9]+$ ]]; then
-            sudo nvidia-smi -i 0 -pl $WATTS
-        else
-            echo "Invalid input. Skipping power limit configuration."
-        fi
+        sudo nvidia-xconfig --cool-bits=28 
         
         # Disable auto-boost and set clock speeds
         sudo nvidia-smi --auto-boost-default=0
@@ -175,7 +163,6 @@ case "$driver_choice" in
         
         # Enable and start NVIDIA persistence daemon
         sudo systemctl enable nvidia-persistenced.service
-        sudo systemctl start nvidia-persistenced.service
         
         # Regenerate initramfs
         sudo mkinitcpio -P
@@ -219,10 +206,7 @@ case "$driver_choice" in
         grep -qxF 'export __GL_SYNC_TO_VBLANK=0' $HOME/.bashrc || echo 'export __GL_SYNC_TO_VBLANK=0' >> $HOME/.bashrc
         grep -qxF 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' $HOME/.bashrc || echo 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' >> $HOME/.bashrc
         grep -qxF 'export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d' $HOME/.bashrc || echo 'export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d' >> $HOME/.bashrc
-        
-        # Configure NVIDIA power settings
-        sudo nvidia-smi -pm 1
-        
+
         # Set NVIDIA kernel module options
         echo "options nvidia NVreg_UsePageAttributeTable=1
         options nvidia_drm modeset=1
@@ -231,23 +215,9 @@ case "$driver_choice" in
         
         # Apply NVIDIA settings
         sudo nvidia-xconfig --cool-bits=28
-        sudo nvidia-smi -i 0 -pm 1
-        
-        # Prompt user for power limit
-        read -p "Enter desired power limit (in watts): " WATTS
-        if [[ $WATTS =~ ^[0-9]+$ ]]; then
-            sudo nvidia-smi -i 0 -pl $WATTS
-        else
-            echo "Invalid input. Skipping power limit configuration."
-        fi
-        
-        # Disable auto-boost and set clock speeds
-        sudo nvidia-smi --auto-boost-default=0
-        sudo nvidia-smi -i 0 -ac 5001,2000
         
         # Enable and start NVIDIA persistence daemon
         sudo systemctl enable nvidia-persistenced.service
-        sudo systemctl start nvidia-persistenced.service
         
         # Regenerate initramfs
         sudo mkinitcpio -P
@@ -258,9 +228,13 @@ case "$driver_choice" in
 esac
 
 cd "$dotfiles_dir"
-    
-for config in home background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvim rofi tmux; do
+
+for config in background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvim rofi tmux; do
     stow $config --adopt
+done
+
+for config in home background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvim rofi tmux; do
+    stow $config --adopt 
 done
 
 mkdir -p "$HOME/Videos"
