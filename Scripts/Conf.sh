@@ -256,7 +256,12 @@ case "$driver_choice" in
 esac
 
 cd "$dotfiles_dir"
-# Copy configurations from dotfiles (example for dunst, rofi, etc.)
+for config in background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvim rofi tmux; do
+    if [ -d $HOME/.config/$config ]; then
+        sudo rm -rf $HOME/.config/$config
+    fi
+done
+    
 for config in background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvim rofi tmux; do
     stow $config
 done
