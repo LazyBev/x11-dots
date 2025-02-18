@@ -13,7 +13,7 @@ set $mod Mod4
 
 #Startup
 exec_always --no-startup-id killall polybar
-exec_always --no-startup-id ~/dotfiles/polybar/launch_polybar.sh
+exec_always --no-startup-id ~/.config/polybar/launch_polybar.sh
 exec_always --no-startup-id feh --bg-scale ~/Pictures/archchan.png
 exec_always --no-startup-id dunst &
 exec_always --no-startup-id picom -b &
