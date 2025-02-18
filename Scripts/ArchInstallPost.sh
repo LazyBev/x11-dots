@@ -66,12 +66,14 @@ make && sudo make install
 cd $HOME && python -m venv yt
 bash -c "source yt/bin/activate; pip install lxml; pip install mov-cli -U; pip install mov-cli-youtube;"
 
-# Configure ALSA to use PipeWire
-echo "Configuring ALSA to use PipeWire..."
+# Configure ALSA to use pulseaudio
+echo "Configuring ALSA to use pulseaudio..."
 echo tee /etc/asound.conf <<ASOUND
 defaults.pcm.card 0
 defaults.ctl.card 0
 ASOUND
+
+sudo sed -i "/load-module module-suspend-on-idle/c\# load-module module-suspend-on-idle" /etc/pulse/default.pa
 
 # Roblox
 if ! grep -q "alias roblox=" $HOME/.bashrc; then
