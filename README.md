@@ -48,11 +48,11 @@ cd ~/.dotfiles; chmod +x Scripts/Conf.sh
 ./Scripts/Conf.sh  # Run the installation script
 ```
 
-Alternatively, you can manually link specific files:
+Alternatively, you can manually link specific files  config:
 
 ```sh
 # Install stow via package manager and make sure you have the packages my configs use
-stow <dir>
+stow <dir> --adopt # adopt isnt necessary unless the dirs already exist
 ```
 
 ## 🛠 Overview
