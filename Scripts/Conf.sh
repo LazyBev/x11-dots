@@ -54,14 +54,20 @@ yay -Syu iwd tlp stow fcitx5-im fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul
 flatpak install --user com.discordapp.Discord
 flatpak install --user https://sober.vinegarhq.org/sober.flatpakref
 
+# mov-cli
+cd $HOME; git clone https://github.com/hpjansson/chafa.git
+cd chafa && ./autogen.sh
+make && sudo make install
+cd $HOME && python -m venv yt
+bash -c "source yt/bin/activate; pip install lxml; pip install mov-cli -U; pip install mov-cli-youtube;"
+mov-cli -e; 
+
 # Configure ALSA to use PipeWire
 echo "Configuring ALSA to use PipeWire..."
 echo tee /etc/asound.conf <<ASOUND
 defaults.pcm.card 0
 defaults.ctl.card 0
 ASOUND
-
-git clone https://github.com/NvChad/starter ~/.config/nvim && nvim
 
 # Roblox
 if ! grep -q "alias roblox=" $HOME/.bashrc; then
@@ -253,7 +259,7 @@ echo "----- Backup made at $backup_dir ------"
 
 cd "$dotfiles_dir"
 # Copy configurations from dotfiles (example for dunst, rofi, etc.)
-for config in dunst fcitx5 tmux i3 neofetch rofi mov-cli ghostty; do
+for config in dunst fcitx5 ghostty i3 neofetch nvim rofi tmux; do
     stow $config
 done
 
