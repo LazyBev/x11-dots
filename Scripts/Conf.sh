@@ -237,7 +237,8 @@ for config in home background picom dunst fcitx5 ghostty mov-cli i3 neofetch nvi
     stow $config --adopt 
 done
 
-mkdir -p "$HOME/Videos"
+chmod +x $HOME/.config/polybar/launch_polybar.sh
+mkdir -p $HOME/Videos
 
 # Enable power management
 sudo systemctl enable tlp
