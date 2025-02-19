@@ -51,6 +51,13 @@ else
     swapon "${disk}2"
 fi
 
+sudo tee /mnt/etc/systemd/network/20-wired.network <<NET
+[Match]
+name=$network
+[Network]
+DHCP=yes
+NET
+
 echo "Installing base system..."
 pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr iwd grep git sed "$cpu"-ucode connman
 
@@ -70,18 +77,7 @@ loadkeys "$keyboard"
 
 # Variables
 HOME="/home/$user"
-yay_choice=""
-backup_dir="$HOME/configBackup_$(date +%Y%m%d_%H%M%S)"
-driver_choice=""
 dotfiles_dir="$HOME/dotfiles"
-
-# Install necessary packages (if not installed)
-install_packages() {
-    local package=$1
-    if ! pacman -Qi "$package" &>/dev/null; then
-        yay -Sy --noconfirm "$package"
-    fi
-}
 
 # Refactor pacman.conf update
 declare -a pacman_conf=(
@@ -146,8 +142,7 @@ systemctl enable iwd.service
 sudo systemctl enable systemd-networkd
 sudo systemctl start systemd-networkd 
 sudo systemctl enable systemd-resolved 
-sudo systemctl start systemd-resolved 
-
+sudo systemctl start systemd-resolved
 EOF
 
 set +a
@@ -157,4 +152,3 @@ echo "Unmounting partitions..."
 umount -R /mnt
 
 reboot
-
