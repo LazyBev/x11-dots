@@ -42,10 +42,6 @@ for change in "${pacman_conf[@]}"; do
     sudo sed -i "$change" /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
 done
 
-# Custom bash theme
-#echo 'export LS_COLORS="di=35;1:fi=33:ex=36;1"' >> $HOME/.bashrc
-#echo 'export PS1='\[\033[01;34m\][\[\033[01;35m\]\u\[\033[00m\]:\[\033[01;36m\]\h\[\033[00m\] <> \[\033[01;34m\]\w\[\033[01;34m\]] \[\033[01;33m\]'' >> $HOME/.bashrc
-
 # Install yay 
 cd ~
 echo "Installing yay package manager..."
@@ -54,8 +50,15 @@ sudo chown "$user:$user" -R $HOME/yay-bin
 cd yay-bin && makepkg -si && cd .. && rm -rf yay-bin
 cd "$dotfiles_dir"
 
-# Installing needed
+# Installing the needed packages i use
 yay -Syu iwd tlp stow fcitx5-im zsh wget fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul ttf-dejavu ttf-liberation ttf-joypixels ttf-meslo-nerd noto-fonts adobe-source-han-mono-jp-fonts adobe-source-han-mono-hk-fonts adobe-source-han-mono-kr-fonts adobe-source-han-mono-tw-fonts adobe-source-han-mono-otc-fonts adobe-source-han-mono-cn-fonts tmux blueman bluez bluez-utils steam steam-native-runtime flatpak wine winetricks neovim lua ripgrep vim firefox pulseaudio wireplumber pulseaudio-alsa alsa-utils pavucontrol ghostty i3 ranger xorg xorg-server xorg-xinit acpi git lazygit github-cli polybar xdg-desktop-portal hwinfo arch-install-scripts wireless_tools neofetch fuse2 polkit rofi curl make cmake meson obsidian man-db man-pages xdotool feh thunar qutebrowser flameshot zip unzip mpv btop picom dunst xarchiver eza fzf
+wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh; sh install.sh; rm -rf install.sh;
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/agkozak/zsh-z $ZSH_CUSTOM/plugins/zsh-z
+git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
+git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git $ZSH_CUSTOM/plugins/zsh-autocomplete
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 flatpak install flathub com.discordapp.Discord
 flatpak install https://sober.vinegarhq.org/sober.flatpakref
 
