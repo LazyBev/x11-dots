@@ -90,13 +90,6 @@ for change in "${pacman_conf[@]}"; do
     sed -i "$change" /etc/pacman.conf || { echo "Failed to update pacman.conf"; exit 1; }
 done
 
-# Custom bash theme
-#echo 'export LS_COLORS="di=35;1:fi=33:ex=36;1"' >> $HOME/.bashrc
-#echo 'export PS1='\[\033[01;34m\][\[\033[01;35m\]\u\[\033[00m\]:\[\033[01;36m\]\h\[\033[00m\] <> \[\033[01;34m\]\w\[\033[01;34m\]] \[\033[01;33m\]'' >> $HOME/.bashrc
-
-# Ls alias
-echo 'alias ls="eza -al --color=auto"' >> $HOME/.bashrc
-
 # Dotfiles
 cd $HOME
 rm -rf dotfiles
