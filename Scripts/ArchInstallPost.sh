@@ -55,7 +55,7 @@ cd yay-bin && makepkg -si && cd .. && rm -rf yay-bin
 cd "$dotfiles_dir"
 
 # Installing needed
-yay -Syu iwd tlp stow fcitx5-im wget fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul ttf-dejavu ttf-liberation ttf-joypixels ttf-meslo-nerd noto-fonts adobe-source-han-mono-jp-fonts adobe-source-han-mono-hk-fonts adobe-source-han-mono-kr-fonts adobe-source-han-mono-tw-fonts adobe-source-han-mono-otc-fonts adobe-source-han-mono-cn-fonts tmux blueman bluez bluez-utils steam steam-native-runtime flatpak wine winetricks neovim lua ripgrep vim firefox pulseaudio wireplumber pulseaudio-alsa alsa-utils pavucontrol ghostty i3 ranger xorg xorg-server xorg-xinit acpi git lazygit github-cli polybar xdg-desktop-portal hwinfo arch-install-scripts wireless_tools neofetch fuse2 polkit rofi curl make cmake meson obsidian man-db man-pages xdotool feh thunar qutebrowser flameshot zip unzip mpv btop picom dunst xarchiver eza fzf
+yay -Syu iwd tlp stow fcitx5-im zsh wget fcitx5-chinese-addons fcitx5-anthy fcitx5-hangul ttf-dejavu ttf-liberation ttf-joypixels ttf-meslo-nerd noto-fonts adobe-source-han-mono-jp-fonts adobe-source-han-mono-hk-fonts adobe-source-han-mono-kr-fonts adobe-source-han-mono-tw-fonts adobe-source-han-mono-otc-fonts adobe-source-han-mono-cn-fonts tmux blueman bluez bluez-utils steam steam-native-runtime flatpak wine winetricks neovim lua ripgrep vim firefox pulseaudio wireplumber pulseaudio-alsa alsa-utils pavucontrol ghostty i3 ranger xorg xorg-server xorg-xinit acpi git lazygit github-cli polybar xdg-desktop-portal hwinfo arch-install-scripts wireless_tools neofetch fuse2 polkit rofi curl make cmake meson obsidian man-db man-pages xdotool feh thunar qutebrowser flameshot zip unzip mpv btop picom dunst xarchiver eza fzf
 flatpak install flathub com.discordapp.Discord
 flatpak install https://sober.vinegarhq.org/sober.flatpakref
 
@@ -75,21 +75,6 @@ ASOUND
 
 sudo sed -i "/load-module module-suspend-on-idle/c\# load-module module-suspend-on-idle" /etc/pulse/default.pa
 
-# Roblox
-if ! grep -q "alias roblox=" $HOME/.bashrc; then
-    echo "Adding Roblox alias to .bashrc..."
-    echo "alias roblox='flatpak run org.vinegarhq.Sober'" >> $HOME/.bashrc
-else
-    echo "Roblox alias already exists in .bashrc. Skipping addition."
-fi
-
-# Discord
-if ! grep -q "alias discord=" $HOME/.bashrc; then
-    echo "Adding Discord alias to .bashrc..."
-    echo "alias discord='flatpak run com.discordapp.Discord'" >> $HOME/.bashrc
-else
-    echo "Discord alias already exists in .bashrc. Skipping addition."
-fi
 touch discord
 DC="$HOME/discord"
 sudo echo 'flatpak run com.discordapp.Discord' >> $DC
@@ -100,13 +85,6 @@ echo "Enabling Bluetooth..."
 sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
 sudo systemctl daemon-reload
-if ! grep -q "alias blueman=" $HOME/.bashrc; then
-    echo "Adding Blueman alias to .bashrc..."
-    echo "alias blueman='blueman-manager'" >> $HOME/.bashrc
-    source $HOME/.bashrc
-else
-    echo "Blueman alias already exists in .bashrc. Skipping addition."
-fi
 
 echo "Select a graphics driver to install:"
 echo "1) NVIDIA"
@@ -140,13 +118,7 @@ case "$driver_choice" in
         # Enable runtime PM for NVIDIA VGA/3D controller devices on adding device
         ACTION==\"add\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030000\", TEST==\"power/control\", ATTR{power/control}=\"auto\"
         ACTION==\"add\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030200\", TEST==\"power/control\", ATTR{power/control}=\"auto\"" | envsubst | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules > /dev/null
-        
-        # Append NVIDIA environment variables to .bashrc if they aren't already set
-        grep -qxF 'export __GL_THREADED_OPTIMIZATIONS=1' $HOME/.bashrc || echo 'export __GL_THREADED_OPTIMIZATIONS=1' >> $HOME/.bashrc
-        grep -qxF 'export __GL_SYNC_TO_VBLANK=0' $HOME/.bashrc || echo 'export __GL_SYNC_TO_VBLANK=0' >> $HOME/.bashrc
-        grep -qxF 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' $HOME/.bashrc || echo 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' >> $HOME/.bashrc
-        grep -qxF 'export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d' $HOME/.bashrc || echo 'export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d' >> $HOME/.bashrc
-        
+
         # Set NVIDIA kernel module options
         echo "options nvidia NVreg_UsePageAttributeTable=1
         options nvidia_drm modeset=1
@@ -199,12 +171,6 @@ case "$driver_choice" in
         # Enable runtime PM for NVIDIA VGA/3D controller devices on adding device
         ACTION==\"add\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030000\", TEST==\"power/control\", ATTR{power/control}=\"auto\"
         ACTION==\"add\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"$NVIDIA_VENDOR\", ATTR{class}==\"0x030200\", TEST==\"power/control\", ATTR{power/control}=\"auto\"" | envsubst | sudo tee /etc/udev/rules.d/80-nvidia-pm.rules > /dev/null
-        
-        # Append NVIDIA environment variables to .bashrc if they aren't already set
-        grep -qxF 'export __GL_THREADED_OPTIMIZATIONS=1' $HOME/.bashrc || echo 'export __GL_THREADED_OPTIMIZATIONS=1' >> $HOME/.bashrc
-        grep -qxF 'export __GL_SYNC_TO_VBLANK=0' $HOME/.bashrc || echo 'export __GL_SYNC_TO_VBLANK=0' >> $HOME/.bashrc
-        grep -qxF 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' $HOME/.bashrc || echo 'export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json' >> $HOME/.bashrc
-        grep -qxF 'export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d' $HOME/.bashrc || echo 'export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d' >> $HOME/.bashrc
 
         # Set NVIDIA kernel module options
         echo "options nvidia NVreg_UsePageAttributeTable=1
@@ -246,39 +212,6 @@ sudo systemctl enable tlp
 
 # Network
 echo "Installing network and internet packages..."
-
-read -p "Enter in any additional packages you wanna install (Type "none" for no package)" additional
-additional="${additional:-none}"
-
-# Check if the user entered additional packages
-if [[ "$additional" != "none" && "$additional" != "" ]]; then
-    echo "Checking if additional packages exist: $additional"
-    
-    # Split the entered package names into an array (in case multiple packages are entered)
-    IFS=' ' read -r -a Apackages <<< "$additional"
-    
-    # Loop through each package to check if it exists
-    for i in "${!Apackages[@]}"; do
-        while ! yay -Ss "^${Apackages[$i]}$" &>/dev/null || Apackages[$i] != "none"; do
-            if [[ "${Apackages[$i]}" == "none" ]]; then
-                echo "Skipping package installation for index $((i + 1))"
-                break
-            fi
-            echo "Package '${Apackages[$i]}' not found in the official repositories. Please enter a valid package."
-            read -p "Enter package ${i+1} again (Type "none" for no package): " Apackages[$i]
-        done
-        if [[ ${Apackages[$i]} != "none" ]]; then
-            echo "Package '${Apackages[$i]}' found. Installing..."
-        else
-            echo "No packages to install..."
-        fi
-    done
-
-    # Install the valid packages
-    yay -Sy "${Apackages[@]}"
-else
-    echo "No additional packages will be installed."
-fi
 
 # Automatically determine CPU brand (AMD or Intel)
 CPU_VENDOR=$(lscpu | grep "Model name" | awk '{print $3}')
