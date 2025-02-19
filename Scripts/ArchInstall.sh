@@ -51,13 +51,6 @@ else
     swapon "${disk}2"
 fi
 
-sudo tee /mnt/etc/systemd/network/20-wired.network <<NET
-[Match]
-name=$network
-[Network]
-DHCP=yes
-NET
-
 echo "Installing base system..."
 pacstrap -K /mnt base base-devel sudo linux linux-headers linux-firmware grub efibootmgr iwd grep git sed "$cpu"-ucode connman
 
@@ -143,6 +136,16 @@ sudo systemctl enable systemd-networkd
 sudo systemctl start systemd-networkd 
 sudo systemctl enable systemd-resolved 
 sudo systemctl start systemd-resolved
+
+sudo tee /etc/systemd/network/20-wired.network <<NET
+[Match]
+name=$network
+[Network]
+DHCP=yes
+NET
+
+sudo systemctl restart systemd-resolved 
+sudo systemctl restart systemd-resolved
 EOF
 
 set +a
