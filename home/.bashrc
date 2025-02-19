@@ -9,6 +9,7 @@ alias grep='grep --color=auto'
 PS1='[\u@\h \W]\$ '
 alias ls="eza -al --color=auto"
 alias roblox='flatpak run org.vinegarhq.Sober'
+alias delcache='sudo pacman -Scc; sudo pacman -Sc; sudo sync; echo 1 | sudo tee /proc/sys/vm/drop_caches; sudo sync; echo 2 | sudo tee /proc/sys/vm/drop_caches; sudo sync; echo 3 | sudo tee /proc/sys/vm/drop_caches; sudo swapoff -a; sudo swapon -a; rm -rf .cache'
 alias blueman='blueman-manager'
 alias discord='flatpak run com.discordapp.Discord'
 alias neofetch='neofetch --source $HOME/.config/neofetch/bk'
