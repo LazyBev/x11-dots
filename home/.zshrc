@@ -1,14 +1,45 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
+export LANG=en_GB.UTF-8
+export LC_ALL=en_GB.UTF-8
+
+# date
+# hyfetch
+# neofetch
+fastfetch
+# sh ~/.cow.sh
+
+alias grep='grep --color=auto'
+alias ls="eza -al --color=auto"
+alias roblox='flatpak run org.vinegarhq.Sober'
+alias delcache='sudo pacman -Scc; sudo pacman -Sc; sudo sync; echo 1 | sudo tee /proc/sys/vm/drop_caches; sudo sync; echo 2 | sudo tee /proc/sys/vm/drop_caches; sudo sync; echo 3 | sudo tee /proc/sys/vm/drop_caches; sudo swapoff -a; sudo swapon -a; rm -rf .cache;'
+alias delnvcache='rm -rf ~/.cache/*gl* ~/.cache/*vk*; rm -rf ~/.nv/GLCache; m -rf ~/.cache/nvidia;'
+alias blueman='blueman-manager'
+alias discord='flatpak run com.discordapp.Discord'
+alias fastfetch='fastfetch --source $HOME/.config/neofetch/bk'
+alias neofetch='neofetch --source $HOME/.config/neofetch/bk'
+alias yt='source $HOME/yt/bin/activate; mov-cli -s youtube '
+export XDG_CONFIG_HOME=/home/lazybev/.config
+export XDG_DATA_HOME=/home/lazybev/.local/share
+export XDG_STATE_HOME=/home/lazybev/.local/state
+export XDG_CACHE_HOME=/home/lazybev/.cache
+export PATH=.local/bin/:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+export __GL_THREADED_OPTIMIZATIONS=1
+export __GL_SYNC_TO_VBLANK=0
+export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
+export VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d
+
 # Path to your Oh My Zsh installation.
+
 export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+
+ZSH_THEME="itchy"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -70,7 +101,14 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+
+plugins=(
+ git
+ zsh-autosuggestions
+ zsh-syntax-highlighting
+ fast-syntax-highlighting
+ zsh-autocomplete
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -82,14 +120,14 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='nvim'
+else
+  export EDITOR='nvim'
+fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
+export ARCHFLAGS="-arch $(uname -m)"
 
 # Set personal aliases, overriding those provided by Oh My Zsh libs,
 # plugins, and themes. Aliases can be placed here, though Oh My Zsh
@@ -102,3 +140,4 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+export PATH=$PATH:$HOME/go/bin
