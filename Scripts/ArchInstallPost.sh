@@ -62,6 +62,16 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 flatpak install flathub com.discordapp.Discord
 flatpak install https://sober.vinegarhq.org/sober.flatpakref
 
+# Arti (tor but written in rust)
+git clone https://gitlab.torproject.org/tpo/core/arti.git
+cd arti && cargo build -p arti --release;
+sudo cp target/release/arti /usr/local/bin/
+cd .. && rm -rf arti
+sudo tee ~/.config/arti/arti-config.toml <<ART
+[network]
+socks_port = 9050
+ART
+
 # mov-cli
 cd $HOME; git clone https://github.com/hpjansson/chafa.git
 cd chafa && ./autogen.sh
