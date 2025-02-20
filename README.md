@@ -9,23 +9,6 @@ Welcome to my **dotfiles** repository! This is where I keep my personalized syst
 - **Terminal-First Setup** 💻 – Focused on CLI tools and TUI applications.
 - **Custom Theming** 🎨 – Aesthetic colors and fonts for a visually pleasing setup.
 
-## 📂 Structure
-
-bash
-📦 dotfiles (X11 vers)
-├── .zshrc               # zsh shell configuration
-├── .config/             # Configuration files for various applications
-│   ├── nvim/            # Neovim setup
-│   ├── ghostty/         # Terminal emulator config
-│   ├── i3/              # i3 window manager setup
-│   ├── polybar/         # Custom status bar
-│   ├── rofi/            # Application launcher config
-│   ├── dunst/           # Notification daemon config
-│   ├── fcitx5/          # Input method config
-│   └── tmux/            # Terminal multiplexer config
-└── README.md            # This file
-
-
 
 ## 🚀 Installation
 
@@ -35,29 +18,26 @@ If your new to linux or a long time user and want to use my config, you have to 
 
 To use my arch install script run these commands
 
-sh
+```sh
 git clone https://github.com/LazyBev/dotfiles.git ~/dotfiles # Dont run this command if you already have my repo cloned
-cd ~/.dotfiles; chmod +x Scripts/ArchInstall.sh.sh
+cd ~/dotfiles; chmod +x Scripts/ArchInstall.sh.sh
 ./Scripts/ArchInstall.sh
-
-
+```
 
 To install these dotfiles, you can clone the repository and set up symlinks:
 
-sh
+```sh
 git clone https://github.com/LazyBev/dotfiles.git ~/dotfiles # Dont run this command if you already have my repo cloned
-cd ~/.dotfiles; chmod +x Scripts/Conf.sh
+cd ~/dotfiles; chmod +x Scripts/Conf.sh
 ./Scripts/Conf.sh  # Run the installation script
-
-
+```
 
 Alternatively, you can manually link specific dirs to your config:
 
-sh
+```sh
 # Install stow via package manager and make sure you have the packages my configs use
 stow <dir> --adopt # adopt isnt necessary unless the dirs already exist
-
-
+```
 
 ## 🛠 Overview
 
