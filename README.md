@@ -26,21 +26,6 @@ Welcome to my **dotfiles** repository! This is where I keep my personalized syst
 └── README.md            # This file
 ```
 
-```bash
-📦 dotfiles (Wayland vers vers)
-├── .zshrc               # zsh shell configuration
-├── .config/             # Configuration files for various applications
-│   ├── nvim/            # Neovim setup
-│   ├── ghostty/         # Terminal emulator config
-│   ├── i3/              # i3 window manager setup
-│   ├── waybar/         # Custom status bar
-│   ├── wofi/            # Application launcher config
-│   ├── dunst/           # Notification daemon config
-│   ├── fcitx5/          # Input method config
-│   └── tmux/            # Terminal multiplexer config
-└── README.md            # This file
-```
-
 ## 🚀 Installation
 
 If your new to linux or a long time user and want to use my config, you have to use arch and i so happen to provide a arch install script you can use :3
