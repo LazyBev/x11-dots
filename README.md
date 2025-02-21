@@ -36,7 +36,8 @@ Alternatively, you can manually link specific dirs to your config:
 
 ```sh
 # Install stow via package manager and make sure you have the packages my configs use
-stow <dir> --adopt # adopt isnt necessary unless the dirs already exist
+git clone https://github.com/username/dotfiles.git ~/dotfiles # Clone the repo
+cd ~/dotfiles; stow <dir> --adopt # adopt isnt necessary unless the dirs already exist
 ```
 
 ## 🛠 Overview
