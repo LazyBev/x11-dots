@@ -21,7 +21,7 @@ To use my arch install script run these commands
 ```sh
 git clone https://github.com/LazyBev/dotfiles.git ~/dotfiles # Dont run this command if you already have my repo cloned
 cd ~/dotfiles; chmod +x Scripts/ArchInstall.sh.sh
-cd scripts; ./ArchInstall.sh
+cd Scripts; ./ArchInstall.sh
 ```
 
 To install these dotfiles, you can clone the repository and set up symlinks:
@@ -29,7 +29,7 @@ To install these dotfiles, you can clone the repository and set up symlinks:
 ```sh
 git clone https://github.com/LazyBev/dotfiles.git ~/dotfiles # Dont run this command if you already have my repo cloned
 cd ~/dotfiles; chmod +x Scripts/Conf.sh
-cd scripts; ./Conf.sh  # Run the installation script
+cd Scripts; ./Conf.sh  # Run the installation script
 ```
 
 Alternatively, you can manually link specific dirs to your config:
